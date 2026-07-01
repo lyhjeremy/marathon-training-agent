@@ -1,0 +1,4 @@
+# LangGraph agent runtime.
+langgraph>=1.0
+# Optional: only needed if you run the API backend instead of the Claude CLI.
+anthropic>=0.40
