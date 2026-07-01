@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Marathon Training Plan Agent" width="100%">
+</p>
+
 # A Marathon Plan That Reviews Itself
 
 *Wrapping an LLM in a LangGraph feedback loop so the plan it gives you has
@@ -16,12 +20,9 @@ enough.
 This project is a **LangGraph agent** — the LLM runs inside a state machine with a
 feedback loop:
 
-```
-assess ─▶ plan ─▶ adjust ─▶ critique ─┬─ issues & budget ─▶ revise ─┐
-                                      │                              │
-                                      └────────── clean ──────▶ END  │
-                                            revise ─▶ critique ◀──────┘
-```
+<p align="center">
+  <img src="assets/architecture.png" alt="Marathon Training Plan Agent architecture" width="760">
+</p>
 
 - **assess** judges whether the goal time is realistic given current fitness and
   timeline, and proposes a smarter target if not.

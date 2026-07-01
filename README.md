@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Marathon Training Plan Agent" width="100%">
+</p>
+
 # Marathon Training Plan Agent
 
 A **LangGraph agent** that writes you a personalized, periodized marathon training
@@ -16,12 +20,11 @@ real, deterministic safety checks, and a `revise` node fixes what it flags — t
 re-checks. The plan you get has survived review, not just generation.
 
 ## The graph
-```
-assess ─▶ plan ─▶ adjust ─▶ critique ─┬─ issues & budget ─▶ revise ─┐
-                                      │                              │
-                                      └────────── clean ──────▶ END  │
-                                            revise ─▶ critique ◀──────┘
-```
+
+<p align="center">
+  <img src="assets/architecture.png" alt="Marathon Training Plan Agent architecture" width="760">
+</p>
+
 | Node | What it does |
 |---|---|
 | **assess** | Judges whether the goal time is realistic; sets a target + peak mileage |
