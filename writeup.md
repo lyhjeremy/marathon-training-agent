@@ -59,6 +59,14 @@ day**, the agent:
 The full run is in [`examples/sample_run.md`](examples/sample_run.md). Every run
 prints its **agent trace**, so the self-correction is visible, not hidden.
 
+That single run is an anecdote; `src/eval.py` turns it into a measurement. It runs
+the agent across a panel of synthetic runners and compares each plan's safety —
+scored by the agent's *own* deterministic checks — before the critique/revise loop
+(the raw draft) versus after it, reporting the pass-rate lift and the drop in mean
+safety issues. Run `python -m src.eval` to reproduce it. And because the plan is
+just data, there's now a **Streamlit UI** (`streamlit run app.py`) that streams the
+agent through its nodes live so you can watch it draft, critique, and revise.
+
 ## Design notes
 
 - **LangGraph** models this naturally: nodes are plain functions, and a single

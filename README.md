@@ -51,14 +51,34 @@ Generation runs on the **Claude CLI** by default (your Claude subscription, no
 per-token cost); set `ANTHROPIC_API_KEY` to use the API. Set `CLAUDE_MODEL` (e.g.
 `haiku`) to trade a little quality for speed across the agent's several LLM calls.
 
+## Try it in the browser
+```bash
+streamlit run app.py
+```
+A Streamlit UI wraps the agent: set your race in the sidebar and **watch it stream
+through `assess → plan → adjust → critique → revise` live**, then read the plan
+table, a weekly-mileage chart, the safety verdict, and the full agent trace.
+
+## Measuring the safety loop
+Does the critique/revise loop actually make plans safer? `src/eval.py` quantifies
+it: it runs the agent on a panel of synthetic runners and compares each plan's
+safety — scored by the agent's own deterministic `_safety_checks` — **before** the
+loop (the raw first draft) against **after** it, reporting the pass-rate lift and
+the drop in mean safety issues per plan.
+```bash
+python -m src.eval        # writes eval/results.csv + eval/safety_gain.png
+```
+
 ## Files
 | Path | What it is |
 |---|---|
 | `src/graph.py` | The LangGraph state machine: nodes, safety checks, the revise loop |
 | `src/knowledge.py` | Course-difficulty & heat-tax figures from my analyses |
 | `src/util.py` | Robust JSON extraction from LLM output |
+| `src/eval.py` | Safety evaluation — does the self-critique loop make plans safer? |
 | `src/llm.py` | LLM wrapper — Claude CLI (default) or Anthropic API |
 | `src/cli.py` | Collect inputs, run the agent, print the plan + agent trace |
+| `app.py` | **Streamlit demo UI** — watch the agent stream through its nodes |
 
 ## Notes
 The output includes an **agent trace** so you can see it work — each node's action

@@ -1,4 +1,12 @@
 # LangGraph agent runtime.
 langgraph>=1.0
+
+# Streamlit demo UI (streamlit run app.py) + plan table/charts.
+streamlit>=1.30
+pandas>=2.0
+
+# Safety-evaluation figure (python -m src.eval).
+matplotlib>=3.7
+
 # Optional: only needed if you run the API backend instead of the Claude CLI.
 anthropic>=0.40
