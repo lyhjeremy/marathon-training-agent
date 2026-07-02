@@ -9,8 +9,14 @@ Run with no args for an interactive prompt.
 from __future__ import annotations
 
 import argparse
+import sys
 
 from .graph import build_agent
+
+# Windows consoles/pipes default to cp1252, which can't encode the → and emoji in
+# our output; force UTF-8 so the CLI prints cleanly on every platform.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
 def _collect_interactive() -> dict:
