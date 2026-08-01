@@ -11,6 +11,7 @@ it assesses whether the goal is realistic, drafts a week-by-week build, tailors 
 to your specific race (course + weather), and self-corrects.
 
 > 🌐 **Overview:** https://lyhjeremy.github.io/marathon-training-agent/
+> 📖 **Product overview:** https://lyhjeremy.github.io/marathon-training-agent/overview/
 
 ## Why an agent (not just a prompt)?
 Ask an LLM for a training plan and you get a plausible-looking table that might
