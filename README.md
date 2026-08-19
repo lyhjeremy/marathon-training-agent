@@ -4,20 +4,22 @@
 
 # Marathon Training Plan Agent
 
+Design and copy follow [these standards](https://github.com/lyhjeremy/lyhjeremy/blob/main/DESIGN_STANDARDS.md).
+
 A **LangGraph agent** that writes you a personalized, periodized marathon training
-plan — and then *critiques and revises its own work* until the plan passes a set
+plan, and then *critiques and revises its own work* until the plan passes a set
 of safety checks. Tell it your race, goal time, current fitness and weeks to go;
 it assesses whether the goal is realistic, drafts a week-by-week build, tailors it
 to your specific race (course + weather), and self-corrects.
 
-> 🌐 **Overview:** https://lyhjeremy.github.io/marathon-training-agent/
-> 📖 **Product overview:** https://lyhjeremy.github.io/marathon-training-agent/overview/
+> **Overview:** https://lyhjeremy.github.io/marathon-training-agent/
+> **Product overview:** https://lyhjeremy.github.io/marathon-training-agent/overview/
 
 ## Why an agent (not just a prompt)?
 Ask an LLM for a training plan and you get a plausible-looking table that might
 ramp mileage too fast, forget a taper, or prescribe a 26-mile long run. This
 project wraps the LLM in a **graph with a feedback loop**: a `critique` node runs
-real, deterministic safety checks, and a `revise` node fixes what it flags — then
+real, deterministic safety checks, and a `revise` node fixes what it flags, then
 re-checks. The plan you get has survived review, not just generation.
 
 ## The graph
@@ -30,7 +32,7 @@ re-checks. The plan you get has survived review, not just generation.
 |---|---|
 | **assess** | Judges whether the goal time is realistic; sets a target + peak mileage |
 | **plan** | Drafts a periodized week-by-week plan (Base → Build → Peak → Taper) |
-| **adjust** | Tailors it to the race using my own analyses — course difficulty & the heat tax |
+| **adjust** | Tailors it to the race using my own analyses, course difficulty & the heat tax |
 | **critique** | Deterministic safety checks (ramp rate, taper, long-run caps) **+** an LLM review |
 | **revise** | Fixes flagged issues and loops back to `critique` (up to a revision budget) |
 
@@ -63,7 +65,7 @@ table, a weekly-mileage chart, the safety verdict, and the full agent trace.
 ## Measuring the safety loop
 Does the critique/revise loop actually make plans safer? `src/eval.py` quantifies
 it: it runs the agent on a panel of synthetic runners and compares each plan's
-safety — scored by the agent's own deterministic `_safety_checks` — **before** the
+safety, scored by the agent's own deterministic `_safety_checks`, **before** the
 loop (the raw first draft) against **after** it, reporting the pass-rate lift and
 the drop in mean safety issues per plan.
 ```bash
@@ -76,13 +78,13 @@ python -m src.eval        # writes eval/results.csv + eval/safety_gain.png
 | `src/graph.py` | The LangGraph state machine: nodes, safety checks, the revise loop |
 | `src/knowledge.py` | Course-difficulty & heat-tax figures from my analyses |
 | `src/util.py` | Robust JSON extraction from LLM output |
-| `src/eval.py` | Safety evaluation — does the self-critique loop make plans safer? |
-| `src/llm.py` | LLM wrapper — Claude CLI (default) or Anthropic API |
+| `src/eval.py` | Safety evaluation. Does the self-critique loop make plans safer? |
+| `src/llm.py` | LLM wrapper, Claude CLI (default) or Anthropic API |
 | `src/cli.py` | Collect inputs, run the agent, print the plan + agent trace |
-| `app.py` | **Streamlit demo UI** — watch the agent stream through its nodes |
+| `app.py` | **Streamlit demo UI.** Watch the agent stream through its nodes |
 
 ## Notes
-The output includes an **agent trace** so you can see it work — each node's action
+The output includes an **agent trace** so you can see it work. Each node's action
 and how many issues each critique caught. Educational tool, not medical or
 professional coaching advice.
 
