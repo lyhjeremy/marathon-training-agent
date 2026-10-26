@@ -1,47 +1,43 @@
-<p align="center">
-  <img src="assets/banner.png" alt="Marathon Training Plan Agent" width="100%">
-</p>
+# Marathon training agent
 
-# Marathon Training Plan Agent
+A LangGraph agent that writes a personalized marathon training plan, then critiques it with deterministic safety checks plus an LLM review and revises it until it passes.
+
+[Live site](https://lyhjeremy.github.io/marathon-training-agent/) · [Write-up](https://lyhjeremy.github.io/marathon-training-agent/overview/) · [Long-form notes](writeup.md) · [Recorded run](examples/sample_run.md)
 
 Design and copy follow [these standards](https://github.com/lyhjeremy/lyhjeremy/blob/main/DESIGN_STANDARDS.md).
 
-A **LangGraph agent** that writes you a personalized, periodized marathon training
-plan, and then *critiques and revises its own work* until the plan passes a set
-of safety checks. Tell it your race, goal time, current fitness and weeks to go;
-it assesses whether the goal is realistic, drafts a week-by-week build, tailors it
-to your specific race (course + weather), and self-corrects.
+## Results
 
-> **Overview:** https://lyhjeremy.github.io/marathon-training-agent/
-> **Product overview:** https://lyhjeremy.github.io/marathon-training-agent/overview/
+One recorded run, from [`examples/sample_run.md`](examples/sample_run.md): Boston, goal 3:05, 16 weeks, 22 miles a week, longest recent run 9 miles, 74°F forecast.
 
-## Why an agent (not just a prompt)?
-Ask an LLM for a training plan and you get a plausible-looking table that might
-ramp mileage too fast, forget a taper, or prescribe a 26-mile long run. This
-project wraps the LLM in a **graph with a feedback loop**: a `critique` node runs
-real, deterministic safety checks, and a `revise` node fixes what it flags, then
-re-checks. The plan you get has survived review, not just generation.
+- `assess` judged the goal unrealistic and recommended 3:20, peaking around 45 miles a week.
+- `critique` found 5 issues in the first draft, including a week-5 mileage jump above 20% (23 to 28 miles). One `revise` pass fixed them and the second critique came back clean.
+- The final 16-week plan includes downhill quad work from week 3, Newton-style hill repeats, a 19-mile Boston simulation in week 12, and a taper to 22 miles in race week.
 
-## The graph
+`src/eval.py` is written to measure the loop across a panel of synthetic runners (safety issues before against after). Its results have not been captured yet, so there is no aggregate number.
 
-<p align="center">
-  <img src="assets/architecture.png" alt="Marathon Training Plan Agent architecture" width="760">
-</p>
+## How it works
+
+The agent is a LangGraph `StateGraph` over a typed state (`profile`, `assessment`, `weeks`, `critique`, `revisions`, `log`).
 
 | Node | What it does |
 |---|---|
-| **assess** | Judges whether the goal time is realistic; sets a target + peak mileage |
-| **plan** | Drafts a periodized week-by-week plan (Base → Build → Peak → Taper) |
-| **adjust** | Tailors it to the race using my own analyses, course difficulty & the heat tax |
-| **critique** | Deterministic safety checks (ramp rate, taper, long-run caps) **+** an LLM review |
-| **revise** | Fixes flagged issues and loops back to `critique` (up to a revision budget) |
+| `assess` | Judges whether the goal is realistic; returns a recommended goal time and peak weekly mileage as JSON |
+| `plan` | Drafts a periodized plan (Base, Build, Peak, Taper) in a fixed JSON week schema |
+| `adjust` | Tailors workouts to the race with figures from `src/knowledge.py`: course penalty against Berlin (Boston +101 s, NYC +78 s), about 1 minute per °F above 55°F, the 30 km wall |
+| `critique` | Runs `_safety_checks` in Python, merges in issues from an LLM review, passes only with zero issues |
+| `revise` | Fixes the flagged issues and returns the plan to `critique` |
 
-The `adjust` step draws on findings from my running projects: [course
-difficulty](https://github.com/lyhjeremy/marathon-strategy-rag) (Boston's Newton
-hills, etc.) and [the heat tax](https://github.com/lyhjeremy/marathon-strategy-rag)
-(~1 min/°F), so a hot Boston plan looks different from a cool Berlin one.
+`_safety_checks` flags four things: a week-over-week mileage increase above 20%, a race week above 75% of peak mileage, a long run over 22.5 miles, and a long run longer than its week's total. A conditional edge sends the plan to `revise` while issues remain and the revision budget (2 by default, `--max-revisions`) isn't spent. A full run makes 4 to 8 LLM calls.
 
-## Quick start
+The course and heat figures come from my own analyses: [Majors course difficulty](https://lyhjeremy.github.io/marathon-majors-course-difficulty/), [the heat tax](https://lyhjeremy.github.io/marathon-heat-tax/), [pacing decay](https://lyhjeremy.github.io/marathon-pacing-decay/) and [negative splits](https://lyhjeremy.github.io/marathon-negative-split-myth/).
+
+## Stack
+
+Python, LangGraph, Claude (Claude CLI by default, Anthropic API with `ANTHROPIC_API_KEY`), Streamlit, pandas, matplotlib.
+
+## How to run
+
 ```bash
 pip install -r requirements.txt
 
@@ -49,44 +45,34 @@ python -m src.cli --race boston --goal 3:05:00 --weeks 16 \
     --current-mpw 22 --longest 9 --days 5 --temp 74
 
 python -m src.cli            # interactive prompts
-```
-Generation runs on the **Claude CLI** by default (your Claude subscription, no
-per-token cost); set `ANTHROPIC_API_KEY` to use the API. Set `CLAUDE_MODEL` (e.g.
-`haiku`) to trade a little quality for speed across the agent's several LLM calls.
-
-## Try it in the browser
-```bash
-streamlit run app.py
-```
-A Streamlit UI wraps the agent: set your race in the sidebar and **watch it stream
-through `assess → plan → adjust → critique → revise` live**, then read the plan
-table, a weekly-mileage chart, the safety verdict, and the full agent trace.
-
-## Measuring the safety loop
-Does the critique/revise loop actually make plans safer? `src/eval.py` quantifies
-it: it runs the agent on a panel of synthetic runners and compares each plan's
-safety, scored by the agent's own deterministic `_safety_checks`, **before** the
-loop (the raw first draft) against **after** it, reporting the pass-rate lift and
-the drop in mean safety issues per plan.
-```bash
-python -m src.eval        # writes eval/results.csv + eval/safety_gain.png
+streamlit run app.py         # browser UI that streams each node
+python -m src.eval           # safety before/after the loop -> eval/results.csv, eval/safety_gain.png
 ```
 
-## Files
+Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across the agent's calls.
+
+## Repo layout
+
 | Path | What it is |
 |---|---|
 | `src/graph.py` | The LangGraph state machine: nodes, safety checks, the revise loop |
-| `src/knowledge.py` | Course-difficulty & heat-tax figures from my analyses |
-| `src/util.py` | Robust JSON extraction from LLM output |
-| `src/eval.py` | Safety evaluation. Does the self-critique loop make plans safer? |
-| `src/llm.py` | LLM wrapper, Claude CLI (default) or Anthropic API |
-| `src/cli.py` | Collect inputs, run the agent, print the plan + agent trace |
-| `app.py` | **Streamlit demo UI.** Watch the agent stream through its nodes |
+| `src/knowledge.py` | Course-difficulty, heat-tax and pacing figures from my analyses |
+| `src/util.py` | JSON extraction from LLM output |
+| `src/eval.py` | Safety evaluation of the critique/revise loop |
+| `src/llm.py` | LLM wrapper: Claude CLI (default) or Anthropic API |
+| `src/cli.py` | Collect inputs, run the agent, print the plan and agent trace |
+| `app.py` | Streamlit UI |
+| `examples/sample_run.md` | The recorded run quoted above |
+| `index.html`, `overview/`, `privacy/`, `terms/` | The site |
 
-## Notes
-The output includes an **agent trace** so you can see it work. Each node's action
-and how many issues each critique caught. Educational tool, not medical or
-professional coaching advice.
+## Limitations
+
+- No aggregate evaluation yet; the evidence is one recorded run.
+- Only four rules are deterministic. Intensity balance, monotony and too many hard days depend on the LLM reviewer.
+- In the recorded run the final plan peaked at 57 miles, above the 45 the assessment suggested; no check compares the two.
+- The rules are general defaults, not individualized physiology, and the plan doesn't adapt to logged training.
+- Educational tool, not medical or professional coaching advice.
 
 ## License
+
 [MIT](LICENSE) © 2026 Jeremy Lee

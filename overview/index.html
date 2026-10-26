@@ -3,55 +3,57 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Marathon Training Plan Agent: it tells you your goal is unrealistic</title>
-<meta name="description" content="A LangGraph agent that drafts a periodized marathon plan, then critiques and revises its own work until it passes deterministic safety checks. In the recorded run it rejected a 3:05 goal and recommended 3:20." />
-<meta name="theme-color" content="#EDEDE7" />
-<meta property="og:title" content="Marathon Training Plan Agent" />
-<meta property="og:description" content="An agent with a critique node that runs real safety checks, and a revise node that fixes what it flags." />
+<title>Marathon training agent: a LangGraph planner with a code-based safety critic</title>
+<meta name="description" content="A five-node LangGraph agent that assesses a goal, drafts a periodized marathon plan, tailors it to the course and heat, then critiques it with deterministic Python checks plus an LLM review and revises until clean." />
+<meta name="theme-color" content="#ECEBE6" />
+<meta property="og:title" content="Marathon training agent" />
+<meta property="og:description" content="Asked for a 3:05 Boston off 22 miles a week, it recommended 3:20 and caught five issues in its own first draft." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://lyhjeremy.github.io/marathon-training-agent/overview/" />
+<link href="" rel="stylesheet" />
 <style>
-@font-face{font-family:"Source Serif 4";src:url("../fonts/SourceSerif4-400.woff2")format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Source Serif 4";src:url("../fonts/SourceSerif4-600.woff2")format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"IBM Plex Sans";src:url("../fonts/IBMPlexSans-400.woff2")format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"IBM Plex Sans";src:url("../fonts/IBMPlexSans-600.woff2")format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"IBM Plex Mono";src:url("../fonts/IBMPlexMono-400.woff2")format("woff2");font-weight:400;font-display:swap}
-
   :root {
-    --paper: #EDEDE7;
-    --card: #F5F5F0;
-    --plate: #F5F5F0;
-    --ink: #1C1E1B;
-    --ink2: #3d3d55;
-    --muted: #52564E;
-    --rule: #C6C7BF;
-    --accent: #2C5852;
-    --accent2: #7A5A1E;
-    --link: #8C3A1E;
-    --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
-    --sans: 'Source Sans 3', -apple-system, system-ui, sans-serif;
-    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
-    --shadow: 0 1px 2px rgba(26,26,46,.05), 0 10px 34px rgba(26,26,46,.07);
+    --paper: #ECEBE6;
+    --card: #F4F3EF;
+    --plate: #F4F3EF;
+    --ink: #1A1C1E;
+    --ink2: #4E535A;
+    --muted: #4E535A;
+    --rule: #C5C6C4;
+    --accent: #94462A;
+    --accent2: #1F4A72;
+    --link: #94462A;
+    --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+    --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --edge: #73777C;
     --spine:  92px;
     --col:    min(100% - 2.6rem, 62rem);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper: #14141f;
-      --card: #1c1c2a;
-      --plate: #f7f4ec;
-      --ink: #F2EFE6;
-      --ink2: #C9C4B6;
-      --muted: #918B7D;
-      --rule: #33313f;
-      --accent: #34D399;
-      --accent2: #E3BC5E;
-      --link: #22D3EE;
-      --shadow: 0 1px 2px rgba(0,0,0,.32), 0 10px 34px rgba(0,0,0,.4);
+      --paper: #17191C;
+      --card: #202327;
+      --plate: #202327;
+      --ink: #E4E5E3;
+      --ink2: #A3A8AE;
+      --muted: #A3A8AE;
+      --rule: #383C41;
+      --accent: #D9906C;
+      --accent2: #7FA8D3;
+      --link: #D9906C;
+      --edge: #6B7076;
     }
   }
 
-  * { box-sizing: border-box; }
+  @font-face{font-family:"Source Serif 4";src:url("../fonts/SourceSerif4-400.woff2")format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Source Serif 4";src:url("../fonts/SourceSerif4-600.woff2")format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"IBM Plex Sans";src:url("../fonts/IBMPlexSans-400.woff2")format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"IBM Plex Sans";src:url("../fonts/IBMPlexSans-600.woff2")format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"IBM Plex Mono";src:url("../fonts/IBMPlexMono-400.woff2")format("woff2");font-weight:400;font-display:swap}
+
+  * { box-sizing: border-box; border-radius: 0; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; background: var(--paper); color: var(--ink);
@@ -210,59 +212,86 @@
     html { scroll-behavior: auto; }
     .btn { }
   }
+  @font-face{font-family:"Barlow Condensed";src:url("../fonts/BarlowCondensed-600.woff2")format("woff2");font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:"Barlow Condensed";src:url("../fonts/BarlowCondensed-700.woff2")format("woff2");font-weight:700;font-style:normal;font-display:swap}
 
+  .btn:hover { transform: none; background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .pull { border: 1px solid var(--edge); border-left: 1px solid var(--edge); background: transparent; }
+  .term { background: var(--card); color: var(--ink); border: 1px solid var(--rule); }
+  .term .c { color: var(--muted); } .term .g { color: var(--accent2); } .term .y { color: var(--accent); }
+  .logo, .hero h1, h2, .claim .n, .bignum { font-family: var(--display); }
+
+  /* Road: a race-day bib and the painted course line. Condensed caps, split-table numbers. */
+  body { border-top: 6px solid var(--accent2); }
+  .hero h1 { font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; line-height: .95;
+             font-size: clamp(46px, 8.4vw, 104px); max-width: 15ch; }
+  h2 { font-weight: 600; letter-spacing: -.005em; font-size: clamp(30px, 4.2vw, 44px); line-height: 1.02; }
+  .kicker { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .claim .n { font-weight: 700; font-size: 56px; letter-spacing: 0; }
+  .bignum { font-weight: 700; letter-spacing: -.01em; }
+  .route::before { width: 0; border-left: 3px dashed var(--accent2); background: none; }
+  .stop::before { border-radius: 0; width: 18px; height: 18px; left: calc(var(--spine) / 2 - 7.5px);
+                  border: 3px solid var(--accent2); }
+  .stop .eyebrow { color: var(--accent2); }
+
+
+  .term pre { white-space: pre-wrap; }
+  .log { min-width: 760px; font-size: 14.5px; }
+  .log th, .log td { padding: 7px 10px; vertical-align: top; }
+  .log .wk { font: 700 19px/1.1 var(--display); width: 38px; color: var(--ink); }
+  .log .mi { width: 150px; white-space: nowrap; }
+  .log .mi .bar { display: inline-block; vertical-align: middle; height: 9px; background: var(--accent2); max-width: 96px; margin-right: 8px; }
+  .log .mi b { font: 700 19px/1 var(--display); color: var(--ink); vertical-align: middle; }
+  .log td.num, .log th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .log .focus { color: var(--ink2); font-size: 13.5px; line-height: 1.45; }
+  .log tr.ph-taper .mi .bar { background: var(--accent); }
+  .log tr.ph-base td:nth-child(2), .log tr.ph-build td:nth-child(2), .log tr.ph-peak td:nth-child(2), .log tr.ph-taper td:nth-child(2) { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+  .splits-note { font-family: var(--sans); font-size: 14.5px; color: var(--muted); margin: 10px 0 0; max-width: 62ch; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="masthead">
-    <div class="logo"><span class="dot" aria-hidden="true"></span>Marathon Training Plan Agent</div>
-    <div class="tagline">drafts, critiques itself, then revises</div>
+    <div class="logo"><span class="dot" aria-hidden="true"></span>Marathon training agent</div>
+    <div class="tagline">LangGraph, Claude, deterministic safety checks</div>
   </header>
 
   <section class="hero">
-    <p class="kicker">Ask an LLM for a training plan and it will happily ramp you into an injury.</p>
-    <h1>This one tells you the goal is wrong before it writes anything.</h1>
+    <p class="kicker">An agent loop with a code-based critic</p>
+    <h1>A training-plan agent that checks its own plan before you see it</h1>
 
     <p class="hero-sub">
-      A <strong>LangGraph agent</strong> that assesses whether your goal time is
-      realistic, drafts a periodized week-by-week build, tailors it to your actual
-      race using course and weather findings, and then
-      <strong>critiques and revises its own work</strong> until it passes a set of
-      deterministic safety checks. The plan you get has survived review rather than
-      just generation.
+      A LangGraph state machine with five nodes. It judges whether your goal time
+      is realistic, drafts a periodized week-by-week plan, tailors it to your race
+      using course-difficulty and heat figures from my own analyses, then runs
+      deterministic safety checks in Python alongside an LLM review. When the
+      checks fail, a revise node fixes the plan and loops back, up to a revision
+      budget. In the recorded run below, asked for a 3:05 Boston off 22 miles a
+      week, it recommended 3:20, and its critic caught five issues in the first
+      draft.
     </p>
 
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/lyhjeremy/marathon-training-agent/blob/main/writeup.md">Read the writeup</a>
-      <a class="textlink" href="https://github.com/lyhjeremy/marathon-training-agent">or the code</a>
+      <a class="btn btn-primary" href="https://github.com/lyhjeremy/marathon-training-agent">Code on GitHub</a>
+      <a class="textlink" href="https://github.com/lyhjeremy/marathon-training-agent/blob/main/examples/sample_run.md">The full recorded run</a>
     </div>
-
-    <figure style="margin-top:38px">
-      <img class="shot" src="../assets/banner.png"
-        alt="Marathon Training Plan Agent banner artwork." />
-    </figure>
 
     <div class="claims">
       <div class="claim">
         <div class="n">5 nodes</div>
-        <p>assess → plan → adjust → critique → revise, with a real loop back from
-           revise into critique.</p>
+        <p><code>assess</code>, <code>plan</code>, <code>adjust</code>, <code>critique</code>, <code>revise</code>, with a conditional edge from critique back through revise.</p>
       </div>
       <div class="claim">
-        <div class="n">3:20</div>
-        <p>what it recommended when asked for 3:05 off 22 miles a week. It argues
-           the case rather than just complying.</p>
+        <div class="n">4 checks</div>
+        <p>in plain Python: week-over-week ramp above 20%, race week above 75% of peak, long run over 22.5 miles, long run longer than the week.</p>
+      </div>
+      <div class="claim">
+        <div class="n">3:05 to 3:20</div>
+        <p>The goal it was given and the target it recommended for a 16-week build from 22 miles a week.</p>
       </div>
       <div class="claim">
         <div class="n">5 issues</div>
-        <p>caught by its own critique node on the first draft of that plan, then
-           fixed and re-checked clean.</p>
-      </div>
-      <div class="claim">
-        <div class="n">Every run</div>
-        <p>prints a full agent trace, so you can see which node did what and how
-           many issues each pass caught.</p>
+        <p>caught by the critique node in that run's first draft, fixed in one revision, then a clean re-check.</p>
       </div>
     </div>
   </section>
@@ -272,173 +301,135 @@
 <div class="route">
 
   <section class="stop">
-    <p class="eyebrow">Start · why an agent</p>
-    <h2>A prompt cannot check its own arithmetic</h2>
+    <p class="eyebrow">Why a graph</p>
+    <h2>A single prompt can't check its own arithmetic</h2>
     <p>
-      Ask a language model for a sixteen-week marathon plan and you get something
-      that looks right. It may also ramp mileage 30% in a week, forget the taper,
-      or prescribe a 26-mile long run. All errors that are obvious to a coach and
-      invisible inside fluent prose.
+      Ask a language model for a sixteen-week marathon plan and the result looks
+      right. It may also raise mileage 30% in a week, skip the taper, or prescribe
+      a 26-mile long run. Those errors are obvious to a coach and easy to miss in
+      fluent prose.
     </p>
     <p>
-      Wrapping the model in a graph changes what is possible. The
-      <code>critique</code> node runs <strong>deterministic</strong> checks in
-      plain code, ramp rate, taper presence, long-run caps, alongside an LLM
-      review, and the <code>revise</code> node fixes what it flags and loops back
-      for another pass, up to a revision budget.
+      Wrapping the model in a graph adds a place to catch them. The
+      <code>critique</code> node runs <code>_safety_checks</code>, which reads the
+      plan's numbers and returns a list of problems, and merges that with issues an
+      LLM reviewer raises. <code>_route</code> sends the plan to
+      <code>revise</code> when there are issues and revisions remain (two by
+      default), and ends the run otherwise.
     </p>
-    <div class="grid">
-      <div class="cell">
-        <h3>assess</h3>
-        <p>Judges whether the goal time is realistic given current fitness, then
-           sets a target and a peak mileage.</p>
-      </div>
-      <div class="cell">
-        <h3>plan</h3>
-        <p>Drafts the periodized build: Base → Build → Peak → Taper.</p>
-      </div>
-      <div class="cell">
-        <h3>adjust</h3>
-        <p>Tailors to the specific race using my own course-difficulty and heat-tax
-           findings.</p>
-      </div>
-      <div class="cell">
-        <h3>critique</h3>
-        <p>Deterministic safety checks <strong>plus</strong> an LLM review. The
-           deterministic half is what makes it more than a second opinion.</p>
-      </div>
-      <div class="cell">
-        <h3>revise</h3>
-        <p>Fixes flagged issues and loops back into critique until clean or the
-           budget runs out.</p>
-      </div>
-      <div class="cell">
-        <h3>The trace</h3>
-        <p>Every run prints what each node did, so the self-correction is visible
-           rather than claimed.</p>
-      </div>
-    </div>
-    <figure>
-      <div class="plate">
-        <img src="../assets/architecture.png" loading="lazy"
-          alt="LangGraph state machine diagram for the training plan agent, showing assess, plan, adjust, critique and revise nodes with a loop from revise back into critique." />
-      </div>
-      <figcaption>The graph. The loop from revise back to critique is the point of the whole thing.</figcaption>
-    </figure>
+    <dl class="specs">
+      <div class="spec"><dt>assess</dt><dd>Judges whether the goal is realistic for the runner's mileage, longest run and weeks to go; returns a recommended goal time and a peak weekly mileage as JSON.</dd></div>
+      <div class="spec"><dt>plan</dt><dd>Drafts the Base, Build, Peak and Taper weeks in a fixed JSON schema: miles, long run, quality sessions, focus.</dd></div>
+      <div class="spec"><dt>adjust</dt><dd>Rewrites workout emphasis for the race using <code>src/knowledge.py</code>: a course penalty against Berlin (Boston +101 s, New York +78 s), about 1 minute per &deg;F above 55&deg;F, and the 30 km wall.</dd></div>
+      <div class="spec"><dt>critique</dt><dd>Deterministic checks plus an LLM review; the plan passes only with zero issues.</dd></div>
+      <div class="spec"><dt>revise</dt><dd>Fixes the listed issues and returns the full plan to <code>critique</code>.</dd></div>
+    </dl>
   </section>
 
   <section class="stop stop--key">
-    <p class="eyebrow">↓ a real run</p>
-    <h2>Asked for 3:05, it pushed back</h2>
+    <p class="eyebrow">A recorded run</p>
+    <h2>Asked for 3:05, it recommended 3:20</h2>
     <p>
-      This is a recorded run, verbatim, from
-      <code>examples/sample_run.md</code>: a Boston goal of 3:05 in sixteen weeks
-      off 22 miles a week and a nine-mile longest run, on a 74°F race day.
+      From <code>examples/sample_run.md</code>: Boston, goal 3:05, 16 weeks,
+      22 miles a week now, longest recent run 9 miles, 5 days a week, 74&deg;F
+      forecast. The assessment it wrote:
     </p>
-    <div class="term">
-<pre>$ python -m src.cli --race boston --goal 3:05:00 --weeks 16 \
-      --current-mpw 22 --longest 9 --days 5 --temp 74
-
-<span class="c">================================================================</span>
-ASSESSMENT
-<span class="c">================================================================</span>
-Goal looks ambitious <span class="y"></span>.  Target: <span class="g">3:20:00</span>  (peak ~45 mpw)
-
-A 3:05 marathon (~7:03/mi) typically requires a 40-55 mi/week base with
+    <div class="term"><pre>A 3:05 marathon (~7:03/mi) typically requires a 40-55 mi/week base with
 long runs already near 16-18 miles; starting from 22 mi/week and a 9-mile
 longest run leaves too little runway in 16 weeks to safely build both the
 mileage and the speed. Targeting 3:20 is an aggressive-but-achievable
-stretch that lets you peak around 45 mi/week without high injury risk.</pre>
-    </div>
-    <p style="margin-top:22px">
-      It does not simply refuse, and it does not simply comply. It names the
-      mileage base a 3:05 normally requires, points at the two things that have to
-      grow at once, and proposes a target that still stretches.
-    </p>
+stretch that lets you peak around 45 mi/week without high injury risk.</pre></div>
+    <p style="margin-top:22px">The agent trace from the same run:</p>
+    <div class="term"><pre>  • assess → feasible=False, target 3:20:00, peak 45 mpw
+  • plan → drafted 16 weeks
+  • adjust → tailored plan to course &amp; weather
+  • critique → 5 issue(s): week 5 jumps mileage &gt;20% (23→28)
+  • revise #1 → addressed 5 issue(s)
+  • critique → clean</pre></div>
+    <p class="splits-note">Output of <code>src/cli.py</code>, quoted verbatim apart from line breaks and two status symbols left out.</p>
   </section>
 
   <section class="stop">
-    <p class="eyebrow">↓ the self-correction</p>
-    <h2>Five issues, caught by the agent on itself</h2>
+    <p class="eyebrow">The training log</p>
+    <h2>The plan it produced, week by week</h2>
     <p>
-      The trace from that same run. The critique node found five problems in the
-      first draft, including a week-5 mileage jump above 20%, and the revise pass
-      fixed them, after which a second critique came back clean.
+      The final plan from that run, after one revision. It peaks at 57 miles in
+      week 13, above the 45 the assessment suggested, and tapers to 22 in race
+      week. The Boston-specific work comes from <code>adjust</code>: downhill quad
+      conditioning from week 3, Newton-style hill repeats in week 6, and a 19-mile
+      race simulation in week 12 with the hills placed at miles 15 to 19.
     </p>
-    <div class="term">
-<pre><span class="c">================================================================</span>
-AGENT TRACE
-<span class="c">================================================================</span>
-  • assess     → feasible=False, target 3:20:00, peak 45 mpw
-  • plan       → drafted 16 weeks
-  • adjust     → tailored plan to course &amp; weather
-  • critique   → <span class="y">5 issue(s)</span>: week 5 jumps mileage &gt;20% (23→28)
-  • revise #1  → addressed 5 issue(s)
-  • critique   → <span class="g">clean</span>
-  <span class="g">final plan passed all safety checks</span></pre>
+    <div class="tablewrap" role="region" aria-label="Sixteen-week plan from the recorded run" tabindex="0">
+      <table class="log">
+        <thead><tr><th>Wk</th><th>Phase</th><th>Miles</th><th class="num">Long</th><th>Focus and key sessions (verbatim)</th></tr></thead>
+        <tbody>
+          <tr class="ph-base"><td class="wk">1</td><td>Base</td><td class="mi"><span class="bar" style="width:47px"></span><b>28</b></td><td class="num">10</td><td class="focus">Establish aerobic base and early heat/hydration habits; keep non-long days truly easy, 4x strides on easy day; easy aerobic run + hydration routine practice</td></tr>
+          <tr class="ph-base"><td class="wk">2</td><td>Base</td><td class="mi"><span class="bar" style="width:51px"></span><b>30</b></td><td class="num">12</td><td class="focus">Build easy volume; begin heat acclimation on warmer runs, 6x100m strides; 5 mi steady on rolling terrain</td></tr>
+          <tr class="ph-base"><td class="wk">3</td><td>Base</td><td class="mi"><span class="bar" style="width:54px"></span><b>32</b></td><td class="num">13</td><td class="focus">Introduce MP feel and even-effort pacing; prime quads for downhills: 4x1 mi @ marathon pace (~7:38, controlled start); gentle downhill strides</td></tr>
+          <tr class="ph-base"><td class="wk">4</td><td>Base</td><td class="mi"><span class="bar" style="width:49px"></span><b>29</b></td><td class="num">11</td><td class="focus">Step-back recovery week; light quad conditioning, easy run + strides; short downhill drills</td></tr>
+          <tr class="ph-build"><td class="wk">5</td><td>Build</td><td class="mi"><span class="bar" style="width:57px"></span><b>34</b></td><td class="num">14</td><td class="focus">Add threshold work; drill controlled, even pacing with easy days between hard efforts, 5x1000m @ 10K pace; 6 mi @ MP with even splits</td></tr>
+          <tr class="ph-build"><td class="wk">6</td><td>Build</td><td class="mi"><span class="bar" style="width:64px"></span><b>38</b></td><td class="num">15</td><td class="focus">Boston-specific hill strength and quad durability on descents, 4 mi tempo; rolling Newton-style hill repeats (up + down)</td></tr>
+          <tr class="ph-build"><td class="wk">7</td><td>Build</td><td class="mi"><span class="bar" style="width:59px"></span><b>35</b></td><td class="num">13</td><td class="focus">Step-back recovery week; reinforce fueling/hydration on-the-move, 3 mi tempo; downhill strides + hydration practice</td></tr>
+          <tr class="ph-build"><td class="wk">8</td><td>Build</td><td class="mi"><span class="bar" style="width:69px"></span><b>41</b></td><td class="num">16</td><td class="focus">Sharpen speed; practice MP under fatigue with an easy day flanking the long run, 6x800m @ 5K pace; 16 mi long run w/ 4 @ MP in final miles</td></tr>
+          <tr class="ph-build"><td class="wk">9</td><td>Build</td><td class="mi"><span class="bar" style="width:76px"></span><b>45</b></td><td class="num">17</td><td class="focus">Build downhill/quad resilience; carry fuel + fluids on long run, 5 mi tempo; sustained downhill running practice for Newton descents</td></tr>
+          <tr class="ph-peak"><td class="wk">10</td><td>Peak</td><td class="mi"><span class="bar" style="width:69px"></span><b>41</b></td><td class="num">15</td><td class="focus">Step-back before peak; calibrate hot-day pace band vs. Goal effort, 4 mi tempo; hot-day pace-band run (rehearse ~74F effort)</td></tr>
+          <tr class="ph-peak"><td class="wk">11</td><td>Peak</td><td class="mi"><span class="bar" style="width:81px"></span><b>48</b></td><td class="num">18</td><td class="focus">Peak endurance; only one hard quality day plus the long run, with genuine easy running between, 2x2 mi @ threshold (easy days on either side); 18 mi w/ 5 @ MP in miles 12-17</td></tr>
+          <tr class="ph-peak"><td class="wk">12</td><td>Peak</td><td class="mi"><span class="bar" style="width:89px"></span><b>53</b></td><td class="num">19</td><td class="focus">Simulate Boston profile, fueling, and heat; keep midweek relaxed so the long run stays the week&#x27;s hardest effort: 5 mi steady (moderate, not hard); 19 mi race sim: downhill start, Newton hills at ~15-19 mi</td></tr>
+          <tr class="ph-peak"><td class="wk">13</td><td>Peak</td><td class="mi"><span class="bar" style="width:96px"></span><b>57</b></td><td class="num">20</td><td class="focus">Peak dress rehearsal at higher aerobic volume; long run ~35% of week, surrounded by easy days, 4 mi tempo (buffered by easy days); 20 mi w/ 6 @ MP over Newton sim + full race-day fueling</td></tr>
+          <tr class="ph-taper"><td class="wk">14</td><td>Taper</td><td class="mi"><span class="bar" style="width:74px"></span><b>44</b></td><td class="num">16</td><td class="focus">Begin taper; hold sharpness and quad readiness, keep heat exposure, 4 mi @ MP; short downhill hill strides</td></tr>
+          <tr class="ph-taper"><td class="wk">15</td><td>Taper</td><td class="mi"><span class="bar" style="width:56px"></span><b>33</b></td><td class="num">12</td><td class="focus">Reduce volume, stay fresh; lock in controlled-start pacing plan, 3 mi @ MP (rehearse conservative early pace); 6x strides + light heat exposure</td></tr>
+          <tr class="ph-taper"><td class="wk">16</td><td>Taper</td><td class="mi"><span class="bar" style="width:37px"></span><b>22</b></td><td class="num">9</td><td class="focus">Race week: rest, fuel, hydrate; even-effort start, respect Newton hills and heat, adjust 3:20 goal to hot-day band, 2 mi @ MP + strides; shakeout jog + hydration/fuel check</td></tr>
+        </tbody>
+      </table>
     </div>
-    <p style="margin-top:22px">
-      The resulting plan is Boston-specific in ways a generic template is not: it
-      programs <strong>downhill quad conditioning</strong> from week 3 for the
-      course's punishing early descent, <strong>Newton-style hill repeats</strong>
-      in the build, a week-12 <strong>race simulation with the hills at 15–19
-      miles</strong>, and heat acclimation throughout for the 74°F forecast.
-    </p>
-    <div class="pull">
-      <p>Wk 12 · Peak · 53 mi · long 19: "19 mi race sim: downhill start, Newton
-         hills at ~15-19 mi"</p>
-      <span class="who">One row of the generated plan, verbatim</span>
-    </div>
+    <p class="splits-note">Bars scale to the 57-mile peak.</p>
   </section>
 
   <section class="stop">
-    <p class="eyebrow">↓ watching it work</p>
-    <h2>A Streamlit UI that streams the nodes</h2>
+    <p class="eyebrow">Interfaces</p>
+    <h2>CLI and a Streamlit app</h2>
     <p>
-      <code>streamlit run app.py</code> wraps the agent so you can set your race in
-      the sidebar and watch it move through
-      <code>assess → plan → adjust → critique → revise</code> live, then read the
-      plan table, a weekly mileage chart, the safety verdict and the full trace.
-    </p>
-    <p>
-      The <code>adjust</code> node draws on the same findings as the rest of this
-      portfolio, <a href="https://lyhjeremy.github.io/marathon-majors-course-difficulty/">course difficulty</a>
-      and <a href="https://lyhjeremy.github.io/marathon-heat-tax/">the heat tax</a>.
-      So a hot Boston plan genuinely does look different from a cool Berlin one.
+      <code>python -m src.cli</code> takes flags or prompts for them and prints
+      the assessment, the plan table and the trace. <code>streamlit run app.py</code>
+      wraps the same graph: set the race in the sidebar and watch the run stream
+      through the nodes, then read the plan table, a weekly-mileage chart, the
+      safety verdict and the trace. Generation uses the Claude CLI by default or
+      the Anthropic API with <code>ANTHROPIC_API_KEY</code>; <code>CLAUDE_MODEL</code>
+      can pick a faster model for the several calls a run makes.
     </p>
   </section>
 
   <section class="stop stop--warn">
-    <p class="eyebrow">↓ the gap, reported not hidden</p>
-    <h2>The safety-lift numbers have not been captured</h2>
+    <p class="eyebrow">Limitations</p>
+    <h2>A demonstration, not yet a measurement</h2>
     <p>
-      <code>src/eval.py</code> exists and is designed to answer the obvious
-      question: does the critique/revise loop actually make plans safer? It runs
-      the agent across a panel of synthetic runners and compares each plan's safety
-      before the loop against after it, reporting the pass-rate lift and the drop
-      in mean issues per plan.
+      <code>src/eval.py</code> is written to measure whether the loop makes plans
+      safer: it runs three synthetic runners (two deliberately aggressive, one
+      realistic control) and scores each plan with the same
+      <code>_safety_checks</code> before and after the loop. Those results have
+      not been captured; the run was cut short by CLI rate limits during the
+      build. This page shows one real run catching five real issues. It can't
+      give an average lift.
     </p>
     <p>
-      <strong>Those numbers have not been captured yet.</strong> The code is
-      verified and runnable; the run was not completed because of CLI throttling
-      during the build. So this page can show you a real trace catching five real
-      issues, and it cannot yet tell you the average lift across many plans. That
-      is the difference between a demonstration and a measurement, and this is
-      currently the former.
+      The deterministic checks cover four rules. Anything else, such as too many
+      hard days or a monotonous build, depends on the LLM reviewer. The recorded
+      plan also peaked higher than the assessment's own 45-mile suggestion, which
+      no check compares against. And the plan is generated advice for an adult
+      runner, not coaching or medical guidance.
     </p>
   </section>
 
   <section class="stop stop--end">
-    <p class="eyebrow">Finish · what it is built on</p>
-    <h2>Where the numbers come from</h2>
+    <p class="eyebrow">Stack</p>
+    <h2>What it runs on</h2>
     <dl class="specs">
-      <div class="spec"><dt>Framework</dt><dd>LangGraph, a state machine with a genuine cycle rather than a linear chain</dd></div>
-      <div class="spec"><dt>Safety checks</dt><dd>Deterministic Python in <code>src/graph.py</code>: ramp rate, taper, long-run caps</dd></div>
-      <div class="spec"><dt>Knowledge</dt><dd><code>src/knowledge.py</code>, course-difficulty and heat-tax figures from my own analyses</dd></div>
-      <div class="spec"><dt>Generation</dt><dd>Claude CLI by default; <code>CLAUDE_MODEL</code> trades quality for speed across the agent's several calls</dd></div>
-      <div class="spec"><dt>Robustness</dt><dd><code>src/util.py</code> extracts JSON from LLM output that is not always clean JSON</dd></div>
-      <div class="spec"><dt>UI</dt><dd>Streamlit, streaming each node as it runs</dd></div>
-      <div class="spec"><dt>Sibling</dt><dd>The <a href="https://lyhjeremy.github.io/wine-pairing-agent/">Wine Pairing Agent</a>, the same critique-loop pattern with retrieval as a tool</dd></div>
+      <div class="spec"><dt>Agent</dt><dd>LangGraph <code>StateGraph</code> with a typed state and a conditional edge for the revise loop</dd></div>
+      <div class="spec"><dt>Model</dt><dd>Claude via the Claude CLI or the Anthropic API</dd></div>
+      <div class="spec"><dt>Guardrails</dt><dd><code>_safety_checks</code> in <code>src/graph.py</code>; JSON extraction from model output in <code>src/util.py</code></dd></div>
+      <div class="spec"><dt>Domain data</dt><dd><code>src/knowledge.py</code>: course penalties, heat tax, the 30 km wall, negative-split rate</dd></div>
+      <div class="spec"><dt>UI</dt><dd>CLI and Streamlit, with a weekly-mileage chart</dd></div>
+      <div class="spec"><dt>Related</dt><dd><a href="https://lyhjeremy.github.io/marathon-strategy-rag/">Marathon strategy RAG</a>, built on the same findings</dd></div>
     </dl>
   </section>
 
@@ -447,19 +438,21 @@ AGENT TRACE
 
 <div class="wrap">
   <section class="close">
-    <h2>A plan that argued with itself first</h2>
+    <h2>A plan that was checked before it was shown</h2>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/lyhjeremy/marathon-training-agent/blob/main/writeup.md">Read the writeup</a>
-      <a class="textlink" href="https://github.com/lyhjeremy/marathon-training-agent">or the code</a>
+      <a class="btn btn-primary" href="https://github.com/lyhjeremy/marathon-training-agent">Code on GitHub</a>
+      <a class="textlink" href="../">Back to the project page</a>
     </div>
   </section>
 
   <footer>
     <p>
-      Marathon Training Plan Agent ·
-      <a href="../">Showcase</a> ·
-      <a href="https://github.com/lyhjeremy/marathon-training-agent/blob/main/writeup.md">Writeup</a> ·
+      Marathon training agent ·
+      <a href="../">Project page</a> ·
+      <a href="https://github.com/lyhjeremy/marathon-training-agent/blob/main/writeup.md">Long-form notes</a> ·
       <a href="https://github.com/lyhjeremy/marathon-training-agent">Source</a> ·
+      <a href="../privacy/">Privacy</a> ·
+      <a href="../terms/">Terms</a> ·
       MIT © 2026 Jeremy Lee
     </p>
     <p>Educational tool, not medical or professional coaching advice.</p>
