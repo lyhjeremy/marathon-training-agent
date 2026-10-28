@@ -14,7 +14,7 @@ One recorded run, from [`examples/sample_run.md`](examples/sample_run.md): Bosto
 - `critique` found 5 issues in the first draft, including a week-5 mileage jump above 20% (23 to 28 miles). One `revise` pass fixed them and the second critique came back clean.
 - The final 16-week plan includes downhill quad work from week 3, Newton-style hill repeats, a 19-mile Boston simulation in week 12, and a taper to 22 miles in race week.
 
-`src/eval.py` is written to measure the loop across a panel of synthetic runners, counting safety issues before and after. Its results haven't been captured yet, so there is no aggregate number.
+`src/eval.py` is written to measure the loop across a panel of synthetic runners, counting safety issues before and after. Its results haven't been captured yet, so there is no aggregate number. The [write-up page](https://lyhjeremy.github.io/marathon-training-agent/overview/) has a JavaScript port of `_safety_checks` that you can run against edited versions of the recorded plan.
 
 ## How it works
 
@@ -24,7 +24,7 @@ The agent is a LangGraph `StateGraph` over a typed state (`profile`, `assessment
 |---|---|
 | `assess` | Judges whether the goal is realistic; returns a recommended goal time and peak weekly mileage as JSON |
 | `plan` | Drafts a periodized plan (Base, Build, Peak, Taper) in a fixed JSON week schema |
-| `adjust` | Tailors workouts to the race with figures from `src/knowledge.py`: course penalty against Berlin (Boston +101 s, NYC +78 s), about 1 minute per °F above 55°F, the 30 km wall |
+| `adjust` | Tailors workouts to the race with figures from `src/knowledge.py`: course penalty against Berlin (see the limitation on these), about 1 minute per °F above 55°F, the 30 km wall |
 | `critique` | Runs `_safety_checks` in Python, merges in issues from an LLM review, passes only with zero issues |
 | `revise` | Fixes the flagged issues and returns the plan to `critique` |
 
@@ -70,6 +70,7 @@ Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across 
 - There is no aggregate evaluation yet; the evidence is one recorded run.
 - Only four rules are deterministic. Intensity balance, monotony and too many hard days depend on the LLM reviewer.
 - In the recorded run the final plan peaked at 57 miles, above the 45 the assessment suggested; no check compares the two.
+- The course figures in `src/knowledge.py` come from my Majors course-difficulty study, which ran on a simulated field with penalties set in code, so they don't measure the courses. They also no longer match that study's results (the file has London 28 s, Tokyo 33 s and a Boston index of 1.036; the study's paired method gives 30.7 s, 21.0 s and a composite of 1.0092). They only steer the wording of `adjust`; no safety check reads them.
 - The rules are general defaults that ignore individual physiology, and the plan doesn't adapt to logged training.
 - Educational tool, not medical or professional coaching advice.
 

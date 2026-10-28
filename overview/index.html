@@ -250,6 +250,44 @@
 </style>
 </head>
 <body>
+<style>
+  .viz { margin-top: 30px; border: 1px solid var(--edge); background: var(--card); padding: 18px 18px 14px; font-family: var(--sans); }
+  .viz h3 { font: 600 clamp(22px, 2.6vw, 28px)/1.06 var(--display); text-transform: uppercase; letter-spacing: .01em;
+            margin: 0 0 6px; max-width: 34ch; }
+  .viz .sub { font-size: 14.5px; color: var(--muted); margin: 0 0 16px; max-width: 64ch; line-height: 1.5; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .ctl button { font: 600 12.5px/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; padding: 9px 11px;
+                background: var(--paper); color: var(--ink); border: 1px solid var(--edge); cursor: pointer; }
+  .ctl button:hover { border-color: var(--ink); }
+  .ctl button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .vsrc { font-size: 13px; color: var(--muted); margin: 10px 0 0; line-height: 1.45; }
+  .host { position: relative; }
+  .host svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .host:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .t-ax { font: 400 11px var(--mono); fill: var(--muted); }
+  .t-val { font: 600 12px var(--mono); fill: var(--ink); }
+  .g-grid { stroke: var(--rule); stroke-width: 1; }
+  .g-wk { fill: var(--accent2); } .g-wk.taper { fill: var(--muted); }
+  .g-lr { fill: var(--paper); }
+  .g-wk.bad { fill: var(--accent); }
+  .g-sel { fill: none; stroke: var(--ink); stroke-width: 2; }
+  .g-cap { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .edit { display: grid; grid-template-columns: 1fr; gap: 10px 24px; margin: 14px 0 0; }
+  @media (min-width: 700px) { .edit { grid-template-columns: 9rem minmax(0, 1fr) minmax(0, 1fr); align-items: end; } }
+  .edit .wkn { font: 700 30px/1 var(--display); text-transform: uppercase; }
+  .edit .wkn small { display: block; font: 400 12px var(--mono); color: var(--muted); letter-spacing: .06em; margin-top: 4px; }
+  .edit label { display: grid; grid-template-columns: minmax(0, 1fr) 3.4em; gap: 4px 10px; align-items: center; font-size: 14px; color: var(--ink2); }
+  .edit input { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--accent2); }
+  .edit output { font: 600 15px/1 var(--mono); color: var(--ink); text-align: right; }
+  .verdict { margin: 16px 0 0; border: 2px solid var(--ink); padding: 12px 14px; font-family: var(--mono); font-size: 14px; }
+  .verdict b { display: block; font: 700 20px/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 6px; }
+  .verdict.fail { border-color: var(--accent); }
+  .verdict.fail b { color: var(--accent); }
+  .verdict ul { margin: 0; padding-left: 1.2em; color: var(--ink); }
+  .verdict p { margin: 0; color: var(--ink2); }
+  @media (max-width: 520px) { .viz { padding: 14px 12px 12px; } }
+</style>
+
 <div class="wrap">
   <header class="masthead">
     <div class="logo"><span class="dot" aria-hidden="true"></span>Marathon training agent</div>
@@ -261,14 +299,11 @@
     <h1>A training-plan agent that checks its own plan before you see it</h1>
 
     <p class="hero-sub">
-      A LangGraph state machine with five nodes. It judges whether your goal time
-      is realistic, drafts a periodized week-by-week plan, tailors it to your race
-      using course-difficulty and heat figures from my own analyses, then runs
-      deterministic safety checks in Python alongside an LLM review. When the
-      checks fail, a revise node fixes the plan and loops back, up to a revision
-      budget. In the recorded run below, asked for a 3:05 Boston off 22 miles a
-      week, it recommended 3:20, and its critic caught five issues in the first
-      draft.
+      Asked for a 3:05 Boston off 22 miles a week, it recommended 3:20, and its critic caught five
+      problems in the first draft before anyone saw it. The agent is a LangGraph state machine with five
+      nodes. It judges whether the goal is realistic, drafts a periodized week-by-week plan, and tailors
+      it to the race and the forecast heat. Then deterministic safety checks in Python run alongside an
+      LLM review, and a revise node fixes whatever they flag and loops back, up to a revision budget.
     </p>
 
     <div class="cta-row">
@@ -304,23 +339,21 @@
     <p class="eyebrow">Why a graph</p>
     <h2>A single prompt can't check its own arithmetic</h2>
     <p>
-      Ask a language model for a sixteen-week marathon plan and the result looks
-      right, even when it raises mileage 30% in a week, skips the taper or
-      prescribes a 26-mile long run. A coach would spot those errors at a glance;
-      in fluent prose they are easy to read past.
+      Ask a language model for a sixteen-week marathon plan and the result looks right, even when it
+      raises mileage 30% in a week, skips the taper or prescribes a 26-mile long run. A coach would spot
+      those errors at a glance; in fluent prose they are easy to read past.
     </p>
     <p>
-      Wrapping the model in a graph adds a place to catch them. The
-      <code>critique</code> node runs <code>_safety_checks</code>, which reads the
-      plan's numbers and returns a list of problems, and merges that with issues an
-      LLM reviewer raises. <code>_route</code> sends the plan to
-      <code>revise</code> when there are issues and revisions remain (two by
-      default), and ends the run otherwise.
+      The graph adds a place to catch them. The <code>critique</code> node runs
+      <code>_safety_checks</code>, which reads the plan's numbers and returns a list of problems, and
+      merges that with issues an LLM reviewer raises. <code>_route</code> sends the plan to
+      <code>revise</code> when there are issues and revisions remain (two by default), and ends the run
+      otherwise.
     </p>
     <dl class="specs">
       <div class="spec"><dt>assess</dt><dd>Judges whether the goal is realistic for the runner's mileage, longest run and weeks to go; returns a recommended goal time and a peak weekly mileage as JSON.</dd></div>
       <div class="spec"><dt>plan</dt><dd>Drafts the Base, Build, Peak and Taper weeks in a fixed JSON schema: miles, long run, quality sessions, focus.</dd></div>
-      <div class="spec"><dt>adjust</dt><dd>Rewrites workout emphasis for the race using <code>src/knowledge.py</code>: a course penalty against Berlin (Boston +101 s, New York +78 s), about 1 minute per &deg;F above 55&deg;F, and the 30 km wall.</dd></div>
+      <div class="spec"><dt>adjust</dt><dd>Rewrites workout emphasis for the race using <code>src/knowledge.py</code>: a course penalty against Berlin, about 1 minute per &deg;F above 55&deg;F, and the 30 km wall.</dd></div>
       <div class="spec"><dt>critique</dt><dd>Deterministic checks plus an LLM review; the plan passes only with zero issues.</dd></div>
       <div class="spec"><dt>revise</dt><dd>Fixes the listed issues and returns the full plan to <code>critique</code>.</dd></div>
     </dl>
@@ -346,18 +379,46 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
   • critique → 5 issue(s): week 5 jumps mileage &gt;20% (23→28)
   • revise #1 → addressed 5 issue(s)
   • critique → clean</pre></div>
-    <p class="splits-note">Output of <code>src/cli.py</code>, quoted verbatim apart from line breaks and two status symbols left out.</p>
+    <p class="splits-note">Output of <code>src/cli.py</code>, quoted verbatim apart from line breaks and two status symbols left out.
+      The trace shows only the first of the five issues; the run didn't record the other four or the first draft.</p>
   </section>
 
   <section class="stop">
-    <p class="eyebrow">The training log</p>
-    <h2>The plan it produced, week by week</h2>
+    <p class="eyebrow">Try the critic</p>
+    <h2>Edit the plan and watch the checks fire</h2>
     <p>
-      The final plan from that run, after one revision. It peaks at 57 miles in
-      week 13, above the 45 the assessment suggested, and tapers to 22 in race
-      week. The Boston-specific work comes from <code>adjust</code>: downhill quad
-      conditioning from week 3, Newton-style hill repeats in week 6, and a 19-mile
-      race simulation in week 12 with the hills placed at miles 15 to 19.
+      The chart holds the final plan from that run. The four checks below are
+      <code>_safety_checks</code> from <code>src/graph.py</code>, ported line for line to JavaScript, so
+      they run in your browser as you change a week. The LLM half of the critique isn't here; it needs a
+      model call.
+    </p>
+    <div class="viz" id="crit">
+      <h3 id="crit-title">The recorded plan passes all four checks</h3>
+      <p class="sub">Weekly miles as bars, with the long run as the narrow inner bar and the 22.5-mile long-run cap as a
+        dashed line. Click a week, or focus the chart and use the arrow keys, then change it with the sliders.</p>
+      <div class="ctl" role="group" aria-label="Load a plan">
+        <button type="button" data-p="rec" aria-pressed="true">Recorded plan</button>
+        <button type="button" data-p="ramp" aria-pressed="false">Jump week 9 to 52</button>
+        <button type="button" data-p="taper" aria-pressed="false">Skip the taper</button>
+        <button type="button" data-p="long" aria-pressed="false">26-mile long run</button>
+      </div>
+      <div class="host" id="crit-host" tabindex="0" role="img" aria-label="Sixteen weekly mileage bars from 28 miles in week 1 to a 57-mile peak in week 13, tapering to 22 in week 16."></div>
+      <div class="edit">
+        <div class="wkn" id="crit-wk">Week 13<small>PEAK</small></div>
+        <label for="crit-m"><span>Weekly miles</span><output id="crit-mo">57</output>
+          <input id="crit-m" type="range" min="0" max="80" step="1" value="57" /></label>
+        <label for="crit-l"><span>Long run, miles</span><output id="crit-lo">20</output>
+          <input id="crit-l" type="range" min="0" max="30" step="1" value="20" /></label>
+      </div>
+      <div class="verdict" id="crit-out" aria-live="polite"></div>
+      <p class="vsrc">Plan from <code>examples/sample_run.md</code>. Messages read as <code>_safety_checks</code> returns them, with a colon
+        where the source has a dash. The three presets are edits for trying the checks, not plans the agent produced.</p>
+    </div>
+    <p style="margin-top:22px">
+      The plan peaks at 57 miles in week 13, above the 45 the assessment suggested, and no check
+      compares the two; the ramp rule only looks one week back. The Boston-specific work comes from
+      <code>adjust</code>: downhill quad conditioning from week 3, Newton-style hill repeats in week 6,
+      and a 19-mile race simulation in week 12 with the hills placed at miles 15 to 19.
     </p>
     <div class="tablewrap" role="region" aria-label="Sixteen-week plan from the recorded run" tabindex="0">
       <table class="log">
@@ -382,20 +443,19 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
         </tbody>
       </table>
     </div>
-    <p class="splits-note">Bars scale to the 57-mile peak.</p>
+    <p class="splits-note">The recorded plan, verbatim. Bars scale to the 57-mile peak.</p>
   </section>
 
   <section class="stop">
     <p class="eyebrow">Interfaces</p>
     <h2>CLI and a Streamlit app</h2>
     <p>
-      <code>python -m src.cli</code> takes flags or prompts for them and prints
-      the assessment, the plan table and the trace. <code>streamlit run app.py</code>
-      wraps the same graph: set the race in the sidebar and watch the run stream
-      through the nodes, then read the plan table, a weekly-mileage chart, the
-      safety verdict and the trace. Generation uses the Claude CLI by default or
-      the Anthropic API with <code>ANTHROPIC_API_KEY</code>; <code>CLAUDE_MODEL</code>
-      can pick a faster model for the several calls a run makes.
+      <code>python -m src.cli</code> takes flags or prompts for them and prints the assessment, the plan
+      table and the trace. <code>streamlit run app.py</code> wraps the same graph: set the race in the
+      sidebar and watch the run stream through the nodes, then read the plan table, a weekly-mileage
+      chart, the safety verdict and the trace. Generation uses the Claude CLI by default or the Anthropic
+      API with <code>ANTHROPIC_API_KEY</code>; <code>CLAUDE_MODEL</code> can pick a faster model for the
+      several calls a run makes. There is no hosted demo.
     </p>
   </section>
 
@@ -403,20 +463,24 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
     <p class="eyebrow">Limitations</p>
     <h2>Evidence from a single run</h2>
     <p>
-      <code>src/eval.py</code> is written to measure whether the loop makes plans
-      safer: it runs three synthetic runners (two deliberately aggressive, one
-      realistic control) and scores each plan with the same
-      <code>_safety_checks</code> before and after the loop. Those results have
-      not been captured; the run was cut short by CLI rate limits during the
-      build. What this page shows is one recorded run in which the critic caught
-      five issues, which says nothing about the average lift.
+      <code>src/eval.py</code> is written to measure whether the loop makes plans safer: it runs three
+      synthetic runners (two deliberately aggressive, one realistic control) and scores each plan with the
+      same <code>_safety_checks</code> before and after the loop. Those results have not been captured;
+      the run was cut short by CLI rate limits during the build. This page shows one recorded run in
+      which the critic caught five issues, which says nothing about the average lift.
     </p>
     <p>
-      The deterministic checks cover four rules. Anything else, such as too many
-      hard days or a monotonous build, depends on the LLM reviewer. The recorded
-      plan also peaked higher than the assessment's own 45-mile suggestion, which
-      no check compares against. The plan is generated advice for an adult
-      runner and is no substitute for coaching or medical guidance.
+      The deterministic checks cover four rules. Anything else, such as too many hard days or a
+      monotonous build, depends on the LLM reviewer. The plan is generated advice for an adult runner
+      and is no substitute for coaching or medical guidance.
+    </p>
+    <p>
+      The course figures in <code>src/knowledge.py</code> need fixing. They come from my Majors
+      course-difficulty study, which ran on a simulated field with penalties set in code, so they are not
+      measurements of the courses. They also no longer match that study's results: the file has London
+      at 28 s and Tokyo at 33 s against Berlin and a Boston index of 1.036, where the study's paired
+      method gives 30.7 s, 21.0 s and a composite of 1.0092. They only steer the wording of the
+      <code>adjust</code> step, and none of the safety checks reads them.
     </p>
   </section>
 
@@ -458,5 +522,99 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
     <p>Educational tool, not medical or professional coaching advice.</p>
   </footer>
 </div>
+
+<script>
+(function () {
+  /* examples/sample_run.md, final plan: [weekly_miles, long_run_miles, phase] */
+  var REC = [[28,10,"Base"],[30,12,"Base"],[32,13,"Base"],[29,11,"Base"],[34,14,"Build"],[38,15,"Build"],[35,13,"Build"],[41,16,"Build"],[45,17,"Build"],[41,15,"Peak"],[48,18,"Peak"],[53,19,"Peak"],[57,20,"Peak"],[44,16,"Taper"],[33,12,"Taper"],[22,9,"Taper"]];
+  var P = { rec: [], ramp: [[8, 52, 18]], taper: [[13, 50, 16], [14, 48, 14], [15, 46, 12]], long: [[12, 57, 26]] };
+  var plan, sel = 12, NS = "http://www.w3.org/2000/svg";
+  function load(name) { plan = REC.map(function (w) { return w.slice(); }); P[name].forEach(function (e) { plan[e[0]][0] = e[1]; plan[e[0]][1] = e[2]; }); }
+  /* _safety_checks() in src/graph.py */
+  function checks(weeks) {
+    var issues = [], miles = weeks.map(function (w) { return w[0]; }), longs = weeks.map(function (w) { return w[1]; });
+    var peak = Math.max.apply(null, miles), bad = {};
+    for (var i = 1; i < miles.length; i++) {
+      if (miles[i - 1] > 0 && (miles[i] - miles[i - 1]) / miles[i - 1] > 0.20) {
+        issues.push("week " + (i + 1) + " jumps mileage >20% (" + miles[i - 1] + "→" + miles[i] + ")"); bad[i] = 1;
+      }
+    }
+    if (miles[miles.length - 1] > 0.75 * peak) { issues.push("insufficient taper: race-week mileage is too close to peak"); bad[miles.length - 1] = 1; }
+    var ml = Math.max.apply(null, longs);
+    if (ml > 22.5) { issues.push("longest run " + ml + " mi exceeds ~22 mi cap"); bad[longs.indexOf(ml)] = 1; }
+    for (var j = 0; j < miles.length; j++) {
+      if (miles[j] > 0 && longs[j] > miles[j]) { issues.push("week " + (j + 1) + " long run (" + longs[j] + ") exceeds weekly total (" + miles[j] + ")"); bad[j] = 1; break; }
+    }
+    return { issues: issues, bad: bad };
+  }
+  var host = document.getElementById("crit-host"), mIn = document.getElementById("crit-m"), lIn = document.getElementById("crit-l");
+  var out = document.getElementById("crit-out"), geo = null;
+  function el(n, a, txt) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; }
+  function draw() {
+    var r = checks(plan), Wd = host.clientWidth;
+    if (Wd) {
+      var narrow = Wd < 560, L = 26, R = 6, top = 16, H = narrow ? 210 : 250, base = H - 22, MAX = 80, pw = Wd - L - R, cw = pw / 16, bw = cw * 0.72;
+      function Y(v) { return base - v / MAX * (base - top); }
+      var svg = el("svg", { viewBox: "0 0 " + Wd + " " + H, width: Wd, height: H, "aria-hidden": "true" });
+      [0, 20, 40, 60, 80].forEach(function (t) {
+        svg.appendChild(el("line", { x1: L, x2: L + pw, y1: Y(t), y2: Y(t), "class": "g-grid" }));
+        svg.appendChild(el("text", { x: L - 5, y: Y(t) + 4, "text-anchor": "end", "class": "t-ax" }, t));
+      });
+      plan.forEach(function (w, i) {
+        var x = L + i * cw + (cw - bw) / 2;
+        svg.appendChild(el("rect", { x: x, y: Y(w[0]), width: bw, height: base - Y(w[0]), "class": "g-wk" + (w[2] === "Taper" ? " taper" : "") + (r.bad[i] ? " bad" : "") }));
+        var lr = Math.min(w[1], w[0]);
+        svg.appendChild(el("rect", { x: x + bw * 0.3, y: Y(lr), width: bw * 0.4, height: base - Y(lr), "class": "g-lr" }));
+        if (w[1] > w[0]) svg.appendChild(el("rect", { x: x + bw * 0.3, y: Y(w[1]), width: bw * 0.4, height: Y(w[0]) - Y(w[1]), "class": "g-wk bad" }));
+        if (i === sel) {
+          svg.appendChild(el("rect", { x: x - 3, y: Y(Math.max(w[0], w[1])) - 3, width: bw + 6, height: base - Y(Math.max(w[0], w[1])) + 3, "class": "g-sel" }));
+          svg.appendChild(el("text", { x: x + bw / 2, y: Y(Math.max(w[0], w[1])) - 7, "text-anchor": "middle", "class": "t-val" }, w[0]));
+        }
+        if (!narrow || i % 3 === 0 || i === 15) svg.appendChild(el("text", { x: x + bw / 2, y: H - 5, "text-anchor": "middle", "class": "t-ax" }, (narrow ? "" : "wk ") + (i + 1)));
+      });
+      svg.appendChild(el("line", { x1: L, x2: L + pw, y1: Y(22.5), y2: Y(22.5), "class": "g-cap" }));
+      host.innerHTML = ""; host.appendChild(svg);
+      geo = { L: L, cw: cw };
+    }
+    var w = plan[sel];
+    document.getElementById("crit-wk").innerHTML = "Week " + (sel + 1) + "<small>" + w[2].toUpperCase() + "</small>";
+    mIn.value = w[0]; lIn.value = w[1];
+    document.getElementById("crit-mo").textContent = w[0];
+    document.getElementById("crit-lo").textContent = w[1];
+    mIn.setAttribute("aria-label", "Week " + (sel + 1) + " weekly miles"); lIn.setAttribute("aria-label", "Week " + (sel + 1) + " long run miles");
+    if (r.issues.length) {
+      out.className = "verdict fail";
+      out.innerHTML = "<b>" + r.issues.length + " issue" + (r.issues.length > 1 ? "s" : "") + ": back to revise</b><ul>" + r.issues.map(function (s) { return "<li>" + s.replace(/>/g, "&gt;") + "</li>"; }).join("") + "</ul>";
+    } else {
+      out.className = "verdict";
+      out.innerHTML = "<b>Clean</b><p>No deterministic issues. In the agent, the LLM review would still run before the plan is shown.</p>";
+    }
+    document.getElementById("crit-title").textContent = r.issues.length ? "This plan fails " + r.issues.length + " check" + (r.issues.length > 1 ? "s" : "") : "This plan passes all four checks";
+  }
+  function setSel(i) { sel = Math.max(0, Math.min(15, i)); draw(); }
+  host.addEventListener("pointerdown", function (e) {
+    if (!geo) return; var b = host.getBoundingClientRect(); setSel(Math.floor((e.clientX - b.left - geo.L) / geo.cw));
+  });
+  host.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") { e.preventDefault(); setSel(sel - 1); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); setSel(sel + 1); }
+    else if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); plan[sel][0] = Math.max(0, Math.min(80, plan[sel][0] + (e.key === "ArrowUp" ? 1 : -1))); mark(); draw(); }
+  });
+  var btns = [].slice.call(document.querySelectorAll("#crit .ctl button"));
+  function mark(name) { btns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.p === name ? "true" : "false"); }); }
+  mIn.addEventListener("input", function () { plan[sel][0] = +mIn.value; mark(); draw(); });
+  lIn.addEventListener("input", function () { plan[sel][1] = +lIn.value; mark(); draw(); });
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      load(b.dataset.p); mark(b.dataset.p);
+      sel = b.dataset.p === "rec" ? 12 : P[b.dataset.p][0][0]; draw();
+    });
+  });
+  load("rec"); draw();
+  var last = host.clientWidth;
+  var f = function () { if (host.clientWidth !== last) { last = host.clientWidth; draw(); } };
+  if (window.ResizeObserver) new ResizeObserver(f).observe(host); else window.addEventListener("resize", f);
+})();
+</script>
 </body>
 </html>
