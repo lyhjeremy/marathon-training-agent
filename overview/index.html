@@ -353,7 +353,7 @@
     <dl class="specs">
       <div class="spec"><dt>assess</dt><dd>Judges whether the goal is realistic for the runner's mileage, longest run and weeks to go; returns a recommended goal time and a peak weekly mileage as JSON.</dd></div>
       <div class="spec"><dt>plan</dt><dd>Drafts the Base, Build, Peak and Taper weeks in a fixed JSON schema: miles, long run, quality sessions, focus.</dd></div>
-      <div class="spec"><dt>adjust</dt><dd>Rewrites workout emphasis for the race using <code>src/knowledge.py</code>: a course penalty against Berlin, about 1 minute per &deg;F above 55&deg;F, and the 30 km wall.</dd></div>
+      <div class="spec"><dt>adjust</dt><dd>Rewrites workout emphasis for the race using <code>src/knowledge.py</code>: a simulated course penalty against Berlin, about 1 minute per &deg;F above 55&deg;F, and the 30 km wall.</dd></div>
       <div class="spec"><dt>critique</dt><dd>Deterministic checks plus an LLM review; the plan passes only with zero issues.</dd></div>
       <div class="spec"><dt>revise</dt><dd>Fixes the listed issues and returns the full plan to <code>critique</code>.</dd></div>
     </dl>
@@ -475,12 +475,18 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
       and is no substitute for coaching or medical guidance.
     </p>
     <p>
-      The course figures in <code>src/knowledge.py</code> need fixing. They come from my Majors
-      course-difficulty study, which ran on a simulated field with penalties set in code, so they are not
-      measurements of the courses. They also no longer match that study's results: the file has London
-      at 28 s and Tokyo at 33 s against Berlin and a Boston index of 1.036, where the study's paired
-      method gives 30.7 s, 21.0 s and a composite of 1.0092. They only steer the wording of the
-      <code>adjust</code> step, and none of the safety checks reads them.
+      The course figures in <code>src/knowledge.py</code> are simulated. They come from an earlier
+      version of my Majors course-difficulty simulation, which ran on a simulated field with course
+      penalties planted in code, so they are not measurements of the courses, and they differ from the
+      current study: the file has London at 28 s and Tokyo at 33 s against Berlin and a Boston index of
+      1.036, where the study's paired method gives 30.7 s, 21.0 s and a composite of 1.0092. The file
+      says so in a comment, and the course line it passes to the <code>adjust</code> prompt now calls
+      the figure a simulated estimate, not a race result. They only steer the wording of
+      <code>adjust</code>, and none of the safety checks reads them.
+    </p>
+    <p>
+      2026-10-28: the label was added after the recorded run shown on this page. The values are
+      unchanged.
     </p>
   </section>
 
@@ -491,7 +497,7 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
       <div class="spec"><dt>Agent</dt><dd>LangGraph <code>StateGraph</code> with a typed state and a conditional edge for the revise loop</dd></div>
       <div class="spec"><dt>Model</dt><dd>Claude via the Claude CLI or the Anthropic API</dd></div>
       <div class="spec"><dt>Guardrails</dt><dd><code>_safety_checks</code> in <code>src/graph.py</code>; JSON extraction from model output in <code>src/util.py</code></dd></div>
-      <div class="spec"><dt>Domain data</dt><dd><code>src/knowledge.py</code>: course penalties, heat tax, the 30 km wall, negative-split rate</dd></div>
+      <div class="spec"><dt>Domain data</dt><dd><code>src/knowledge.py</code>: course penalties (simulated), heat tax, the 30 km wall, negative-split rate</dd></div>
       <div class="spec"><dt>UI</dt><dd>CLI and Streamlit, with a weekly-mileage chart</dd></div>
       <div class="spec"><dt>Related</dt><dd><a href="https://lyhjeremy.github.io/marathon-strategy-rag/">Marathon strategy RAG</a>, built on the same findings</dd></div>
     </dl>

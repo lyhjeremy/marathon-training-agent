@@ -9,6 +9,12 @@ from __future__ import annotations
 
 # Course Difficulty Index vs Berlin (seconds slower for an equivalent runner).
 # From my "Marathon Majors Course Difficulty" analysis.
+# SIMULATED, NOT RACE RESULTS. That study ran on a simulated field (800 athletes,
+# seed 42) with course penalties planted in code, so these figures test a method
+# and do not measure the real courses. They also come from an earlier version of
+# the simulation and differ from the current study (for example Tokyo 33 s here
+# vs 21.0 s, Boston index 1.036 here vs 1.0092). Left unchanged so the recorded
+# runs stay reproducible; the brief below labels them as simulated.
 COURSE_DIFFICULTY = {
     "berlin": {"index": 1.000, "penalty_s": 0, "note": "flattest, fastest — a PR course"},
     "chicago": {"index": 1.004, "penalty_s": 12, "note": "flat and fast"},
@@ -57,7 +63,8 @@ def knowledge_brief(race: str | None, temp_f: float | None) -> str:
     if c:
         lines.append(
             f"- Course ({race.title()}): {c['note']}. Expect ~{c['penalty_s']}s "
-            f"slower than a flat course; train specificity for it."
+            f"slower than a flat course (a simulated estimate from a method test, "
+            f"not race results); train specificity for it."
         )
     if temp_f is not None:
         pen = heat_penalty_minutes(temp_f)

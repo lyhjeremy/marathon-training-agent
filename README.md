@@ -24,7 +24,7 @@ The agent is a LangGraph `StateGraph` over a typed state (`profile`, `assessment
 |---|---|
 | `assess` | Judges whether the goal is realistic; returns a recommended goal time and peak weekly mileage as JSON |
 | `plan` | Drafts a periodized plan (Base, Build, Peak, Taper) in a fixed JSON week schema |
-| `adjust` | Tailors workouts to the race with figures from `src/knowledge.py`: course penalty against Berlin (see the limitation on these), about 1 minute per °F above 55°F, the 30 km wall |
+| `adjust` | Tailors workouts to the race with figures from `src/knowledge.py`: course penalty against Berlin (simulated figures, labeled as such; see the limitations), about 1 minute per °F above 55°F, the 30 km wall |
 | `critique` | Runs `_safety_checks` in Python, merges in issues from an LLM review, passes only with zero issues |
 | `revise` | Fixes the flagged issues and returns the plan to `critique` |
 
@@ -56,7 +56,7 @@ Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across 
 | Path | What it is |
 |---|---|
 | `src/graph.py` | The LangGraph state machine: nodes, safety checks, the revise loop |
-| `src/knowledge.py` | Course-difficulty, heat-tax and pacing figures from my analyses |
+| `src/knowledge.py` | Course-difficulty (simulated), heat-tax and pacing figures from my analyses |
 | `src/util.py` | JSON extraction from LLM output |
 | `src/eval.py` | Safety evaluation of the critique/revise loop |
 | `src/llm.py` | LLM wrapper: Claude CLI (default) or Anthropic API |
@@ -70,7 +70,8 @@ Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across 
 - There is no aggregate evaluation yet; the evidence is one recorded run.
 - Only four rules are deterministic. Intensity balance, monotony and too many hard days depend on the LLM reviewer.
 - In the recorded run the final plan peaked at 57 miles, above the 45 the assessment suggested; no check compares the two.
-- The course figures in `src/knowledge.py` come from my Majors course-difficulty study, which ran on a simulated field with penalties set in code, so they don't measure the courses. They also no longer match that study's results (the file has London 28 s, Tokyo 33 s and a Boston index of 1.036; the study's paired method gives 30.7 s, 21.0 s and a composite of 1.0092). They only steer the wording of `adjust`; no safety check reads them.
+- The course figures in `src/knowledge.py` are simulated. They come from an earlier version of my Majors course-difficulty simulation (a simulated field with course penalties planted in code), so they don't measure the courses, and they differ from the current study (the file has London 28 s, Tokyo 33 s and a Boston index of 1.036; the study's paired method gives 30.7 s, 21.0 s and a composite of 1.0092). The file says so in a comment, and the course line in the `adjust` prompt labels the figure as a simulated estimate, not a race result. They only steer the wording of `adjust`; no safety check reads them.
+- 2026-10-28: the simulated-data label was added after the recorded run in `examples/`; the values are unchanged.
 - The rules are general defaults that ignore individual physiology, and the plan doesn't adapt to logged training.
 - Educational tool, not medical or professional coaching advice.
 
