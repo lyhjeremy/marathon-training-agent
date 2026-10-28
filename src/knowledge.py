@@ -16,7 +16,7 @@ from __future__ import annotations
 # vs 21.0 s, Boston index 1.036 here vs 1.0092). Left unchanged so the recorded
 # runs stay reproducible; the brief below labels them as simulated.
 COURSE_DIFFICULTY = {
-    "berlin": {"index": 1.000, "penalty_s": 0, "note": "flattest, fastest — a PR course"},
+    "berlin": {"index": 1.000, "penalty_s": 0, "note": "flattest, fastest: a PR course"},
     "chicago": {"index": 1.004, "penalty_s": 12, "note": "flat and fast"},
     "london": {"index": 1.010, "penalty_s": 28, "note": "flat, but crowded early"},
     "tokyo": {"index": 1.012, "penalty_s": 33, "note": "flat with a few bridges"},
