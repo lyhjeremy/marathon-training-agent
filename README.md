@@ -14,7 +14,7 @@ One recorded run, from [`examples/sample_run.md`](examples/sample_run.md): Bosto
 - `critique` found 5 issues in the first draft, including a week-5 mileage jump above 20% (23 to 28 miles). One `revise` pass fixed them and the second critique came back clean.
 - The final 16-week plan includes downhill quad work from week 3, Newton-style hill repeats, a 19-mile Boston simulation in week 12, and a taper to 22 miles in race week.
 
-`src/eval.py` is written to measure the loop across a panel of synthetic runners (safety issues before against after). Its results have not been captured yet, so there is no aggregate number.
+`src/eval.py` is written to measure the loop across a panel of synthetic runners, counting safety issues before and after. Its results haven't been captured yet, so there is no aggregate number.
 
 ## How it works
 
@@ -67,10 +67,10 @@ Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across 
 
 ## Limitations
 
-- No aggregate evaluation yet; the evidence is one recorded run.
+- There is no aggregate evaluation yet; the evidence is one recorded run.
 - Only four rules are deterministic. Intensity balance, monotony and too many hard days depend on the LLM reviewer.
 - In the recorded run the final plan peaked at 57 miles, above the 45 the assessment suggested; no check compares the two.
-- The rules are general defaults, not individualized physiology, and the plan doesn't adapt to logged training.
+- The rules are general defaults that ignore individual physiology, and the plan doesn't adapt to logged training.
 - Educational tool, not medical or professional coaching advice.
 
 ## License

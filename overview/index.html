@@ -305,9 +305,9 @@
     <h2>A single prompt can't check its own arithmetic</h2>
     <p>
       Ask a language model for a sixteen-week marathon plan and the result looks
-      right. It may also raise mileage 30% in a week, skip the taper, or prescribe
-      a 26-mile long run. Those errors are obvious to a coach and easy to miss in
-      fluent prose.
+      right, even when it raises mileage 30% in a week, skips the taper or
+      prescribes a 26-mile long run. A coach would spot those errors at a glance;
+      in fluent prose they are easy to read past.
     </p>
     <p>
       Wrapping the model in a graph adds a place to catch them. The
@@ -401,22 +401,22 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
 
   <section class="stop stop--warn">
     <p class="eyebrow">Limitations</p>
-    <h2>A demonstration, not yet a measurement</h2>
+    <h2>Evidence from a single run</h2>
     <p>
       <code>src/eval.py</code> is written to measure whether the loop makes plans
       safer: it runs three synthetic runners (two deliberately aggressive, one
       realistic control) and scores each plan with the same
       <code>_safety_checks</code> before and after the loop. Those results have
       not been captured; the run was cut short by CLI rate limits during the
-      build. This page shows one real run catching five real issues. It can't
-      give an average lift.
+      build. What this page shows is one recorded run in which the critic caught
+      five issues, which says nothing about the average lift.
     </p>
     <p>
       The deterministic checks cover four rules. Anything else, such as too many
       hard days or a monotonous build, depends on the LLM reviewer. The recorded
       plan also peaked higher than the assessment's own 45-mile suggestion, which
-      no check compares against. And the plan is generated advice for an adult
-      runner, not coaching or medical guidance.
+      no check compares against. The plan is generated advice for an adult
+      runner and is no substitute for coaching or medical guidance.
     </p>
   </section>
 
