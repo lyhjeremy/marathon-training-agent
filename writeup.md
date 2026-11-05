@@ -18,7 +18,7 @@ Splitting the critic in two was the main design decision. Models are poor at gra
 
 After `assess` moved the goal to 3:20, `adjust` added Newton-style hill repeats, sustained downhill running for quad durability, a 19-mile Boston race simulation with the hills at miles 15 to 19, and hot-day pace-band rehearsals. The critique and the single revise pass followed. The full run is in [`examples/sample_run.md`](examples/sample_run.md); every run prints its agent trace, so you can watch the self-correction happen.
 
-One run is an anecdote. `src/eval.py` is built to turn it into a measurement: it runs three synthetic runners (two deliberately aggressive, one realistic control) and scores each plan with the agent's own `_safety_checks` before and after the loop. Those numbers haven't been captured yet, because CLI rate limits cut the run short during the build. There is also a Streamlit UI (`streamlit run app.py`) that streams the agent through its nodes as it works.
+One run is an anecdote. `src/eval.py` is built to turn it into a measurement: it runs three synthetic runners (two deliberately aggressive, one realistic control) and scores each plan with the agent's own `_safety_checks` before and after the loop. Run on 2026-11-05 (`eval/measure.py`, five plans), the loop moved plans passing all four checks from 1 in 5 to 2 in 5, and one of those two came back 18 weeks long for a 10-week runner. Revisions left flagged jumps in place, added new ones, or changed the plan's length. Each plan cost $1.19 API-equivalent and took 172 seconds median. There is also a Streamlit UI (`streamlit run app.py`) that streams the agent through its nodes as it works.
 
 ## Design notes
 

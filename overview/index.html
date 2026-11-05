@@ -290,6 +290,24 @@
   .verdict ul { margin: 0; padding-left: 1.2em; color: var(--ink); }
   .verdict p { margin: 0; color: var(--ink2); }
   @media (max-width: 520px) { .viz { padding: 14px 12px 12px; } }
+  /* At a glance (same card as Race Day Copilot) */
+  .glance { margin-top: 30px; border: 1px solid var(--edge); background: var(--card); padding: 16px 18px 6px; font-family: var(--sans); }
+  .glance h2 { font: 600 clamp(20px, 2.2vw, 24px)/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 8px; max-width: none; }
+  .glance dl { margin: 0; }
+  .glance dl > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 2px 16px; padding: 9px 0; border-top: 1px solid var(--rule); }
+  .glance dt { font: 600 17px/1.25 var(--display); text-transform: uppercase; letter-spacing: .02em; color: var(--ink); }
+  .glance dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink2); }
+  .glance dd b { color: var(--ink); font-family: var(--mono); font-weight: 600; }
+  @media (max-width: 560px) { .glance { padding: 14px 12px 6px; } .glance dl > div { grid-template-columns: 1fr; } }
+  /* Measured panel: one row per plan, like a results sheet */
+  .panel { margin-top: 22px; border-top: 2px solid var(--ink); font-family: var(--sans); }
+  .panel .r { display: grid; grid-template-columns: minmax(0, 11rem) 5.5rem 5.5rem 4.5rem minmax(0, 1fr); gap: 4px 14px; padding: 10px 0; border-bottom: 1px solid var(--rule); align-items: baseline; font-size: 14.5px; color: var(--ink2); }
+  .panel .r.h { font: 600 11.5px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .panel .r b { font: 700 17px/1.2 var(--display); text-transform: uppercase; color: var(--ink); }
+  .panel .num { font: 600 15px/1 var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+  .panel .bad { color: var(--accent); }
+  @media (max-width: 700px) { .panel .r { grid-template-columns: repeat(3, minmax(0, 1fr)); } .panel .r > :first-child, .panel .r > :last-child { grid-column: 1 / -1; } .panel .r.h { display: none; }
+    .panel .num::before { content: attr(data-l) " "; font: 400 11px var(--mono); color: var(--muted); text-transform: uppercase; } }
 </style>
 
 <div class="wrap">
@@ -303,8 +321,11 @@
     <h1>A training-plan agent that checks its own plan before you see it</h1>
 
     <p class="hero-sub">
-      Asked for a 3:05 Boston off 22 miles a week, it recommended 3:20, and its critic caught five
-      problems in the first draft before anyone saw it. The agent is a LangGraph state machine with five
+      Run on its own three-runner safety panel (five plans), the critique and revise loop moved
+      the share of plans passing all four safety checks from 1 in 5 to 2 in 5, and one of those two
+      came back 18 weeks long for a runner with 10. Each plan cost $1.19 at API prices and took
+      172 seconds. In the recorded run below, asked for a 3:05 Boston off 22 miles a week, it
+      recommended 3:20 and its critic caught five problems in the first draft. The agent is a LangGraph state machine with five
       nodes. It judges whether the goal is realistic, drafts a periodized week-by-week plan, and tailors
       it to the race and the forecast heat. Then deterministic safety checks in Python run alongside an
       LLM review, and a revise node fixes whatever they flag and loops back, up to a revision budget.
@@ -333,6 +354,20 @@
         <p>caught by the critique node in that run's first draft, fixed in one revision, then a clean re-check.</p>
       </div>
     </div>
+
+    <section class="glance" aria-labelledby="glance-h">
+      <h2 id="glance-h">At a glance</h2>
+      <dl>
+        <div><dt>Task</dt><dd>Write a week-by-week marathon plan for a runner, then critique and revise it until it passes</dd></div>
+        <div><dt>Eval set</dt><dd>The three synthetic runners fixed in <code>src/eval.py</code> (two aggressive, one realistic); five plans, Boston and New York run twice</dd></div>
+        <div><dt>Baseline</dt><dd>The first draft, before the loop: <b>1 of 5</b> pass all four safety checks, 6 issues in all</dd></div>
+        <div><dt>Result</dt><dd>After the loop: <b>2 of 5</b> pass, 5 issues. One of the two is 18 weeks long for a 10-week runner</dd></div>
+        <div><dt>Cost per plan</dt><dd><b>$1.19</b> median API-equivalent ($0.98 to $1.38, n = 5), 6 to 8 Claude CLI calls on Opus 5.5</dd></div>
+        <div><dt>Latency</dt><dd><b>172 s</b> median, 179 s p95 (n = 5, Apple M4, 2026-11-05)</dd></div>
+        <div><dt>Revision loops</dt><dd><b>1.8</b> per plan on average: four plans used both revisions, one used one</dd></div>
+        <div><dt>Main failure</dt><dd>Revisions don't reliably fix what the checks flag: of the 4 plans whose draft failed a check, 3 still failed one at the end. The LLM review raised issues of its own in 11 of 14 rounds</dd></div>
+      </dl>
+    </section>
   </section>
 </div>
 
@@ -385,6 +420,37 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
   • critique → clean</pre></div>
     <p class="splits-note">Output of <code>src/cli.py</code>, quoted verbatim apart from line breaks and two status symbols left out.
       The trace shows only the first of the five issues; the run didn't record the other four or the first draft.</p>
+  </section>
+
+  <section class="stop stop--key" id="measured">
+    <p class="eyebrow">Measured</p>
+    <h2>Five plans through the loop</h2>
+    <p>
+      <code>eval/measure.py</code> runs the three runners in <code>src/eval.py</code> through the
+      same node sequence the agent uses and scores the raw draft (out of <code>adjust</code>) and the
+      final plan with the agent's own <code>_safety_checks</code>. It ran each runner twice and stopped
+      starting new plans after 34 CLI calls, so Boston and New York ran twice and Berlin once. Every
+      draft and final plan is saved in <code>eval/runs.json</code>.
+    </p>
+    <div class="panel" role="table" aria-label="Safety issues before and after the loop for each plan">
+      <div class="r h" role="row"><span role="columnheader">Runner</span><span role="columnheader">Draft issues</span><span role="columnheader">Final issues</span><span role="columnheader">Revisions</span><span role="columnheader">What happened</span></div>
+      <div class="r" role="row"><b role="cell">Boston 3:00, 12 wk</b><span class="num" data-l="draft" role="cell">2</span><span class="num bad" data-l="final" role="cell">1</span><span class="num" data-l="rev" role="cell">2</span><span role="cell">The week 5 and 8 jumps were fixed and a new one appeared at week 9 (25 to 33 miles)</span></div>
+      <div class="r" role="row"><b role="cell">Boston 3:00, 12 wk</b><span class="num" data-l="draft" role="cell">2</span><span class="num bad" data-l="final" role="cell">2</span><span class="num" data-l="rev" role="cell">2</span><span role="cell">Both jumps survived two revisions almost unchanged</span></div>
+      <div class="r" role="row"><b role="cell">New York 3:30, 10 wk</b><span class="num" data-l="draft" role="cell">1</span><span class="num" data-l="final" role="cell">0</span><span class="num" data-l="rev" role="cell">1</span><span role="cell">Passed, but the revision returned 18 weeks; no check compares the length with the 10 asked for</span></div>
+      <div class="r" role="row"><b role="cell">New York 3:30, 10 wk</b><span class="num" data-l="draft" role="cell">1</span><span class="num bad" data-l="final" role="cell">2</span><span class="num" data-l="rev" role="cell">2</span><span role="cell">Worse: one jump became two (33 to 42, 38 to 50), and week 1 rose to 32 miles for a runner at 25</span></div>
+      <div class="r" role="row"><b role="cell">Berlin 3:10, 18 wk</b><span class="num" data-l="draft" role="cell">0</span><span class="num" data-l="final" role="cell">0</span><span class="num" data-l="rev" role="cell">2</span><span role="cell">The draft already passed; revision 1 added four ramp jumps and revision 2 took them out, while the LLM review kept listing issues</span></div>
+    </div>
+    <p style="margin-top:18px">
+      Issues here are the four deterministic checks only. The critique node also merges in the LLM
+      review, which raised issues of its own in 11 of 14 rounds; between the two, four of five plans
+      ran out of revisions. The assessment is not stable either: the same Boston runner was told 3:45 in one
+      run and 4:15 in the other. Outcomes are hand-coded in <code>eval/error_analysis.json</code>.
+    </p>
+    <dl class="specs">
+      <div class="spec"><dt>Cost per plan</dt><dd>$1.19 median, $0.98 to $1.38, mean $1.18 (n = 5). This is the API-equivalent <code>total_cost_usd</code> that <code>claude -p --output-format json</code> reports, on Opus 5.5, the CLI's default; it runs on a subscription, so nothing was billed</dd></div>
+      <div class="spec"><dt>Latency</dt><dd>172 s median, 179 s p95 per plan (n = 5) on an Apple M4, 2026-11-05. Median per call by node: revise 32 s, plan 23 s, adjust 20 s, critique 15 s, assess 6 s (<code>eval/calls.csv</code>)</dd></div>
+      <div class="spec"><dt>Loops</dt><dd>9 revisions over 5 plans, 6 to 8 LLM calls per plan, 38 in all</dd></div>
+    </dl>
   </section>
 
   <section class="stop">
@@ -465,13 +531,12 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
 
   <section class="stop stop--warn">
     <p class="eyebrow">Limitations</p>
-    <h2>Evidence from a single run</h2>
+    <h2>Five plans, and the loop barely helps</h2>
     <p>
-      <code>src/eval.py</code> is written to measure whether the loop makes plans safer: it runs three
-      synthetic runners (two deliberately aggressive, one realistic control) and scores each plan with the
-      same <code>_safety_checks</code> before and after the loop. Those results have not been captured;
-      the run was cut short by CLI rate limits during the build. This page shows one recorded run in
-      which the critic caught five issues, which says nothing about the average lift.
+      The measured panel is five plans from three synthetic runners, so 1 in 5 against 2 in 5 is
+      not a stable rate, but the failures in it are real: revisions that leave a flagged jump in
+      place, add new ones, or change the plan's length. The recorded run in which the critic caught
+      five issues and fixed them in one revision is the good case, not the typical one.
     </p>
     <p>
       The deterministic checks cover four rules. Anything else, such as too many hard days or a

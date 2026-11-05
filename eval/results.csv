@@ -1,0 +1,6 @@
+run,race,goal,raw_issues,final_issues,raw_pass,final_pass,revisions,ended_clean,llm_calls,wall_s,cost_usd
+boston-3:00:00-r1,boston,3:00:00,2,1,False,False,2,False,8,172.2,1.3204
+nyc-3:30:00-r1,nyc,3:30:00,1,0,False,True,1,True,6,130.8,0.9825
+berlin-3:10:00-r1,berlin,3:10:00,0,0,True,True,2,False,8,177.8,1.3843
+boston-3:00:00-r2,boston,3:00:00,2,2,False,False,2,False,8,179.0,1.1915
+nyc-3:30:00-r2,nyc,3:30:00,1,2,False,False,2,False,8,157.9,1.0287

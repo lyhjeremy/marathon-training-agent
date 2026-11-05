@@ -1,6 +1,7 @@
 # Marathon training agent
 
 A LangGraph agent that writes a personalized marathon training plan, then critiques it with deterministic safety checks plus an LLM review and revises it until it passes.
+On its own three-runner safety panel (five plans, 2026-11-05) the loop moved plans passing all four checks from 1 in 5 to 2 in 5, and one of the two came back 18 weeks long for a 10-week runner; each plan cost $1.19 API-equivalent and took 172 s median.
 
 [Live site](https://lyhjeremy.github.io/marathon-training-agent/) · [Write-up](https://lyhjeremy.github.io/marathon-training-agent/overview/) · [Long-form notes](writeup.md) · [Recorded run](examples/sample_run.md)
 
@@ -14,7 +15,19 @@ One recorded run, from [`examples/sample_run.md`](examples/sample_run.md): Bosto
 - `critique` found 5 issues in the first draft, including a week-5 mileage jump above 20% (23 to 28 miles). One `revise` pass fixed them and the second critique came back clean.
 - The final 16-week plan includes downhill quad work from week 3, Newton-style hill repeats, a 19-mile Boston simulation in week 12, and a taper to 22 miles in race week.
 
-`src/eval.py` is written to measure the loop across a panel of synthetic runners, counting safety issues before and after. Its results haven't been captured yet, so there is no aggregate number. The [write-up page](https://lyhjeremy.github.io/marathon-training-agent/overview/) has a JavaScript port of `_safety_checks` that you can run against edited versions of the recorded plan.
+`python -m eval.measure` runs the three synthetic runners from `src/eval.py` through the same nodes (Boston and New York twice, Berlin once, stopping after 34 CLI calls), scores the raw draft and the final plan with `_safety_checks`, and records the cost and time of every Claude CLI call. Run on 2026-11-05 on an Apple M4:
+
+| | Raw draft | After the loop |
+|---|---|---|
+| Plans passing all four checks | 1 of 5 | 2 of 5 |
+| Safety issues, all plans | 6 | 5 |
+
+- Revision loops: 1.8 per plan (four plans used both revisions, one used one). The LLM review raised issues of its own in 11 of 14 critique rounds, which is why most plans ran out of revisions.
+- Cost: $1.19 median API-equivalent per plan ($0.98 to $1.38, n = 5), 6 to 8 calls on Opus 5.5, the CLI's default. This is the `total_cost_usd` that `claude -p --output-format json` reports; the CLI runs on a subscription, so nothing was billed.
+- Latency: 172 s median, 179 s p95 per plan (n = 5). `revise` is the slowest node at 32 s median per call.
+- Failures: one plan passed only because its revision came back 18 weeks long for a 10-week runner (no check compares the length); one revision turned one ramp jump into two; one left both jumps in place; one fixed two and added a new one. The same Boston runner was assessed at 3:45 in one run and 4:15 in the other. Hand-coded in `eval/error_analysis.json`; every draft and final plan is in `eval/runs.json`.
+
+The [write-up page](https://lyhjeremy.github.io/marathon-training-agent/overview/) has a JavaScript port of `_safety_checks` that you can run against edited versions of the recorded plan.
 
 ## How it works
 
@@ -59,6 +72,7 @@ Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across 
 | `src/knowledge.py` | Course-difficulty (simulated), heat-tax and pacing figures from my analyses |
 | `src/util.py` | JSON extraction from LLM output |
 | `src/eval.py` | Safety evaluation of the critique/revise loop |
+| `eval/` | `measure.py` (the 2026-11-05 panel run with cost and latency), its runs, per-call rows and error analysis |
 | `src/llm.py` | LLM wrapper: Claude CLI (default) or Anthropic API |
 | `src/cli.py` | Collect inputs, run the agent, print the plan and agent trace |
 | `app.py` | Streamlit UI |
@@ -67,7 +81,8 @@ Set `CLAUDE_MODEL` (for example `haiku`) to trade some quality for speed across 
 
 ## Limitations
 
-- There is no aggregate evaluation yet; the evidence is one recorded run.
+- The measured panel is five plans from three synthetic runners, too few for a stable rate.
+- No check compares the plan's length with the weeks asked for, or its first week with the runner's current mileage.
 - Only four rules are deterministic. Intensity balance, monotony and too many hard days depend on the LLM reviewer.
 - In the recorded run the final plan peaked at 57 miles, above the 45 the assessment suggested; no check compares the two.
 - The course figures in `src/knowledge.py` are simulated. They come from an earlier version of my Majors course-difficulty simulation (a simulated field with course penalties planted in code), so they don't measure the courses, and they differ from the current study (the file has London 28 s, Tokyo 33 s and a Boston index of 1.036; the study's paired method gives 30.7 s, 21.0 s and a composite of 1.0092). The file says so in a comment, and the course line in the `adjust` prompt labels the figure as a simulated estimate, not a race result. They only steer the wording of `adjust`; no safety check reads them.

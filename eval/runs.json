@@ -1,0 +1,1739 @@
+[
+ {
+  "assessment": {
+   "feasible": false,
+   "recommended_goal_time": "3:45:00",
+   "peak_weekly_miles": 36,
+   "rationale": "A 3:00 marathon means holding about 6:52 per mile for 26.2 miles, and runners who do that usually build to 50-70 miles a week. Starting from 20 miles a week and an 8-mile long run, 12 weeks on 4 days a week is only enough to reach about 36 miles a week safely, so aim for about 3:45 and adjust once a tune-up race or long-run paces show your actual fitness."
+  },
+  "raw_issues": [
+   "week 5 jumps mileage >20% (21→26)",
+   "week 8 jumps mileage >20% (25→32)"
+  ],
+  "final_issues": [
+   "week 9 jumps mileage >20% (25→33)"
+  ],
+  "critiques": [
+   [
+    "week 5 jumps mileage >20% (21→26)",
+    "week 8 jumps mileage >20% (25→32)",
+    "The long run takes too large a share of weekly volume in the peak block: 16 of 32 mi (50%), 18 of 34 (53%) and 20 of 36 (56%). The usual ceiling is about 30-35%, and going past it on 4 runs a week raises injury risk.",
+    "The long run grows from 8 to 20 mi in 10 weeks on a base of only 20 mpw, and the 20-miler includes 4-5 mi at goal pace on hills. For this volume that is aggressive. A 16-18 mi cap, or keeping the 20 at easy effort, would be safer.",
+    "Weeks 8-10 have too many hard days. Week 8 puts a tempo, a long run with marathon-pace miles and downhill repeats into a 4-run week. Week 9 has 6 mi at marathon pace, a long run with hills at marathon effort and a hot-day pace run. That leaves almost no easy running between hard sessions.",
+    "Weekly volume jumps 28% from week 7 to week 8 (25 to 32 mi). That comes straight after a step-back week and together with the first 16-miler and the new downhill repeats.",
+    "Hard downhill repeats in week 8 and the hill work on top of a 16-20 mi long run put a lot of eccentric load on quads in a low-mileage runner. Downhill volume should come in more gradually, with only one hill-focused session a week.",
+    "A peak of 36 mpw is thin for an 8:35/mi (about 3:45) marathon goal, and the late-race pace may not hold. The cool-weather goal is optimistic unless the runner has previous marathon or half-marathon results to support it.",
+    "Week 8 says 4 mi at marathon pace but places it in miles 11-15, which is 5 miles. One of the two numbers needs correcting."
+   ],
+   [
+    "Week 9 to 10 raises weekly mileage from 32 to 37 (about 16%) and the long run from 13 to 15 mi in the same week; spread the jump over two weeks or cap week 10 near 35 mi",
+    "The 15 mi long run is about 40% of a 37 mi week, which is a heavy share of weekly load; trim it to 14 mi or add an easy mile or two elsewhere",
+    "Week 10 puts the peak volume, the longest run and a rolling-hill course in one week, right after week 9's downhill repeats; drop the cruise intervals or make them shorter that week",
+    "A 37 mi peak and a 15 mi longest run are thin preparation for 26.2 mi, so the 8:35/mi goal is optimistic unless the week-8 10K clearly supports it; the plan should default to the slower band",
+    "Week 8 is labeled a step-back week but includes an all-out 10K and a 10 mi long run; schedule the long run at least 3 days after the time trial or shorten it to 8 mi"
+   ],
+   [
+    "week 9 jumps mileage >20% (25→33)",
+    "The longest run is 14 mi (week 10), which leaves a 12+ mi gap to 26.2. For a 36 mi peak week, aim for at least one 16-18 mi run in weeks 9-10, or expect the late miles of the race to be very hard.",
+    "Peak volume is only 36 mi, and only one week tops 33 mi. That is thin support for an 8:35-9:00/mi marathon goal, so the default pace band may be too optimistic.",
+    "Week 10's focus says the long run and the hills are the only hard work, but no hill session is listed that week. The note contradicts the session list."
+   ]
+  ],
+  "revisions": 2,
+  "ended_clean": false,
+  "draft": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 20,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "Easy runs at 9:45-10:15/mi",
+     "4 x 20s strides after one easy run",
+     "Run one easy day in the warmest part of the day, drinking to thirst"
+    ],
+    "focus": "Settle into 4 runs per week at easy effort and start light heat exposure"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 22,
+    "long_run_miles": 9,
+    "quality_sessions": [
+     "6 x 20s strides",
+     "Hill circuit: 6 x 45s uphill, jog down slowly to load quads on the descent"
+    ],
+    "focus": "Add volume and early uphill and downhill strength"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 24,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "Fartlek: 6 x 1 min moderate-hard / 2 min easy, even effort across all reps",
+     "8 x 45s hill repeats with controlled downhill jog recoveries",
+     "Long run: first 3 mi deliberately slow, practice a controlled start"
+    ],
+    "focus": "Build aerobic base, quad strength and the habit of starting slow"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 21,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "Step-back week: easy runs plus 6 x 20s strides",
+     "Weigh before and after one run to estimate sweat rate"
+    ],
+    "focus": "Recover and measure sweat rate to plan hydration"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 26,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "Tempo: 3 mi at 8:00-8:10/mi",
+     "Long run: last 2 mi at marathon pace (8:35/mi), even splits, no surge",
+     "Practice fueling: gel or carbs every 40 min plus fluids per sweat rate"
+    ],
+    "focus": "Introduce threshold work, even marathon pace and gut training"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 29,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Cruise intervals: 3 x 1.5 mi at 8:00/mi, 2 min jog",
+     "Long run on rolling hills, fueling every 40 min, run in the warmth or overdressed",
+     "Easy run in heat (or extra layers) 2x this week to begin acclimation"
+    ],
+    "focus": "Extend the long run, rehearse race nutrition and start heat acclimation"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 25,
+    "long_run_miles": 11,
+    "quality_sessions": [
+     "Step-back week: 4 mi steady at 8:35/mi, matched even splits",
+     "6 x 20s strides",
+     "Easy run in heat to keep acclimation going"
+    ],
+    "focus": "Lighter week while holding heat exposure"
+   },
+   {
+    "week": 8,
+    "phase": "Build",
+    "weekly_miles": 32,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "Tempo: 4 mi at 8:00-8:10/mi",
+     "Long run: opening 4 mi downhill or rolling at controlled effort, then 4 mi at 8:35/mi in miles 11-15",
+     "Downhill repeats: 6 x 60s on a moderate descent for quad durability"
+    ],
+    "focus": "Quad durability for Boston's downhill start and marathon pace on tiring legs"
+   },
+   {
+    "week": 9,
+    "phase": "Peak",
+    "weekly_miles": 34,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "Marathon pace: 6 mi at 8:35/mi within a 9 mi run, even splits",
+     "Long run: hilly miles 13-17 at marathon effort, not pace, to simulate the Newton hills at ~30 km",
+     "Hot-day pace practice: 3 mi at 9:10-9:20/mi in warm conditions"
+    ],
+    "focus": "Hills on tired legs at the point of the race where pace usually breaks"
+   },
+   {
+    "week": 10,
+    "phase": "Peak",
+    "weekly_miles": 36,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "Cruise intervals: 4 x 1 mi at 8:00/mi",
+     "20-mile dress rehearsal: race kit, breakfast, fueling every 40 min, hydration per sweat rate, controlled downhill opening",
+     "In the rehearsal: miles 16-20 at goal pace over rolling hills to cover the 26-32 km stretch"
+    ],
+    "focus": "Peak week and full rehearsal of the 30-42 km segment with fueling"
+   },
+   {
+    "week": 11,
+    "phase": "Taper",
+    "weekly_miles": 27,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "5 mi at marathon pace (8:35/mi) within a 7 mi run, even splits",
+     "6 x 20s strides",
+     "Two short easy runs in heat to hold acclimation; check race forecast"
+    ],
+    "focus": "Cut volume about 25%, keep intensity and heat adaptation"
+   },
+   {
+    "week": 12,
+    "phase": "Taper",
+    "weekly_miles": 14,
+    "long_run_miles": 6,
+    "quality_sessions": [
+     "3 mi with 2 mi at 8:35/mi (or 9:10-9:20/mi if forecast is warm) early in the week",
+     "2 mi shakeout with 4 strides the day before",
+     "Race day: Boston Marathon, even effort; 8:35/mi if cool, 9:10-9:20/mi at ~74°F; hold back on the downhill first 4 mi, fuel every 40 min, drink at every station in heat"
+    ],
+    "focus": "Rest, carb-load the final 2-3 days, pick the pace band from the forecast, race"
+   }
+  ],
+  "final": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 20,
+    "long_run_miles": 7,
+    "quality_sessions": [
+     "Easy runs at 9:45-10:15/mi, 4 runs",
+     "4 x 20s strides after one easy run",
+     "One easy run in the warmest part of the day, drinking to thirst"
+    ],
+    "focus": "Settle into 4 easy runs a week and start light heat exposure"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 22,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "6 x 20s strides",
+     "Hill circuit: 6 x 30s uphill at moderate effort, walk or very slow jog down"
+    ],
+    "focus": "Add volume and uphill strength; downhill load stays minimal"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 24,
+    "long_run_miles": 9,
+    "quality_sessions": [
+     "Fartlek: 6 x 1 min moderate-hard / 2 min easy, even effort",
+     "Long run: first 3 mi deliberately slow to practice a controlled start"
+    ],
+    "focus": "Build the aerobic base and the habit of starting slow; one quality day plus the long run"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 21,
+    "long_run_miles": 7,
+    "quality_sessions": [
+     "Step-back week: easy runs plus 6 x 20s strides",
+     "Weigh before and after one run to estimate sweat rate"
+    ],
+    "focus": "Recover and measure sweat rate to plan hydration"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 25,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "Tempo: 3 mi at 8:05-8:15/mi",
+     "Long run easy, fueling every 40 min plus fluids per sweat rate",
+     "4 x 30s gentle downhill strides after an easy run"
+    ],
+    "focus": "Move to 5 runs a week (extra run 3 mi easy); introduce threshold work, gut training and light downhill running"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 28,
+    "long_run_miles": 11,
+    "quality_sessions": [
+     "Cruise intervals: 3 x 1.5 mi at 8:05/mi, 2 min jog",
+     "Long run easy on gently rolling terrain, fueling every 40 min",
+     "Easy run in heat or extra layers twice this week"
+    ],
+    "focus": "Extend the long run, rehearse nutrition and start heat acclimation"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 31,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 x 45s hill repeats with controlled downhill jog recoveries (the week's only hill session)",
+     "Long run on flat ground: last 3 mi at 8:50-9:00/mi (default marathon pace), even splits",
+     "6 x 20s strides"
+    ],
+    "focus": "Two hard days only: hills midweek and a fast-finish long run at the default pace band"
+   },
+   {
+    "week": 8,
+    "phase": "Build",
+    "weekly_miles": 25,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "Step-back week: 10K time trial or race on Tuesday or Wednesday, easy runs only for the next 2 days",
+     "Set marathon pace at 10K pace plus 45-55 s/mi",
+     "8 mi easy long run on the weekend, at least 3 days after the 10K; keep heat exposure on one run"
+    ],
+    "focus": "Recover and test fitness; default marathon pace is 8:50-9:00/mi, and 8:35/mi applies only if the 10K is about 7:40-7:45/mi or faster"
+   },
+   {
+    "week": 9,
+    "phase": "Peak",
+    "weekly_miles": 33,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "Downhill repeats: 6 x 45s on a moderate descent, easy effort uphill (only hill session)",
+     "Long run on flat ground: miles 9-12 at the pace set by the week-8 10K (4 mi), fueling every 40 min"
+    ],
+    "focus": "Two hard days separated by at least two easy runs; marathon pace on tiring legs"
+   },
+   {
+    "week": 10,
+    "phase": "Peak",
+    "weekly_miles": 36,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "No interval session this week: easy runs plus 6 x 20s strides on one day",
+     "14 mi dress rehearsal at easy effort on gently rolling hills: race kit, breakfast, fueling every 40 min, hydration per sweat rate, controlled downhill opening",
+     "Add an easy 5-6 mi midweek run so the long run is under 40% of the week"
+    ],
+    "focus": "Peak week, up about 9% from week 9; the long run and the hills are the only hard work after last week's downhill repeats"
+   },
+   {
+    "week": 11,
+    "phase": "Taper",
+    "weekly_miles": 28,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "4 mi at marathon pace (from the 10K) within a 7 mi run, even splits",
+     "6 x 20s strides",
+     "Two short easy runs in heat; check race forecast"
+    ],
+    "focus": "Cut volume about 22%, keep some intensity and heat adaptation"
+   },
+   {
+    "week": 12,
+    "phase": "Taper",
+    "weekly_miles": 14,
+    "long_run_miles": 5,
+    "quality_sessions": [
+     "5 mi with 2 mi at marathon pace early in the week",
+     "2 mi shakeout with 4 strides the day before",
+     "Race day: even effort at 8:50-9:00/mi by default (8:35/mi only if the 10K clearly supports it), 9:15-9:30/mi at ~74°F; hold back on the downhill first 4 mi, fuel every 40 min"
+    ],
+    "focus": "Rest, carb-load the final 2-3 days, start in the slower band unless the 10K and forecast both support faster, race"
+   }
+  ],
+  "run": "boston-3:00:00-r1",
+  "profile": {
+   "goal_race": "boston",
+   "goal_time": "3:00:00",
+   "weeks": 12,
+   "current_mpw": 20,
+   "longest_run_mi": 8,
+   "days_per_week": 4,
+   "race_temp_f": 74
+  },
+  "error": null,
+  "llm_calls": 8,
+  "wall_s": 172.2,
+  "cost_usd": 1.3204
+ },
+ {
+  "assessment": {
+   "feasible": false,
+   "recommended_goal_time": "3:55:00",
+   "peak_weekly_miles": 40,
+   "rationale": "A 3:30 marathon means about 8:01 per mile, and most runners who hit that are doing 40 to 55 miles a week for several months; going from 25 to that range in 10 weeks raises injury risk, and the NYC bridges add time. If you build to around 40 miles a week with long runs of 18 to 20 miles, 3:50 to 4:00 is a realistic target, and you can adjust it after a tune-up half marathon around week 6."
+  },
+  "raw_issues": [
+   "week 5 jumps mileage >20% (27→34)"
+  ],
+  "final_issues": [],
+  "critiques": [
+   [
+    "week 5 jumps mileage >20% (27→34)",
+    "Long runs take up 45-50% of weekly mileage every week (12 of 25, 16 of 34, 20 of 40). On 5 runs a week that is lopsided. Keep long runs nearer 30-35% of weekly volume, or raise the weekday mileage.",
+    "A 40 mpw peak is thin support for a 20 mi run with 6 miles at marathon effort. That one session is half of the week's mileage.",
+    "Week 1 opens with a 12 mi long run at 25 mpw, and the plan never states the runner's current base. That start is only safe if they already run 12 mi regularly.",
+    "Weeks 5-8 put marathon-effort or hill work into every long run, on top of a second session of intervals, hill repeats or tempo. That is two hard days a week for four weeks in a row with no easy long run in between.",
+    "Week 6 puts hill repeats with fast downhills and an 18 mi run with 5 hilly marathon-effort miles in the same week. Together that is a big eccentric load on the quads at the plan's highest-intensity point.",
+    "The 10-week build is short. It ramps from 25 to 40 mpw with only one step-back week (week 4), leaving little room to absorb a missed week or a minor injury."
+   ],
+   []
+  ],
+  "revisions": 1,
+  "ended_clean": true,
+  "draft": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 25,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 x 20s strides after an easy run",
+     "Easy long run at 10:00-10:30/mi on rolling terrain, even effort first mile to last"
+    ],
+    "focus": "Aerobic base, settle into 5 runs a week, start easy and hold effort level"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 28,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "Fartlek on hills: 6 x 2 min moderate (include climbs), 2 min easy",
+     "Long run with gel every 45 min; 8 x 20s strides after an easy run"
+    ],
+    "focus": "Build aerobic volume, start hill exposure and gut training"
+   },
+   {
+    "week": 3,
+    "phase": "Build",
+    "weekly_miles": 31,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Tempo: 3 mi at 8:15/mi",
+     "Long run with last 2 mi at marathon effort (8:58/mi) over a rolling finish"
+    ],
+    "focus": "Add threshold work, first marathon-pace miles on tired legs"
+   },
+   {
+    "week": 4,
+    "phase": "Build",
+    "weekly_miles": 27,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 x 20s strides",
+     "Easy rolling run with 4 x 90s controlled downhills for quad conditioning"
+    ],
+    "focus": "Step-back week; start eccentric quad work for bridge descents"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 34,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "Intervals: 5 x 1 km at 7:45/mi pace, 2 min jog",
+     "16 mi long run: first 3 mi held back to 9:15/mi, miles 11-15 at 8:58/mi effort on hills, gel every 30-40 min"
+    ],
+    "focus": "Raise volume, practice controlled starts and fueling before the late-race segment"
+   },
+   {
+    "week": 6,
+    "phase": "Peak",
+    "weekly_miles": 37,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "Hill repeats: 6 x 90s uphill plus controlled downhill jog, modeled on the Queensboro Bridge (mile 15-16)",
+     "18 mi long run with miles 13-17 at marathon effort over rolling hills, Fifth Ave/Central Park simulation"
+    ],
+    "focus": "NYC-specific strength: climbs at even effort, downhills for quads, race-pace work past 30 km fatigue"
+   },
+   {
+    "week": 7,
+    "phase": "Peak",
+    "weekly_miles": 40,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "Tempo: 2 x 2.5 mi at 8:15/mi on a rolling route, 3 min jog",
+     "20 mi dress rehearsal: even effort from mile 1, last 6 mi at marathon effort with a sustained climb near mile 18, race gels and shoes"
+    ],
+    "focus": "Peak week; rehearse the 30-42 km segment on hills with full race fueling"
+   },
+   {
+    "week": 8,
+    "phase": "Taper",
+    "weekly_miles": 32,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Marathon pace: 4 mi at 8:58/mi effort on rolling terrain",
+     "14 mi long run with last 3 mi at marathon effort, include one long downhill"
+    ],
+    "focus": "Begin taper, cut volume about 20%, keep intensity and hill feel"
+   },
+   {
+    "week": 9,
+    "phase": "Taper",
+    "weekly_miles": 25,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "Tempo: 2 mi at 8:15/mi",
+     "3 mi at marathon effort inside an 8 mi run, starting with a held-back first mile"
+    ],
+    "focus": "Freshen legs, sleep well, raise carbs; rehearse the race-day fueling plan"
+   },
+   {
+    "week": 10,
+    "phase": "Taper",
+    "weekly_miles": 16,
+    "long_run_miles": 6,
+    "quality_sessions": [
+     "Shakeout: 3 mi with 4 x 1 min at 8:58/mi",
+     "Race day: NYC Marathon 26.2 mi; run by effort, let the Verrazzano climb and bridges cost time, do not chase pace on uphills, gel every 30-40 min, hold effort through Fifth Ave and Central Park"
+    ],
+    "focus": "Race week: pre-race miles listed; even effort, not even splits, expect the hills to add about 1-1.5 min to the flat-course time of 3:55:00"
+   }
+  ],
+  "final": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 25,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "6 x 20s strides after an easy run",
+     "Easy 8 mi long run at 10:00-10:30/mi on rolling terrain, even effort first mile to last"
+    ],
+    "focus": "Assumes a current base of about 20-25 mpw with an 8-10 mi run in the last month; if the longest recent run is under 7 mi, repeat this week before moving on"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 27,
+    "long_run_miles": 9,
+    "quality_sessions": [
+     "8 x 20s strides after an easy run",
+     "Easy 9 mi long run with a gel at 45 min to start gut training"
+    ],
+    "focus": "Settle into 5 runs a week, add volume to the weekday runs"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 30,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "Fartlek on hills: 6 x 2 min moderate (include climbs), 2 min easy",
+     "Easy 10 mi long run, gel every 45 min"
+    ],
+    "focus": "Build aerobic volume, first hill exposure"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 26,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "6 x 20s strides",
+     "Easy rolling run with 4 x 90s controlled downhills for quad conditioning"
+    ],
+    "focus": "Step-back week; start light eccentric quad work for bridge descents"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 31,
+    "long_run_miles": 11,
+    "quality_sessions": [
+     "Tempo: 2 x 1.5 mi at 8:15/mi, 3 min jog",
+     "Easy 11 mi long run, gel every 40 min"
+    ],
+    "focus": "Add threshold work; long run stays easy"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 34,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "Hill repeats: 6 x 60s uphill at strong effort, easy jog back down",
+     "Easy 12 mi long run on flat to rolling terrain"
+    ],
+    "focus": "Uphill strength with an easy downhill recovery; easy long run keeps one hard day this week"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 37,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "Easy 6 mi with 6 x 20s strides (no midweek workout)",
+     "13 mi long run with the last 2 mi at marathon effort (8:58/mi)"
+    ],
+    "focus": "First marathon-pace miles on tired legs; only one hard day this week"
+   },
+   {
+    "week": 8,
+    "phase": "Build",
+    "weekly_miles": 32,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "6 x 20s strides plus 4 x 90s controlled downhills",
+     "Easy 10 mi long run"
+    ],
+    "focus": "Step-back week to absorb the first build block"
+   },
+   {
+    "week": 9,
+    "phase": "Build",
+    "weekly_miles": 38,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "Intervals: 5 x 1 km at 7:45/mi pace, 2 min jog",
+     "Easy 13 mi long run on rolling terrain"
+    ],
+    "focus": "Raise weekday mileage; long run stays easy in an interval week"
+   },
+   {
+    "week": 10,
+    "phase": "Build",
+    "weekly_miles": 41,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Easy 7 mi with 8 x 20s strides (no midweek workout)",
+     "14 mi long run with miles 10-13 at marathon effort, gel every 30-40 min"
+    ],
+    "focus": "Practice a held-back start and fueling before marathon-effort miles"
+   },
+   {
+    "week": 11,
+    "phase": "Build",
+    "weekly_miles": 45,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "Hill repeats: 6 x 90s uphill modeled on the Queensboro Bridge (mile 15-16), controlled jog down",
+     "Easy 16 mi long run on flat to gently rolling terrain, gel every 30-40 min"
+    ],
+    "focus": "NYC-specific climbing strength; long run kept easy and flat so the quads are not loaded twice"
+   },
+   {
+    "week": 12,
+    "phase": "Build",
+    "weekly_miles": 38,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 x 20s strides",
+     "Easy 12 mi long run"
+    ],
+    "focus": "Step-back week; buffer for a missed week or a niggle before the peak block"
+   },
+   {
+    "week": 13,
+    "phase": "Peak",
+    "weekly_miles": 45,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "Easy 7 mi with 6 x 20s strides (no midweek workout)",
+     "16 mi long run: first 3 mi at 9:15/mi or slower, miles 11-15 at marathon effort over rolling hills"
+    ],
+    "focus": "Race-pace work on hills past 25 km fatigue; one hard day this week"
+   },
+   {
+    "week": 14,
+    "phase": "Peak",
+    "weekly_miles": 49,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "Tempo: 2 x 2.5 mi at 8:15/mi on a rolling route, 3 min jog",
+     "Easy 18 mi long run with race gels every 30-40 min"
+    ],
+    "focus": "Threshold work midweek, easy long run for time on feet"
+   },
+   {
+    "week": 15,
+    "phase": "Peak",
+    "weekly_miles": 52,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "Easy 7 mi with 6 x 20s strides (no midweek workout)",
+     "20 mi dress rehearsal: even effort from mile 1, last 5 mi at marathon effort with a sustained climb near mile 18, race gels and shoes"
+    ],
+    "focus": "Peak week; the 20-miler is 38% of a 52 mi week, with no other hard session"
+   },
+   {
+    "week": 16,
+    "phase": "Taper",
+    "weekly_miles": 42,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Marathon pace: 4 mi at 8:58/mi effort inside an 8 mi run on rolling terrain",
+     "Easy 14 mi long run, include one long downhill"
+    ],
+    "focus": "Begin taper, cut volume about 20%, keep some race-pace feel"
+   },
+   {
+    "week": 17,
+    "phase": "Taper",
+    "weekly_miles": 32,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "Tempo: 2 mi at 8:15/mi",
+     "Easy 10 mi with the middle 3 mi at marathon effort, held-back first mile"
+    ],
+    "focus": "Freshen legs, sleep well, raise carbs; rehearse the race-day fueling plan"
+   },
+   {
+    "week": 18,
+    "phase": "Taper",
+    "weekly_miles": 16,
+    "long_run_miles": 6,
+    "quality_sessions": [
+     "Shakeout: 3 mi with 4 x 1 min at 8:58/mi",
+     "Race day: NYC Marathon 26.2 mi; run by effort, let the Verrazzano climb and bridges cost time, gel every 30-40 min, hold effort through Fifth Ave and Central Park"
+    ],
+    "focus": "Race week: pre-race miles listed; even effort, not even splits, expect the hills to add about 1-1.5 min to the flat-course time of 3:55:00"
+   }
+  ],
+  "run": "nyc-3:30:00-r1",
+  "profile": {
+   "goal_race": "nyc",
+   "goal_time": "3:30:00",
+   "weeks": 10,
+   "current_mpw": 25,
+   "longest_run_mi": 12,
+   "days_per_week": 5,
+   "race_temp_f": null
+  },
+  "error": null,
+  "llm_calls": 6,
+  "wall_s": 130.8,
+  "cost_usd": 0.9825
+ },
+ {
+  "assessment": {
+   "feasible": false,
+   "recommended_goal_time": "3:30:00",
+   "peak_weekly_miles": 50,
+   "rationale": "A 3:10 marathon means holding 7:15/mile for 26.2 miles, and most runners who manage that have built up to 55-65 miles a week and can show a recent half marathon around 1:30; at 35 miles a week with no race result to point to, 18 weeks isn't enough to close that gap safely. Aim for 3:30 (about 8:00/mile) and build gradually to a 50-mile peak week, and if a tune-up half in weeks 10-12 comes in under 1:33, move the target toward 3:15-3:20."
+  },
+  "raw_issues": [],
+  "final_issues": [],
+  "critiques": [
+   [
+    "The long run takes up about 40-43% of weekly mileage almost every week (14 of 35 in week 1, 20 of 48 in week 12, 21 of 50 in week 15). Most plans keep it nearer 30-35%, so either add easy mileage on other days or trim the long runs a little.",
+    "Week 11 is called a step-back week but has a 5 mi tempo and an optional tune-up half marathon raced at 1:39. That is two hard efforts in a recovery week; drop the tempo or make it easy if the half goes ahead.",
+    "Weeks 13 and 15 put 10 mi (2x5) and 8 mi of marathon pace into 20-21 mi long runs, on top of a 5x1 mi or 6x1000m session in the same week. Back-to-back peak weeks with that load leave little margin; space the VO2 session at least 3 days from the long run, or cut a rep.",
+    "Week 1 starts at 35 mi with a 14 mi long run and steady-pace work, which assumes the runner is already at about 30-35 mi/week with long runs of 12 mi or more. If they are not, the first 2-3 weeks ramp too fast."
+   ],
+   [
+    "week 5 jumps mileage >20% (30→38)",
+    "week 9 jumps mileage >20% (38→47)",
+    "week 12 jumps mileage >20% (42→54)",
+    "week 15 jumps mileage >20% (48→58)"
+   ],
+   [
+    "The threshold paces (7:20-7:30/mi) and the 6:55/mi 1000m reps are about 15-25 s/mi faster than a 3:30 marathon fitness level supports. Daniels-style tables put threshold near 7:45-7:50/mi for that goal, so these sessions risk turning into race efforts. Base them on a recent race or on the week 11 half result.",
+    "The week 15 long run is 20 of 52 miles (about 38% of the week) and includes 7 mi at marathon pace. That is a heavy single session for a runner who started at 25-30 mi/week; cap the marathon-pace miles at 5-6 or add easy volume elsewhere in the week.",
+    "Weeks 10 and 12 each pair a threshold or VO2 session with a separate midweek 5 mi marathon-pace run and a 16-17 mi long run. That makes three demanding days in a 46 mi week; make one of the midweek sessions easy or move the marathon-pace miles into the long run.",
+    "Peaking at 52 mi/week from a 25-30 mi base is a modest load for a 3:30 goal. The plan never checks whether that goal is realistic before week 16 sets an 8:00/mi race plan. Use the week 11 half (1:39 predicts about 3:25-3:30) to confirm or adjust the goal, and give a fallback pace if the runner skips the half."
+   ]
+  ],
+  "revisions": 2,
+  "ended_clean": false,
+  "draft": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 35,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "6 mi easy with 6x20s strides",
+     "5 mi steady at 8:45/mi on flat roads, even splits"
+    ],
+    "focus": "Settle into 6 days/week at easy effort (9:00-9:45/mi); Berlin is flat, so do most runs on flat routes"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 37,
+    "long_run_miles": 15,
+    "quality_sessions": [
+     "7 mi with 8x20s hill sprints for strength and form",
+     "6 mi progression from 9:15 to 8:15/mi"
+    ],
+    "focus": "Aerobic volume and running form; drink on a schedule during the long run"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 39,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "7 mi with 3x1 mi at 7:30/mi threshold, each rep within 5s of the others",
+     "6 mi easy with 6x20s strides"
+    ],
+    "focus": "First threshold work; practice even reps instead of fast first reps"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 34,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi with 6x20s strides",
+     "5 mi fartlek, 8x1 min hard and 1 min easy"
+    ],
+    "focus": "Step-back week to absorb the first block"
+   },
+   {
+    "week": 5,
+    "phase": "Base",
+    "weekly_miles": 40,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "8 mi with 2x2 mi at 7:25/mi threshold, even splits",
+     "7 mi easy with 8x100m strides"
+    ],
+    "focus": "Longer threshold intervals; take a gel at mi 8 of the long run to start gut training"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 42,
+    "long_run_miles": 17,
+    "quality_sessions": [
+     "8 mi with 5x1000m at 6:55/mi pace, 2 min jog",
+     "Long run: last 3 mi at 8:00/mi marathon pace, run on a flat loop"
+    ],
+    "focus": "Add VO2 work and the first marathon-pace miles late in the run, when legs are tired"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 44,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "9 mi with 4 mi tempo at 7:25/mi",
+     "8 mi with 5 mi at 8:00/mi marathon pace, no mile faster than 7:55"
+    ],
+    "focus": "Pace control: lock onto 8:00/mi by feel and check it against the watch"
+   },
+   {
+    "week": 8,
+    "phase": "Build",
+    "weekly_miles": 38,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "7 mi with 6x800m at 6:50/mi, 90s jog",
+     "6 mi easy with strides"
+    ],
+    "focus": "Step-back week; sharpen without extra volume"
+   },
+   {
+    "week": 9,
+    "phase": "Build",
+    "weekly_miles": 45,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "9 mi with 3x2 mi at 7:25/mi, 3 min jog",
+     "Long run: first 5 mi at 9:15/mi, then miles 13-17 at 8:00/mi marathon pace"
+    ],
+    "focus": "Controlled start, then marathon pace in the late miles; gel every 4-5 mi from mi 4"
+   },
+   {
+    "week": 10,
+    "phase": "Build",
+    "weekly_miles": 47,
+    "long_run_miles": 19,
+    "quality_sessions": [
+     "9 mi with 6x1000m at 6:55/mi",
+     "9 mi with 6 mi at 8:00/mi marathon pace"
+    ],
+    "focus": "Highest Build volume; long run finishes past 30 km (mi 18.6) to start preparing the wall zone"
+   },
+   {
+    "week": 11,
+    "phase": "Build",
+    "weekly_miles": 41,
+    "long_run_miles": 15,
+    "quality_sessions": [
+     "8 mi with 5 mi tempo at 7:25/mi",
+     "Optional tune-up half marathon at about 1:39 (7:35/mi), even splits, in place of the long run"
+    ],
+    "focus": "Step-back week with a fitness check; first 2 mi of the half no faster than 7:40/mi"
+   },
+   {
+    "week": 12,
+    "phase": "Peak",
+    "weekly_miles": 48,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "10 mi with 2x3 mi at 7:25/mi",
+     "9 mi with 7 mi at 8:00/mi marathon pace"
+    ],
+    "focus": "First 20 miler at easy pace with full race fueling; note how miles 18-20 feel"
+   },
+   {
+    "week": 13,
+    "phase": "Peak",
+    "weekly_miles": 50,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "10 mi with 5x1 mi at 7:10/mi, 2 min jog",
+     "Long run: 8 mi easy, then 2x5 mi at 8:00/mi with 1 mi easy between; second block covers the 30 km+ zone"
+    ],
+    "focus": "Peak mileage; marathon pace in miles 15-20, where the race usually turns"
+   },
+   {
+    "week": 14,
+    "phase": "Peak",
+    "weekly_miles": 44,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "9 mi with 4 mi tempo at 7:20/mi",
+     "8 mi with 6 mi at 8:00/mi marathon pace"
+    ],
+    "focus": "Step-back week before the last big effort; if training through summer heat, practice drinking 16-24 oz/hr with electrolytes"
+   },
+   {
+    "week": 15,
+    "phase": "Peak",
+    "weekly_miles": 50,
+    "long_run_miles": 21,
+    "quality_sessions": [
+     "10 mi with 6x1000m at 6:55/mi",
+     "Long run: 13 mi at 9:00/mi, last 8 mi at 8:00/mi marathon pace (race miles 18-26 simulation)"
+    ],
+    "focus": "Longest run; full race-day rehearsal of kit, breakfast and fueling, with gels taken on the race schedule"
+   },
+   {
+    "week": 16,
+    "phase": "Taper",
+    "weekly_miles": 40,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "8 mi with 3x2 mi at 7:25/mi",
+     "Long run: 6 mi at 8:00/mi marathon pace, even splits"
+    ],
+    "focus": "Taper begins: volume drops about 20%, intensity holds; set race plan of 8:00/mi from the gun"
+   },
+   {
+    "week": 17,
+    "phase": "Taper",
+    "weekly_miles": 32,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "7 mi with 4x1 mi at 8:00/mi marathon pace",
+     "5 mi easy with 6x20s strides"
+    ],
+    "focus": "Freshen up; extra sleep and carbohydrate; check Berlin forecast and set a warm-day band (about 8:10-8:15/mi if 65°F)"
+   },
+   {
+    "week": 18,
+    "phase": "Taper",
+    "weekly_miles": 18,
+    "long_run_miles": 6,
+    "quality_sessions": [
+     "Tuesday: 5 mi with 2 mi at 8:00/mi marathon pace",
+     "Saturday: 3 mi shakeout with 4 strides",
+     "Sunday: Berlin Marathon, even 8:00/mi splits for 3:30:00; first 5 km no faster than 8:00/mi, gel every 4-5 mi"
+    ],
+    "focus": "Race week: carb-load the last 2-3 days; at ~55°F no pace adjustment needed (weekly miles exclude the 26.2 race)"
+   }
+  ],
+  "final": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 30,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "5 mi easy with 6x20s strides",
+     "6 mi easy at 9:00-9:45/mi on flat roads"
+    ],
+    "focus": "Assumes a current base of about 25-30 mi/week with long runs of 8-10 mi; no steady or threshold work yet. Run 5-6 days at easy effort, mostly on flat routes because Berlin is flat"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 32,
+    "long_run_miles": 11,
+    "quality_sessions": [
+     "6 mi with 6x20s hill sprints for strength and form",
+     "6 mi easy with 6x20s strides"
+    ],
+    "focus": "Add volume on the easy days; drink on a schedule during the long run"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 35,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi progression from 9:15 to 8:30/mi",
+     "6 mi easy with 6x20s strides"
+    ],
+    "focus": "First faster running, kept controlled; 6 days/week with at least one 7 mi midweek easy run"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 30,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "5 mi easy with 6x20s strides",
+     "5 mi fartlek, 6x1 min hard and 1 min easy"
+    ],
+    "focus": "Step-back week to absorb the first block"
+   },
+   {
+    "week": 5,
+    "phase": "Base",
+    "weekly_miles": 35,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "7 mi with 3x1 mi at 7:30/mi threshold, each rep within 5s of the others",
+     "6 mi easy with 8x100m strides"
+    ],
+    "focus": "Return to week 3 volume after the step-back; first threshold work with even reps; take a gel at mi 7 of the long run to start gut training"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 38,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "8 mi with 2x2 mi at 7:25/mi threshold, even splits",
+     "Long run: last 2 mi at 8:00/mi marathon pace on a flat loop"
+    ],
+    "focus": "Longer threshold intervals and the first marathon-pace miles; a midweek 7 mi easy run carries the extra volume"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 41,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Tuesday: 8 mi with 5x1000m at 6:55/mi, 2 min jog",
+     "Long run: last 4 mi at 8:00/mi marathon pace, no mile faster than 7:55"
+    ],
+    "focus": "Add VO2 work at least 3 days before the long run; lock onto 8:00/mi by feel and check it against the watch"
+   },
+   {
+    "week": 8,
+    "phase": "Build",
+    "weekly_miles": 36,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "7 mi with 6x800m at 6:50/mi, 90s jog",
+     "6 mi easy with strides"
+    ],
+    "focus": "Step-back week; sharpen without extra volume"
+   },
+   {
+    "week": 9,
+    "phase": "Build",
+    "weekly_miles": 42,
+    "long_run_miles": 15,
+    "quality_sessions": [
+     "8 mi with 3x2 mi at 7:25/mi, 3 min jog",
+     "Long run: first 6 mi at 9:15/mi, then miles 10-14 at 8:00/mi marathon pace"
+    ],
+    "focus": "Controlled start, then marathon pace late; gel every 4-5 mi from mi 4; two 7-8 mi easy days midweek"
+   },
+   {
+    "week": 10,
+    "phase": "Build",
+    "weekly_miles": 46,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "Tuesday: 9 mi with 6x1000m at 6:55/mi",
+     "8 mi with 5 mi at 8:00/mi marathon pace"
+    ],
+    "focus": "Highest Build volume, spread across 6 days so no single run dominates the week"
+   },
+   {
+    "week": 11,
+    "phase": "Build",
+    "weekly_miles": 39,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "If racing the half: 6 mi easy with 6x20s strides midweek, no tempo",
+     "Optional tune-up half marathon at about 1:39 (7:35/mi), even splits, in place of the long run; if not racing, 13 mi easy plus a 4 mi tempo at 7:25/mi midweek"
+    ],
+    "focus": "Step-back week with one hard effort only; first 2 mi of the half no faster than 7:40/mi, and 2 easy days after it"
+   },
+   {
+    "week": 12,
+    "phase": "Peak",
+    "weekly_miles": 46,
+    "long_run_miles": 17,
+    "quality_sessions": [
+     "9 mi with 2x3 mi at 7:25/mi",
+     "8 mi with 5 mi at 8:00/mi marathon pace"
+    ],
+    "focus": "Back to week 10 volume after the step-back; 17 mi at easy pace with full race fueling; note how the last 3 mi feel"
+   },
+   {
+    "week": 13,
+    "phase": "Peak",
+    "weekly_miles": 51,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "Tuesday: 9 mi with 4x1 mi at 7:10/mi, 2 min jog",
+     "Sunday long run: 8 mi easy, then 2x4 mi at 8:00/mi with 1 mi easy between, 1 mi cooldown"
+    ],
+    "focus": "VO2 session 5 days before the long run; 8 mi of marathon pace in miles 9-17"
+   },
+   {
+    "week": 14,
+    "phase": "Peak",
+    "weekly_miles": 44,
+    "long_run_miles": 15,
+    "quality_sessions": [
+     "8 mi with 4 mi tempo at 7:20/mi",
+     "15 mi long run, easy throughout"
+    ],
+    "focus": "Step-back week before the last big effort; if training through summer heat, practice drinking 16-24 oz/hr with electrolytes"
+   },
+   {
+    "week": 15,
+    "phase": "Peak",
+    "weekly_miles": 52,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "Tuesday: 9 mi with 5x1000m at 6:55/mi",
+     "Sunday long run: 13 mi at 9:00/mi, last 7 mi at 8:00/mi marathon pace"
+    ],
+    "focus": "Peak week and longest run; VO2 session 5 days before the long run, one rep cut; full race-day rehearsal of kit, breakfast and gels on the race schedule"
+   },
+   {
+    "week": 16,
+    "phase": "Taper",
+    "weekly_miles": 42,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "8 mi with 3x2 mi at 7:25/mi",
+     "Long run: 14 mi with 5 mi at 8:00/mi marathon pace, even splits"
+    ],
+    "focus": "Taper begins: volume drops about 20%, intensity holds; set race plan of 8:00/mi from the gun"
+   },
+   {
+    "week": 17,
+    "phase": "Taper",
+    "weekly_miles": 33,
+    "long_run_miles": 11,
+    "quality_sessions": [
+     "7 mi with 4x1 mi at 8:00/mi marathon pace",
+     "5 mi easy with 6x20s strides"
+    ],
+    "focus": "Freshen up; extra sleep and carbohydrate; check the Berlin forecast and set a warm-day band (about 8:10-8:15/mi if 65°F)"
+   },
+   {
+    "week": 18,
+    "phase": "Taper",
+    "weekly_miles": 20,
+    "long_run_miles": 6,
+    "quality_sessions": [
+     "Tuesday: 6 mi with 2 mi at 8:00/mi marathon pace",
+     "Saturday: 3 mi shakeout with 4 strides",
+     "Sunday: Berlin Marathon, even 8:00/mi splits for 3:30:00; first 5 km no faster than 8:00/mi, gel every 4-5 mi"
+    ],
+    "focus": "Race week: carb-load the last 2-3 days; at about 55°F no pace adjustment is needed (weekly miles exclude the 26.2 race)"
+   }
+  ],
+  "run": "berlin-3:10:00-r1",
+  "profile": {
+   "goal_race": "berlin",
+   "goal_time": "3:10:00",
+   "weeks": 18,
+   "current_mpw": 35,
+   "longest_run_mi": 16,
+   "days_per_week": 6,
+   "race_temp_f": 55
+  },
+  "error": null,
+  "llm_calls": 8,
+  "wall_s": 177.8,
+  "cost_usd": 1.3843
+ },
+ {
+  "assessment": {
+   "feasible": false,
+   "recommended_goal_time": "4:15:00",
+   "peak_weekly_miles": 36,
+   "rationale": "A 3:00:00 marathon requires holding 6:52 per mile for 26.2 miles, which usually takes months of 50+ mile weeks; from a base of 20 miles per week and an 8-mile long run, 12 weeks on 4 days per week is only enough to build safely to about 36 miles per week with a 20-mile long run. A goal of about 4:15 is realistic for this build, and the runner can adjust it after a tune-up half marathon around week 8."
+  },
+  "raw_issues": [
+   "week 5 jumps mileage >20% (20→26)",
+   "week 8 jumps mileage >20% (25→32)"
+  ],
+  "final_issues": [
+   "week 5 jumps mileage >20% (20→26)",
+   "week 8 jumps mileage >20% (24→32)"
+  ],
+  "critiques": [
+   [
+    "week 5 jumps mileage >20% (20→26)",
+    "week 8 jumps mileage >20% (25→32)",
+    "Long runs take too large a share of weekly volume: 18 of 32 mi in week 8 (56%) and 20 of 36 mi in week 9 (56%). Most plans keep the long run near 30-40% of the week; on a 4-day schedule the other three runs are too short to support the long ones.",
+    "The long run jumps from 12 mi (week 7) to 18 mi (week 8), and the previous longest was 14 mi in week 6. Add a 16-mi step or move the 18 later.",
+    "Peak volume of 36 mi/week is thin support for a 20-miler and a 26.2 mi race. A runner at 10:30-11:00/mi will be out for about 3.5 hours on the 20-miler with little weekly mileage behind it.",
+    "The week 8 long run has 10:00/mi for the first 6 mi, which is faster than the stated easy range of 10:45-11:30/mi. It also has 5 mi at marathon pace (miles 13-17) in the plan's first 18-miler. That is too much stress for one run at this volume.",
+    "Week 8 pairs that hard 18-miler with a downhill and tired-legs uphill session, so 2 of the week's 4 runs are hard. The same happens in week 9: a 4 mi tempo plus a 20-miler with hills at miles 16-19 and a race-pace finish.",
+    "Week 7 is labeled a step-back week but still has two quality sessions (1 km repeats and downhill repeats) plus a 12-mi long run. Cut it to one quality session.",
+    "Week 6 combines a tempo with marathon-pace miles at the end of a long run that starts downhill, and it is also the first heat-training week. Hard days and new stressors are bunched together.",
+    "Week 10 is a taper week but still has a 12-mi long run, a 4 mi marathon-pace session and a heat-layer run. Cutting 28 from 36 mi is fine, but the intensity is not reduced.",
+    "The race-day note to 'drink at every station' in the heat risks hyponatremia for a slower runner on course 4+ hours. Base drinking on the week 10 sweat-rate test and thirst, and include sodium.",
+    "The plan has 12 weeks with a low base (20 mi/week at the start). That is a tight timeline for Boston's downhill course. The downhill work helps, but the volume ramp and long-run progression leave little margin if a week is missed."
+   ],
+   [
+    "Week 8 to week 9 raises weekly mileage from 33 to 39 (about 18%) and the long run from 15 to 18 mi in the same week. That is the largest jump in the plan, and it lands in the peak week.",
+    "The long run takes too large a share of weekly volume on only 4-5 running days: 8 of 20 mi (40%) in week 1, 13 of 30 (43%) in week 6 and 18 of 39 (46%) in week 9. Most guidance keeps it nearer 30-35%.",
+    "Week 7 is labeled a step-back week, but mileage only drops from 30 to 28 (about 7%). It also adds downhill repeats at marathon-pace effort and starts heat work, so it gives little real recovery before the peak block.",
+    "Starting at 20 mpw and peaking at 39 mpw in 12 weeks is a thin base for Boston's downhill course. The 18 mi cap is sensible, but the later miles of the race carry more risk, and the plan could state that more plainly in its pacing advice.",
+    "Downhill work at marathon-pace effort appears in weeks 7 and 11 with only light preparation in week 2. Eccentric quad load at that effort can leave lasting soreness, so keep it short and stop it at the first sign of soreness."
+   ],
+   [
+    "week 5 jumps mileage >20% (20→26)",
+    "week 8 jumps mileage >20% (24→32)"
+   ]
+  ],
+  "revisions": 2,
+  "ended_clean": false,
+  "draft": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 20,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "4 x 20s strides after an easy run"
+    ],
+    "focus": "Easy aerobic running at conversational pace (10:45-11:30/mi); start each run slower than you think you need to"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 22,
+    "long_run_miles": 9,
+    "quality_sessions": [
+     "6 x 20s strides after an easy run",
+     "Easy run with 3 x 2 min on a gentle downhill, relaxed form"
+    ],
+    "focus": "Build consistency over 4 days a week, all easy effort; begin light downhill exposure for the quads"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 24,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "5 mi with the middle 2 mi steady (10:15/mi)",
+     "6 x 20s strides"
+    ],
+    "focus": "Light steady running; practice drinking every 20-30 min on the long run"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 20,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "6 x 20s strides"
+    ],
+    "focus": "Step-back week: absorb the base block and recover"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 26,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi with 3 mi at marathon pace (9:44/mi), even splits",
+     "Hill repeats: 6 x 60s uphill, controlled jog down"
+    ],
+    "focus": "Start marathon-pace work and hill strength; every MP rep at the same pace, no fast finishes"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 29,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "Tempo: 2 mi warmup, 3 mi at 9:05/mi, 1 mi cooldown",
+     "Long run: first 4 mi on a downhill route, last 2 mi at marathon pace"
+    ],
+    "focus": "Raise threshold; long run fueling with a gel every 40-45 min; start heat work (extra layers or a warm treadmill room, 2 easy runs)"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 25,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "5 x 1 km at 8:45/mi with 2 min jog",
+     "Downhill repeats: 5 x 90s at MP effort, walk back up"
+    ],
+    "focus": "Step-back week: lower volume, keep speed and quad conditioning"
+   },
+   {
+    "week": 8,
+    "phase": "Peak",
+    "weekly_miles": 32,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "Long run: downhill first 6 mi at 10:00/mi, miles 13-17 at marathon pace, finish easy",
+     "Downhill practice: 4 x 90s controlled downhill, then 3 x 60s uphill on tired legs"
+    ],
+    "focus": "First 18-miler; rehearse race-day gels, fluids and shoes; marathon pace late in the run to prepare for miles 18-26"
+   },
+   {
+    "week": 9,
+    "phase": "Peak",
+    "weekly_miles": 36,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "Tempo: 4 mi at 9:05/mi",
+     "Long run on rolling terrain: easy start, hills at miles 16-19, last mile at hot-day race pace (10:25/mi)"
+    ],
+    "focus": "Peak week: longest run of the plan, no faster than 10:30/mi before the hills; fuel every 40 min and drink to a plan, in warm clothing if the weather is cold"
+   },
+   {
+    "week": 10,
+    "phase": "Taper",
+    "weekly_miles": 28,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi with 4 mi at marathon pace (9:44/mi), even splits",
+     "Easy run in heat layers, with weigh-in before and after to check sweat loss"
+    ],
+    "focus": "Taper begins: cut volume about 20%; set the race pace band (9:44/mi if cool, 10:20-10:35/mi if near 74F)"
+   },
+   {
+    "week": 11,
+    "phase": "Taper",
+    "weekly_miles": 20,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "5 mi with 3 x 1 mi at marathon pace on a downhill-then-uphill loop",
+     "6 x 20s strides"
+    ],
+    "focus": "Cut volume further; sleep; check the race forecast, fluids plan and electrolytes"
+   },
+   {
+    "week": 12,
+    "phase": "Taper",
+    "weekly_miles": 12,
+    "long_run_miles": 5,
+    "quality_sessions": [
+     "4 mi with 2 x 1 mi at marathon pace (early week)",
+     "2 mi shakeout with 4 strides the day before the race"
+    ],
+    "focus": "Race week: Boston Marathon 26.2 mi (not counted). Start 10-15s/mi slower than target down the early hills, hold even effort through Newton at ~30 km; heat over 70F means 10:20-10:35/mi and drink at every station"
+   }
+  ],
+  "final": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 20,
+    "long_run_miles": 7,
+    "quality_sessions": [
+     "4 x 20s strides after an easy run"
+    ],
+    "focus": "Easy aerobic running at conversational pace (10:45-11:30/mi) on 4 days; start each run slower than you think you need to"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 22,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "Easy run with 6 x 20s strides and 3 x 1 min on a gentle downhill, relaxed form"
+    ],
+    "focus": "Build consistency over 4 days, all easy effort; first light downhill exposure for the quads"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 24,
+    "long_run_miles": 9,
+    "quality_sessions": [
+     "5 mi with the middle 2 mi steady (10:15/mi)"
+    ],
+    "focus": "Light steady running; practice drinking to thirst on the long run and carry a sodium source"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 20,
+    "long_run_miles": 7,
+    "quality_sessions": [
+     "6 x 20s strides"
+    ],
+    "focus": "Step-back week (about 17% less volume): absorb the base block and recover"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 26,
+    "long_run_miles": 9,
+    "quality_sessions": [
+     "Hill repeats: 6 x 60s uphill at controlled effort, easy jog down",
+     "4 x 60s on a gentle downhill at easy-to-steady effort, short and relaxed"
+    ],
+    "focus": "Add a 5th day of 3 mi easy if healthy, which keeps the long run near 35% of the week. Downhill work stays short; stop it at the first sign of quad soreness"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 29,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "6 mi with 3 mi at marathon pace (9:44/mi), even splits"
+    ],
+    "focus": "Start marathon-pace work; long run fully easy (10:45-11:30/mi) with a gel every 40-45 min. No heat work yet"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 24,
+    "long_run_miles": 8,
+    "quality_sessions": [
+     "6 x 20s strides after an easy run"
+    ],
+    "focus": "Real step-back week: volume down about 17%, no downhill or marathon-pace work, no heat work. Rest and sleep before the peak block"
+   },
+   {
+    "week": 8,
+    "phase": "Peak",
+    "weekly_miles": 32,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "Tempo: 2 mi warmup, 3 mi at 9:05/mi, 1 mi cooldown"
+    ],
+    "focus": "Long run all easy (10:45-11:30/mi) on a route with some downhill; rehearse race-day gels, fluids and shoes. Begin heat work on 2 easy runs only (extra layers or a warm room)"
+   },
+   {
+    "week": 9,
+    "phase": "Peak",
+    "weekly_miles": 35,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "Downhill repeats: 4 x 90s at marathon-pace effort on a gentle grade, walk back up; stop the session at the first sign of quad soreness"
+    ],
+    "focus": "Only downhill session at marathon-pace effort in the plan, kept short. Long run easy on rolling terrain. Keep heat work on easy days"
+   },
+   {
+    "week": 10,
+    "phase": "Peak",
+    "weekly_miles": 38,
+    "long_run_miles": 15,
+    "quality_sessions": [
+     "Long run on rolling terrain: easy throughout (10:45-11:30/mi), last 2 mi at hot-day race pace (10:25/mi)"
+    ],
+    "focus": "Peak week; the long run is the only hard day. 15 mi is the longest run: it keeps the long run under 40% of weekly volume on a thin base. Fuel every 40 min with sodium. Do a sweat-rate test on one short easy run (weigh before and after, no heat layers)"
+   },
+   {
+    "week": 11,
+    "phase": "Taper",
+    "weekly_miles": 29,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "5 mi with 2 x 1 mi at marathon pace (9:44/mi) on flat ground"
+    ],
+    "focus": "Taper: volume down about 24%, no downhill work. Long run easy; sleep; check the forecast, set the pace band (9:44/mi if cool, 10:20-10:35/mi if near 74F) and build the fluid and sodium plan from the sweat test"
+   },
+   {
+    "week": 12,
+    "phase": "Taper",
+    "weekly_miles": 14,
+    "long_run_miles": 5,
+    "quality_sessions": [
+     "4 mi with 2 x 1 mi at marathon pace (early week)",
+     "2 mi shakeout with 4 strides the day before the race"
+    ],
+    "focus": "Race week: Boston Marathon 26.2 mi (not counted). Miles 16-26 are beyond any training run and come after 16 mi of downhill quad load, so expect to slow late and plan for it. Start 15-20s/mi slower than target on the early downhills, hold even effort through Newton, and treat goal pace as a ceiling. Above 70F run 10:20-10:35/mi. Drink to thirst within the sweat-test rate, about 300-600 mg sodium per hour"
+   }
+  ],
+  "run": "boston-3:00:00-r2",
+  "profile": {
+   "goal_race": "boston",
+   "goal_time": "3:00:00",
+   "weeks": 12,
+   "current_mpw": 20,
+   "longest_run_mi": 8,
+   "days_per_week": 4,
+   "race_temp_f": 74
+  },
+  "error": null,
+  "llm_calls": 8,
+  "wall_s": 179.0,
+  "cost_usd": 1.1915
+ },
+ {
+  "assessment": {
+   "feasible": false,
+   "recommended_goal_time": "3:55:00",
+   "peak_weekly_miles": 40,
+   "rationale": "A 3:30 marathon means holding 8:01 per mile for 26.2 miles, which usually takes 45 to 55 miles a week for several months, and NYC's bridges and late climb in Central Park add time on top of that. Building from 25 to about 40 miles a week over 10 weeks, with long runs up to 18 to 20 miles, makes 3:50 to 4:00 a realistic target; a recent half marathon under 1:40 would be a reason to revise it."
+  },
+  "raw_issues": [
+   "week 5 jumps mileage >20% (26→33)"
+  ],
+  "final_issues": [
+   "week 5 jumps mileage >20% (33→42)",
+   "week 8 jumps mileage >20% (38→50)"
+  ],
+  "critiques": [
+   [
+    "week 5 jumps mileage >20% (26→33)",
+    "Long runs make up 47-50% of weekly mileage in every week (for example 12 of 25 mi in week 1 and 20 of 40 mi in week 7). The usual guideline is about 30-35%, so the rest of the week is too thin to support these long runs and injury risk goes up.",
+    "A 20 mi long run on a 40 mi peak week is too long for the volume. Either raise peak weekly mileage to the mid-40s or higher, or cap the long run at about 16-18 mi.",
+    "Week 1 opens with a 12 mi long run at 25 mi/week. That only works if the runner already handles about 10-12 mi long runs comfortably; the plan doesn't state that baseline.",
+    "Weeks 5-7 put two hard sessions in each 5-day week: a tempo or threshold workout plus a long run with 5-6 mi at marathon pace and hills. With half the weekly volume in the long run, that's a lot of intensity for a 33-40 mi/week runner. Consider making some long runs fully easy.",
+    "The 10-week build has only one step-back week (week 4), then three straight weeks of increases to the peak. That's short for a marathon build at this mileage.",
+    "Week 4 is labeled Build but is a step-back week. It's a minor labeling inconsistency."
+   ],
+   [
+    "Long run takes too large a share of weekly volume: the week 8 long run is 16 of 39 mi (about 41%), and weeks 5, 6 and 9 are about 37%, which puts a lot of load on one day",
+    "The peak long run of 16 mi, with only one run over 14 mi and a peak week of 39 mi, is thin for a full marathon; expect a hard final 10 km, especially on the NYC bridges and Fifth Ave",
+    "The 8:58/mi goal pace (about a 3:55 finish) is ambitious on a 10-week build that peaks at 39 mi/week; treat it as an effort target and be ready to slow down",
+    "Taper week 9 still has two quality sessions (3 x 1 mi at 8:45 and a marathon-pace finish to the long run); dropping one would leave fresher legs for race week"
+   ],
+   [
+    "week 5 jumps mileage >20% (33→42)",
+    "week 8 jumps mileage >20% (38→50)",
+    "Week 7 to week 8 jumps from 38 to 50 mi (+32%) and adds the longest run with 5 mi at marathon effort in the same week. Week 6 already reached 46 mi, so the load is not new, but trimming week 8 to about 46-48 mi would lower the injury risk for a runner who started near 30 mi/week.",
+    "The whole build is 10 weeks from a 28-30 mi/week base, with only three runs of 14 mi or more before a hilly course. That is tight. The plan's own advice to treat 8:58/mi as an effort target and fall back to 9:10-9:20/mi if needed is necessary, not optional.",
+    "Week 10 lists long_run_miles as 5 and weekly_miles as 16, but the race is in that week's sessions. The fields should say whether the 26.2 mi race is counted."
+   ]
+  ],
+  "revisions": 2,
+  "ended_clean": false,
+  "draft": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 25,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi easy on a rolling route with 6 x 20s strides",
+     "Long run 12 mi easy at 10:15-10:45/mi on hilly terrain"
+    ],
+    "focus": "Settle into 5 days/week at easy effort; start running hills by feel"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 27,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "6 mi with 3 mi steady at 9:15/mi on rolling terrain, even effort uphill",
+     "Long run 13 mi easy, take a gel every 45 min"
+    ],
+    "focus": "Build aerobic volume; hold even effort on climbs instead of even pace"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 30,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "7 mi with 6 x 60s hill repeats, controlled jog down for quad conditioning",
+     "Long run 14 mi, last 2 mi at 9:00/mi over a bridge or hill"
+    ],
+    "focus": "Introduce hill strength and downhill running; practice marathon pace on tired legs"
+   },
+   {
+    "week": 4,
+    "phase": "Build",
+    "weekly_miles": 26,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi with 6 x 20s strides",
+     "Long run 12 mi easy, rolling route"
+    ],
+    "focus": "Step-back week to absorb the base block"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 33,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "7 mi with 3 mi tempo at 8:25/mi on a route with one climb",
+     "Long run 16 mi, first 2 mi at 9:20/mi, miles 10-15 at 8:58/mi with a hill in the final 3 mi"
+    ],
+    "focus": "Controlled start, then marathon pace late in the run on hills"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 36,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "8 mi with 5 x 3 min uphill at threshold effort, 2 min easy downhill at a quick cadence",
+     "Long run 18 mi with race fueling every 30-40 min, miles 13-17 at 8:58/mi effort over hills"
+    ],
+    "focus": "Rehearse gels and fluids; train the 30 km zone with fuel on board"
+   },
+   {
+    "week": 7,
+    "phase": "Peak",
+    "weekly_miles": 40,
+    "long_run_miles": 20,
+    "quality_sessions": [
+     "8 mi with 2 x 2.5 mi at 8:25/mi, 3 min jog, one rep including a long climb",
+     "Long run 20 mi in race kit: first mile 9:20/mi, miles 14-19 at 8:58/mi effort, including a long climb near mile 17 like Fifth Ave"
+    ],
+    "focus": "Peak volume; simulate the late Fifth Ave climb and Central Park rollers at the 30-42 km stage"
+   },
+   {
+    "week": 8,
+    "phase": "Taper",
+    "weekly_miles": 32,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "7 mi with 4 mi at 8:58/mi effort on rolling terrain",
+     "Long run 14 mi easy, last 3 mi at marathon effort with full race fueling"
+    ],
+    "focus": "Cut volume about 20%; hold even-effort pacing on hills"
+   },
+   {
+    "week": 9,
+    "phase": "Taper",
+    "weekly_miles": 25,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "6 mi with 3 x 1 mi at 8:45/mi, one uphill and one downhill",
+     "Long run 10 mi with 3 mi at 8:58/mi, first mile conservative"
+    ],
+    "focus": "Freshen legs; plan effort for the Verrazzano, Queensboro and Willis Ave bridges and Fifth Ave"
+   },
+   {
+    "week": 10,
+    "phase": "Taper",
+    "weekly_miles": 14,
+    "long_run_miles": 5,
+    "quality_sessions": [
+     "5 mi with 2 mi at 8:58/mi early in the week",
+     "Race day: NYC Marathon, mile 1 on the Verrazzano at 9:30-9:45/mi, then even effort near 8:58/mi; let pace drop on bridges, fuel every 30-40 min, race the last 10 km by effort"
+    ],
+    "focus": "Race week: rest, carb load; go out slow on the bridge, keep effort even, expect a slower finish than a flat course"
+   }
+  ],
+  "final": [
+   {
+    "week": 1,
+    "phase": "Base",
+    "weekly_miles": 32,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "6 mi easy on a rolling route with 6 x 20s strides",
+     "Long run 10 mi easy at 10:15-10:45/mi on rolling terrain"
+    ],
+    "focus": "Assumes a current base of about 28-30 mi/week over 5 days; add the extra miles to midweek easy runs so the long run stays near 31% of the week"
+   },
+   {
+    "week": 2,
+    "phase": "Base",
+    "weekly_miles": 35,
+    "long_run_miles": 11,
+    "quality_sessions": [
+     "7 mi with 3 mi steady at 9:15/mi on rolling terrain, even effort uphill",
+     "Long run 11 mi easy, take a gel every 45 min"
+    ],
+    "focus": "Start a midweek medium-long run of 8 mi easy to spread the load; hold even effort on climbs, not even pace"
+   },
+   {
+    "week": 3,
+    "phase": "Base",
+    "weekly_miles": 38,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "7 mi with 6 x 60s hill repeats, controlled jog down for quad conditioning",
+     "Long run 12 mi easy on a hilly route"
+    ],
+    "focus": "Medium-long run grows to 9 mi; introduce hill strength and downhill running and keep the long run fully easy"
+   },
+   {
+    "week": 4,
+    "phase": "Base",
+    "weekly_miles": 33,
+    "long_run_miles": 10,
+    "quality_sessions": [
+     "6 mi with 6 x 20s strides",
+     "Long run 10 mi easy, rolling route"
+    ],
+    "focus": "Step-back week to absorb the base block"
+   },
+   {
+    "week": 5,
+    "phase": "Build",
+    "weekly_miles": 42,
+    "long_run_miles": 14,
+    "quality_sessions": [
+     "8 mi with 3 mi tempo at 8:25/mi on a route with one climb",
+     "Long run 14 mi easy at 10:00-10:30/mi"
+    ],
+    "focus": "Medium-long run of 10 mi easy midweek; one workout per week and the long run stays easy, about 33% of the week"
+   },
+   {
+    "week": 6,
+    "phase": "Build",
+    "weekly_miles": 46,
+    "long_run_miles": 16,
+    "quality_sessions": [
+     "8 mi easy with 6 x 20s strides",
+     "Long run 16 mi, first 11 mi easy, miles 12-15 at goal-marathon effort (8:58-9:15/mi) over rolling hills, race fueling every 30-40 min"
+    ],
+    "focus": "First marathon-effort long run with gels and fluids; medium-long run of 11 mi easy, no other hard session"
+   },
+   {
+    "week": 7,
+    "phase": "Build",
+    "weekly_miles": 38,
+    "long_run_miles": 13,
+    "quality_sessions": [
+     "7 mi with 5 x 3 min uphill at threshold effort, 2 min easy downhill at a quick cadence",
+     "Long run 13 mi easy"
+    ],
+    "focus": "Step-back week before the peak; threshold hills are the only hard effort"
+   },
+   {
+    "week": 8,
+    "phase": "Peak",
+    "weekly_miles": 50,
+    "long_run_miles": 18,
+    "quality_sessions": [
+     "8 mi easy on rolling terrain with 6 x 20s strides",
+     "Long run 18 mi in race kit: first mile 9:30/mi or slower, miles 12-16 at goal-marathon effort including a long climb like Fifth Ave, last 2 mi easy"
+    ],
+    "focus": "Peak week with a 12 mi easy medium-long run midweek so the long run is about 36% of volume; full race fueling, everything else easy. Use this run to judge the goal: if 8:58/mi effort felt hard by mile 16, plan on 9:10-9:20/mi"
+   },
+   {
+    "week": 9,
+    "phase": "Taper",
+    "weekly_miles": 36,
+    "long_run_miles": 12,
+    "quality_sessions": [
+     "6 mi with 3 x 1 mi at 8:45/mi, one uphill and one downhill",
+     "Long run 12 mi fully easy, no marathon-effort finish"
+    ],
+    "focus": "Cut volume about 28% with one quality session only; plan effort for the Verrazzano, Queensboro and Willis Ave bridges and Fifth Ave"
+   },
+   {
+    "week": 10,
+    "phase": "Taper",
+    "weekly_miles": 16,
+    "long_run_miles": 5,
+    "quality_sessions": [
+     "5 mi with 2 mi at goal-marathon effort early in the week",
+     "Race day: NYC Marathon, mile 1 on the Verrazzano at 9:30-9:45/mi, then even effort near 8:58-9:15/mi; let pace drop on bridges, fuel every 30-40 min, race the last 10 km by effort"
+    ],
+    "focus": "Race week: rest and carb load; treat 8:58/mi as an effort target and slow down early if it feels hard, since a 10-week build leaves the final 10 km on First Ave and Fifth Ave as the hardest part"
+   }
+  ],
+  "run": "nyc-3:30:00-r2",
+  "profile": {
+   "goal_race": "nyc",
+   "goal_time": "3:30:00",
+   "weeks": 10,
+   "current_mpw": 25,
+   "longest_run_mi": 12,
+   "days_per_week": 5,
+   "race_temp_f": null
+  },
+  "error": null,
+  "llm_calls": 8,
+  "wall_s": 157.9,
+  "cost_usd": 1.0287
+ }
+]

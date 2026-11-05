@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-05",
+  "machine": "Apple M4",
+  "n_plans": 5,
+  "n_completed": 5,
+  "raw_pass": 1,
+  "final_pass": 2,
+  "raw_issues_total": 6,
+  "final_issues_total": 5,
+  "ended_clean": 1,
+  "revisions": [
+    2,
+    1,
+    2,
+    2,
+    2
+  ],
+  "llm_calls": 38,
+  "cost_per_plan_median": 1.192,
+  "cost_per_plan_mean": 1.181,
+  "latency_median_s": 172.2,
+  "latency_p95_s": 178.8,
+  "models": [
+    "claude-opus-5-5"
+  ]
+}

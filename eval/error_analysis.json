@@ -1,0 +1,87 @@
+{
+  "note": "Hand-coded 2026-11-05 from eval/runs.json: what the critique and revise loop did to each plan.",
+  "plans": [
+    {
+      "run": "boston-3:00:00-r1",
+      "weeks_asked": 12,
+      "weeks_in_final": 12,
+      "raw_issues": 2,
+      "final_issues": 1,
+      "revisions": 2,
+      "llm_review_issues_per_round": [
+        9,
+        5,
+        4
+      ],
+      "assessed_goal": "3:45:00",
+      "outcome": "revision moved the violation",
+      "detail": "Revision 1 removed the week 5 and week 8 jumps; revision 2 left a new one at week 9 (25 to 33)."
+    },
+    {
+      "run": "nyc-3:30:00-r1",
+      "weeks_asked": 10,
+      "weeks_in_final": 18,
+      "raw_issues": 1,
+      "final_issues": 0,
+      "revisions": 1,
+      "llm_review_issues_per_round": [
+        7,
+        0
+      ],
+      "assessed_goal": "3:55:00",
+      "outcome": "clean, but the wrong length",
+      "detail": "Revision 1 fixed the week 5 jump and the plan passed every check, but it came back with 18 weeks for a runner with 10."
+    },
+    {
+      "run": "berlin-3:10:00-r1",
+      "weeks_asked": 18,
+      "weeks_in_final": 18,
+      "raw_issues": 0,
+      "final_issues": 0,
+      "revisions": 2,
+      "llm_review_issues_per_round": [
+        4,
+        4,
+        4
+      ],
+      "assessed_goal": "3:30:00",
+      "outcome": "checks passed, LLM review never satisfied",
+      "detail": "The draft passed all four checks. Revision 1 introduced four ramp jumps (weeks 5, 9, 12, 15), revision 2 removed them, and the LLM review still listed four issues."
+    },
+    {
+      "run": "boston-3:00:00-r2",
+      "weeks_asked": 12,
+      "weeks_in_final": 12,
+      "raw_issues": 2,
+      "final_issues": 2,
+      "revisions": 2,
+      "llm_review_issues_per_round": [
+        12,
+        5,
+        2
+      ],
+      "assessed_goal": "4:15:00",
+      "outcome": "revisions left the violations",
+      "detail": "Both ramp jumps in the draft (week 5, 20 to 26; week 8, 25 to 32) are still in the final plan, almost unchanged (week 8 is 24 to 32)."
+    },
+    {
+      "run": "nyc-3:30:00-r2",
+      "weeks_asked": 10,
+      "weeks_in_final": 10,
+      "raw_issues": 1,
+      "final_issues": 2,
+      "revisions": 2,
+      "llm_review_issues_per_round": [
+        7,
+        4,
+        5
+      ],
+      "assessed_goal": "3:55:00",
+      "outcome": "revision made it worse",
+      "detail": "One ramp jump in the draft became two (week 5, 33 to 42; week 8, 38 to 50), and week 1 rose to 32 miles for a runner at 25."
+    }
+  ],
+  "critique_rounds": 14,
+  "critique_rounds_with_no_issue": 1,
+  "critique_rounds_where_llm_review_raised_issues": 11
+}
