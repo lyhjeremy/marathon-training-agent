@@ -52,6 +52,8 @@ Python, LangGraph, Claude (Claude CLI by default, Anthropic API with `ANTHROPIC_
 ## How to run
 
 ```bash
+git clone https://github.com/lyhjeremy/marathon-training-agent && cd marathon-training-agent
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 python -m src.cli --race boston --goal 3:05:00 --weeks 16 \
