@@ -1,0 +1,560 @@
+{
+ "date": "2026-11-13",
+ "runners": 6,
+ "freeze": {
+  "frozen_at_commit": "d397cd50a6082bbbaf6fb6873ca65c5894977601",
+  "date": "2026-11-13",
+  "sha256": "f26ddc669e90884046195444233e9472c449d8c7f727ebcfb841f04b97474aee",
+  "runners": 6,
+  "note": "Frozen before either system ran on these runners. r1 to r3 are the November 5 profiles with a recent half-marathon time added; r4 to r6 are new. eval/structured_eval.py refuses to run if runners.json changes."
+ },
+ "systems": {
+  "before": {
+   "plans": 6,
+   "errors": 0,
+   "all_checks_pass": 1,
+   "length_drift": 3,
+   "safety_issues_total": 8,
+   "llm_calls": 46,
+   "calls_per_plan_mean": 7.67,
+   "cost_per_plan_median": 0.2213,
+   "cost_total": 1.3191,
+   "latency_median_s": 113.5,
+   "latency_p95_s": 128.9,
+   "models": [
+    "claude-sonnet-5-5"
+   ],
+   "draft_pass": 0,
+   "draft_length_drift": 0
+  },
+  "after": {
+   "plans": 6,
+   "errors": 0,
+   "all_checks_pass": 6,
+   "length_drift": 0,
+   "safety_issues_total": 0,
+   "llm_calls": 11,
+   "calls_per_plan_mean": 1.83,
+   "cost_per_plan_median": 0.0968,
+   "cost_total": 0.6215,
+   "latency_median_s": 46.7,
+   "latency_p95_s": 66.2,
+   "models": [
+    "claude-sonnet-5-5"
+   ],
+   "first_draft_valid": 2
+  }
+ },
+ "per_runner": [
+  {
+   "runner": "r1",
+   "race": "boston",
+   "goal": "3:00:00",
+   "weeks": 12,
+   "llm_targets": [
+    "3:35:00",
+    "3:35:00",
+    "3:35:00"
+   ],
+   "llm_spread_min": 0.0,
+   "code_target": "3:33:00",
+   "before": {
+    "n_weeks": 17,
+    "all_pass": false,
+    "issues": [
+     "week 5 jumps mileage >20% (19→26)",
+     "week 10 jumps mileage >20% (27→35)",
+     "week 14 jumps mileage >20% (32→44)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 92.1,
+    "cost_usd": 0.1865,
+    "weekly_miles": [
+     20,
+     22,
+     24,
+     19,
+     26,
+     28,
+     31,
+     34,
+     27,
+     35,
+     38,
+     41,
+     32,
+     44,
+     34,
+     26,
+     16
+    ]
+   },
+   "after": {
+    "n_weeks": 12,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 1,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.11.sessions.6.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [],
+      "n_weeks": 12
+     }
+    ],
+    "calls": 2,
+    "wall_s": 49.4,
+    "cost_usd": 0.1066,
+    "weekly_miles": [
+     20.0,
+     22.0,
+     24.0,
+     21.0,
+     25.0,
+     28.0,
+     26.0,
+     30.0,
+     32.0,
+     28.0,
+     25.5,
+     4.0
+    ]
+   }
+  },
+  {
+   "runner": "r2",
+   "race": "nyc",
+   "goal": "3:30:00",
+   "weeks": 10,
+   "llm_targets": [
+    "3:50:00",
+    "3:45:00",
+    "3:48:00"
+   ],
+   "llm_spread_min": 5.0,
+   "code_target": "3:46:00",
+   "before": {
+    "n_weeks": 18,
+    "all_pass": false,
+    "issues": [],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 114.0,
+    "cost_usd": 0.2269,
+    "weekly_miles": [
+     24,
+     26,
+     28,
+     23,
+     27,
+     30,
+     33,
+     27,
+     32,
+     36,
+     32,
+     38,
+     44,
+     40,
+     47,
+     38,
+     28,
+     14
+    ]
+   },
+   "after": {
+    "n_weeks": 10,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 2,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.9.sessions.6.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [
+       "week 5 jumps mileage >20% (27→33)"
+      ],
+      "n_weeks": 10
+     },
+     {
+      "calls": 3,
+      "problems": [],
+      "n_weeks": 10
+     }
+    ],
+    "calls": 3,
+    "wall_s": 69.7,
+    "cost_usd": 0.1626,
+    "weekly_miles": [
+     25.0,
+     28.0,
+     31.0,
+     27.0,
+     32.0,
+     37.0,
+     40.0,
+     36.0,
+     29.0,
+     6.0
+    ]
+   }
+  },
+  {
+   "runner": "r3",
+   "race": "berlin",
+   "goal": "3:10:00",
+   "weeks": 18,
+   "llm_targets": [
+    "3:10:00",
+    "3:10:00",
+    "3:10:00"
+   ],
+   "llm_spread_min": 0.0,
+   "code_target": "3:10:00",
+   "before": {
+    "n_weeks": 18,
+    "all_pass": false,
+    "issues": [
+     "week 9 jumps mileage >20% (34→42)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 117.2,
+    "cost_usd": 0.2478,
+    "weekly_miles": [
+     30,
+     32,
+     35,
+     30,
+     35,
+     38,
+     41,
+     34,
+     42,
+     44,
+     47,
+     42,
+     50,
+     54,
+     46,
+     38,
+     30,
+     14
+    ]
+   },
+   "after": {
+    "n_weeks": 18,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 0,
+    "first_valid": true,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [],
+      "n_weeks": 18
+     }
+    ],
+    "calls": 1,
+    "wall_s": 37.0,
+    "cost_usd": 0.0648,
+    "weekly_miles": [
+     35.0,
+     37.0,
+     40.0,
+     36.0,
+     42.0,
+     45.0,
+     48.0,
+     43.0,
+     50.0,
+     52.0,
+     54.0,
+     48.0,
+     56.0,
+     56.0,
+     53.0,
+     46.0,
+     40.0,
+     10.0
+    ]
+   }
+  },
+  {
+   "runner": "r4",
+   "race": "chicago",
+   "goal": "4:30:00",
+   "weeks": 16,
+   "llm_targets": [
+    "4:40:00",
+    "4:40:00",
+    "4:45:00"
+   ],
+   "llm_spread_min": 5.0,
+   "code_target": "4:36:00",
+   "before": {
+    "n_weeks": 16,
+    "all_pass": false,
+    "issues": [
+     "week 5 jumps mileage >20% (17→22)",
+     "week 9 jumps mileage >20% (21→28)",
+     "week 13 jumps mileage >20% (30→40)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 132.8,
+    "cost_usd": 0.2512,
+    "weekly_miles": [
+     16,
+     18,
+     20,
+     17,
+     22,
+     24,
+     26,
+     21,
+     28,
+     32,
+     36,
+     30,
+     40,
+     30,
+     22,
+     12
+    ]
+   },
+   "after": {
+    "n_weeks": 16,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 1,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.12.sessions.3.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [],
+      "n_weeks": 16
+     }
+    ],
+    "calls": 2,
+    "wall_s": 55.7,
+    "cost_usd": 0.1225,
+    "weekly_miles": [
+     15.0,
+     16.0,
+     17.0,
+     15.0,
+     17.0,
+     19.0,
+     20.0,
+     17.0,
+     20.0,
+     22.0,
+     23.0,
+     21.0,
+     24.0,
+     18.0,
+     14.0,
+     7.0
+    ]
+   }
+  },
+  {
+   "runner": "r5",
+   "race": "london",
+   "goal": "2:55:00",
+   "weeks": 20,
+   "llm_targets": [
+    "2:56:00",
+    "2:56:00",
+    "2:55:00"
+   ],
+   "llm_spread_min": 1.0,
+   "code_target": "2:55:00",
+   "before": {
+    "n_weeks": 20,
+    "all_pass": true,
+    "issues": [],
+    "revisions": 1,
+    "calls": 6,
+    "wall_s": 97.2,
+    "cost_usd": 0.1911,
+    "weekly_miles": [
+     38,
+     41,
+     44,
+     40,
+     46,
+     49,
+     52,
+     44,
+     52,
+     55,
+     58,
+     48,
+     56,
+     60,
+     50,
+     58,
+     54,
+     44,
+     36,
+     30
+    ]
+   },
+   "after": {
+    "n_weeks": 20,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 0,
+    "first_valid": true,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [],
+      "n_weeks": 20
+     }
+    ],
+    "calls": 1,
+    "wall_s": 44.0,
+    "cost_usd": 0.0781,
+    "weekly_miles": [
+     45.0,
+     48.0,
+     51.0,
+     44.0,
+     52.0,
+     56.0,
+     60.0,
+     51.0,
+     60.0,
+     64.0,
+     67.0,
+     56.0,
+     66.0,
+     70.0,
+     68.0,
+     70.0,
+     62.0,
+     55.0,
+     43.0,
+     10.0
+    ]
+   }
+  },
+  {
+   "runner": "r6",
+   "race": "tokyo",
+   "goal": "3:45:00",
+   "weeks": 8,
+   "llm_targets": [
+    "3:52:00",
+    "3:55:00",
+    "3:52:00"
+   ],
+   "llm_spread_min": 3.0,
+   "code_target": "3:50:00",
+   "before": {
+    "n_weeks": 15,
+    "all_pass": false,
+    "issues": [
+     "week 9 jumps mileage >20% (27→35)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 113.1,
+    "cost_usd": 0.2156,
+    "weekly_miles": [
+     26,
+     28,
+     30,
+     24,
+     28,
+     31,
+     34,
+     27,
+     35,
+     38,
+     42,
+     46,
+     36,
+     28,
+     16
+    ]
+   },
+   "after": {
+    "n_weeks": 8,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 1,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.5.sessions.6.note: String should have at most 120 characters",
+       "weeks.7.sessions.6.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [],
+      "n_weeks": 8
+     }
+    ],
+    "calls": 2,
+    "wall_s": 41.7,
+    "cost_usd": 0.0869,
+    "weekly_miles": [
+     30.0,
+     33.0,
+     37.0,
+     35.0,
+     41.0,
+     48.0,
+     34.0,
+     9.0
+    ]
+   }
+  }
+ ],
+ "assessment_spread": {
+  "llm_runs_per_runner": 3,
+  "llm_spread_min": [
+   0.0,
+   5.0,
+   0.0,
+   5.0,
+   1.0,
+   3.0
+  ],
+  "llm_spread_median_min": 2.0,
+  "llm_spread_max_min": 5.0,
+  "code_spread_min": 0
+ },
+ "llm_calls_total": 69,
+ "cost_total_usd": 1.9934
+}

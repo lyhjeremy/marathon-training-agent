@@ -1,0 +1,1334 @@
+{
+ "summary": {
+  "date": "2026-11-13",
+  "runners": 6,
+  "freeze": {
+   "frozen_at_commit": "d397cd50a6082bbbaf6fb6873ca65c5894977601",
+   "date": "2026-11-13",
+   "sha256": "f26ddc669e90884046195444233e9472c449d8c7f727ebcfb841f04b97474aee",
+   "runners": 6,
+   "note": "Frozen before either system ran on these runners. r1 to r3 are the November 5 profiles with a recent half-marathon time added; r4 to r6 are new. eval/structured_eval.py refuses to run if runners.json changes."
+  },
+  "systems": {
+   "before": {
+    "plans": 6,
+    "errors": 0,
+    "all_checks_pass": 1,
+    "length_drift": 3,
+    "safety_issues_total": 8,
+    "llm_calls": 46,
+    "calls_per_plan_mean": 7.67,
+    "cost_per_plan_median": 0.2213,
+    "cost_total": 1.3191,
+    "latency_median_s": 113.5,
+    "latency_p95_s": 128.9,
+    "models": [
+     "claude-sonnet-5-5"
+    ],
+    "draft_pass": 0,
+    "draft_length_drift": 0
+   },
+   "after": {
+    "plans": 6,
+    "errors": 0,
+    "all_checks_pass": 6,
+    "length_drift": 0,
+    "safety_issues_total": 0,
+    "llm_calls": 11,
+    "calls_per_plan_mean": 1.83,
+    "cost_per_plan_median": 0.0968,
+    "cost_total": 0.6215,
+    "latency_median_s": 46.7,
+    "latency_p95_s": 66.2,
+    "models": [
+     "claude-sonnet-5-5"
+    ],
+    "first_draft_valid": 2
+   }
+  },
+  "assessment_spread": {
+   "llm_runs_per_runner": 3,
+   "llm_spread_min": [
+    0.0,
+    5.0,
+    0.0,
+    5.0,
+    1.0,
+    3.0
+   ],
+   "llm_spread_median_min": 2.0,
+   "llm_spread_max_min": 5.0,
+   "code_spread_min": 0
+  },
+  "llm_calls_total": 69,
+  "cost_total_usd": 1.9934
+ },
+ "runners": [
+  {
+   "runner": "r1",
+   "race": "boston",
+   "goal": "3:00:00",
+   "weeks": 12,
+   "llm_targets": [
+    "3:35:00",
+    "3:35:00",
+    "3:35:00"
+   ],
+   "llm_spread_min": 0.0,
+   "code_target": "3:33:00",
+   "before": {
+    "n_weeks": 17,
+    "all_pass": false,
+    "issues": [
+     "week 5 jumps mileage >20% (19→26)",
+     "week 10 jumps mileage >20% (27→35)",
+     "week 14 jumps mileage >20% (32→44)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 92.1,
+    "cost_usd": 0.1865,
+    "weekly_miles": [
+     20,
+     22,
+     24,
+     19,
+     26,
+     28,
+     31,
+     34,
+     27,
+     35,
+     38,
+     41,
+     32,
+     44,
+     34,
+     26,
+     16
+    ],
+    "assessment": {
+     "feasible": false,
+     "recommended_goal_time": "3:35:00",
+     "peak_weekly_miles": 40,
+     "rationale": "A 1:42 half predicts roughly a 3:32-3:35 marathon, and 3:00 would require about a 1:27 half-level fitness, a gap that can't be closed in 12 weeks from 20 miles/week and an 8-mile long run on 4 days/week. A realistic build to ~40 miles/week with a 18-20 mile long run supports a 3:35 target, with Boston's hilly course and downhill start warranting a conservative pace."
+    },
+    "long_runs": [
+     6,
+     7,
+     8,
+     7,
+     9,
+     10,
+     12,
+     13,
+     10,
+     14,
+     16,
+     18,
+     12,
+     20,
+     14,
+     10,
+     5
+    ],
+    "log": [
+     "assess → feasible=False, target 3:35:00, peak 40 mpw",
+     "plan → drafted 12 weeks",
+     "adjust → tailored plan to course & weather",
+     "critique → 13 issue(s): week 5 jumps mileage >20% (21→27)",
+     "revise #1 → addressed 13 issue(s)",
+     "critique → 11 issue(s): week 5 jumps mileage >20% (21→28)",
+     "revise #2 → addressed 11 issue(s)",
+     "critique → 8 issue(s): week 5 jumps mileage >20% (19→26)"
+    ]
+   },
+   "after": {
+    "n_weeks": 12,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 1,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.11.sessions.6.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [],
+      "n_weeks": 12
+     }
+    ],
+    "calls": 2,
+    "wall_s": 49.4,
+    "cost_usd": 0.1066,
+    "weekly_miles": [
+     20.0,
+     22.0,
+     24.0,
+     21.0,
+     25.0,
+     28.0,
+     26.0,
+     30.0,
+     32.0,
+     28.0,
+     25.5,
+     4.0
+    ],
+    "assessment": {
+     "method": "riegel_1.06_from_recent_half + 10pct_rule",
+     "goal_min": 180.0,
+     "predicted_min": 212.66,
+     "feasible": false,
+     "recommended_goal_time": "3:33:00",
+     "peak_weekly_miles": 32.0,
+     "taper_weeks": 3,
+     "rationale": "Riegel from a 1:42:00 half predicts 3:32:40; goal 3:00:00 is faster than that. Peak 32.0 mi/week: 20 grown 10% per build week with every fourth week a step back, capped at 1.6 times the current load and at 70."
+    },
+    "long_runs": [
+     8.0,
+     10.0,
+     11.0,
+     9.0,
+     12.0,
+     14.0,
+     12.0,
+     15.0,
+     17.0,
+     14.0,
+     12.0,
+     0.0
+    ],
+    "log": [
+     "assess (code): target 3:33:00, peak 32.0 mi/week",
+     "draft (model): plan written",
+     "check (code): 1 problem(s)",
+     "repair (model): asked to fix 1 problem(s)",
+     "check (code): clean"
+    ],
+    "sample_week": {
+     "week": 7,
+     "phase": "Peak",
+     "focus": "Step-back with downhill/uphill specificity",
+     "sessions": [
+      {
+       "day": "Mon",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Tue",
+       "type": "tempo",
+       "miles": 5.0,
+       "note": "Steady tempo, even effort"
+      },
+      {
+       "day": "Wed",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Thu",
+       "type": "easy",
+       "miles": 5.0,
+       "note": ""
+      },
+      {
+       "day": "Fri",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Sat",
+       "type": "easy",
+       "miles": 4.0,
+       "note": ""
+      },
+      {
+       "day": "Sun",
+       "type": "long",
+       "miles": 12.0,
+       "note": "Include downhill miles to condition quads for Boston"
+      }
+     ]
+    }
+   },
+   "profile": {
+    "id": "r1",
+    "goal_race": "boston",
+    "goal_time": "3:00:00",
+    "weeks": 12,
+    "current_mpw": 20,
+    "longest_run_mi": 8,
+    "days_per_week": 4,
+    "race_temp_f": 74,
+    "recent_half": "1:42:00",
+    "note": "November 5 panel: aggressive, low base"
+   }
+  },
+  {
+   "runner": "r2",
+   "race": "nyc",
+   "goal": "3:30:00",
+   "weeks": 10,
+   "llm_targets": [
+    "3:50:00",
+    "3:45:00",
+    "3:48:00"
+   ],
+   "llm_spread_min": 5.0,
+   "code_target": "3:46:00",
+   "before": {
+    "n_weeks": 18,
+    "all_pass": false,
+    "issues": [],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 114.0,
+    "cost_usd": 0.2269,
+    "weekly_miles": [
+     24,
+     26,
+     28,
+     23,
+     27,
+     30,
+     33,
+     27,
+     32,
+     36,
+     32,
+     38,
+     44,
+     40,
+     47,
+     38,
+     28,
+     14
+    ],
+    "assessment": {
+     "feasible": false,
+     "recommended_goal_time": "3:50:00",
+     "peak_weekly_miles": 40,
+     "rationale": "A 1:48 half predicts roughly 3:43-3:57 for the marathon, and 25 miles/week with a 12-mile long run leaves only 10 weeks to build the endurance for 3:30 (about 8:01/mile). A 3:50 goal is realistic if mileage builds safely to about 40 miles/week with 18-20 mile long runs."
+    },
+    "long_runs": [
+     8,
+     9,
+     10,
+     8,
+     11,
+     12,
+     13,
+     10,
+     13,
+     14,
+     12,
+     16,
+     18,
+     14,
+     20,
+     14,
+     10,
+     5
+    ],
+    "log": [
+     "assess → feasible=False, target 3:50:00, peak 40 mpw",
+     "plan → drafted 10 weeks",
+     "adjust → tailored plan to course & weather",
+     "critique → 15 issue(s): week 5 jumps mileage >20% (26→34)",
+     "revise #1 → addressed 15 issue(s)",
+     "critique → 11 issue(s): week 5 jumps mileage >20% (22→30)",
+     "revise #2 → addressed 11 issue(s)",
+     "critique → 6 issue(s): Long run jumps from 12 mi (wk 11) to 16 mi (wk 12) is +33%, and it includes 4 mi at marathon effort. That is too big a leap; add an intermediate 14 mi."
+    ]
+   },
+   "after": {
+    "n_weeks": 10,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 2,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.9.sessions.6.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [
+       "week 5 jumps mileage >20% (27→33)"
+      ],
+      "n_weeks": 10
+     },
+     {
+      "calls": 3,
+      "problems": [],
+      "n_weeks": 10
+     }
+    ],
+    "calls": 3,
+    "wall_s": 69.7,
+    "cost_usd": 0.1626,
+    "weekly_miles": [
+     25.0,
+     28.0,
+     31.0,
+     27.0,
+     32.0,
+     37.0,
+     40.0,
+     36.0,
+     29.0,
+     6.0
+    ],
+    "assessment": {
+     "method": "riegel_1.06_from_recent_half + 10pct_rule",
+     "goal_min": 210.0,
+     "predicted_min": 225.17,
+     "feasible": false,
+     "recommended_goal_time": "3:46:00",
+     "peak_weekly_miles": 40.0,
+     "taper_weeks": 2,
+     "rationale": "Riegel from a 1:48:00 half predicts 3:45:10; goal 3:30:00 is faster than that. Peak 40.0 mi/week: 25 grown 10% per build week with every fourth week a step back, capped at 1.6 times the current load and at 70."
+    },
+    "long_runs": [
+     12.0,
+     13.0,
+     14.0,
+     12.0,
+     14.0,
+     17.0,
+     20.0,
+     16.0,
+     12.0,
+     0.0
+    ],
+    "log": [
+     "assess (code): target 3:46:00, peak 40.0 mi/week",
+     "draft (model): plan written",
+     "check (code): 1 problem(s)",
+     "repair (model): asked to fix 1 problem(s)",
+     "check (code): 1 problem(s)",
+     "repair (model): asked to fix 1 problem(s)",
+     "check (code): clean"
+    ],
+    "sample_week": {
+     "week": 6,
+     "phase": "Build",
+     "focus": "Introduce marathon pace",
+     "sessions": [
+      {
+       "day": "Mon",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Tue",
+       "type": "easy",
+       "miles": 5.0,
+       "note": "Easy"
+      },
+      {
+       "day": "Wed",
+       "type": "marathon_pace",
+       "miles": 7.0,
+       "note": "2 mi warmup, 3 mi at goal pace 8:39, 2 mi cooldown; even effort"
+      },
+      {
+       "day": "Thu",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Fri",
+       "type": "easy",
+       "miles": 5.0,
+       "note": "Easy"
+      },
+      {
+       "day": "Sat",
+       "type": "easy",
+       "miles": 3.0,
+       "note": "Shakeout"
+      },
+      {
+       "day": "Sun",
+       "type": "long",
+       "miles": 17.0,
+       "note": "Easy first 12 mi, steady last 5 mi; fuel on schedule for the late segment"
+      }
+     ]
+    }
+   },
+   "profile": {
+    "id": "r2",
+    "goal_race": "nyc",
+    "goal_time": "3:30:00",
+    "weeks": 10,
+    "current_mpw": 25,
+    "longest_run_mi": 12,
+    "days_per_week": 5,
+    "race_temp_f": null,
+    "recent_half": "1:48:00",
+    "note": "November 5 panel: short window (the 18-week drift case)"
+   }
+  },
+  {
+   "runner": "r3",
+   "race": "berlin",
+   "goal": "3:10:00",
+   "weeks": 18,
+   "llm_targets": [
+    "3:10:00",
+    "3:10:00",
+    "3:10:00"
+   ],
+   "llm_spread_min": 0.0,
+   "code_target": "3:10:00",
+   "before": {
+    "n_weeks": 18,
+    "all_pass": false,
+    "issues": [
+     "week 9 jumps mileage >20% (34→42)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 117.2,
+    "cost_usd": 0.2478,
+    "weekly_miles": [
+     30,
+     32,
+     35,
+     30,
+     35,
+     38,
+     41,
+     34,
+     42,
+     44,
+     47,
+     42,
+     50,
+     54,
+     46,
+     38,
+     30,
+     14
+    ],
+    "assessment": {
+     "feasible": true,
+     "recommended_goal_time": "3:10:00",
+     "peak_weekly_miles": 55,
+     "rationale": "A 1:30 half predicts about 3:07-3:08 by Riegel, so 3:10 (7:15/mi) is realistic if endurance holds up. Building from 35 to about 55 mpw over 18 weeks, with long runs up to 20-22 miles and marathon-pace work, supports that. Run a half-marathon tune-up around week 10 and fall back to about 3:13 if you aren't on track."
+    },
+    "long_runs": [
+     10,
+     11,
+     12,
+     10,
+     13,
+     14,
+     15,
+     12,
+     15,
+     17,
+     18,
+     14,
+     19,
+     20,
+     16,
+     13,
+     10,
+     6
+    ],
+    "log": [
+     "assess → feasible=True, target 3:10:00, peak 55 mpw",
+     "plan → drafted 18 weeks",
+     "adjust → tailored plan to course & weather",
+     "critique → 18 issue(s): week 5 jumps mileage >20% (34→42)",
+     "revise #1 → addressed 18 issue(s)",
+     "critique → 3 issue(s): Tempo/threshold paces are mislabeled. Week 3 (7:25-7:30) and week 5 (7:25) are slower than the 7:15 goal marathon pace, and the week 10 'tempo' (7:10-7:15) is just marathon pace. Real threshold for this runner is about 6:58-7:05/mi. Those sessions give less stimulus than intended, so fix the paces or relabel them.",
+     "revise #2 → addressed 3 issue(s)",
+     "critique → 1 issue(s): week 9 jumps mileage >20% (34→42)"
+    ]
+   },
+   "after": {
+    "n_weeks": 18,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 0,
+    "first_valid": true,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [],
+      "n_weeks": 18
+     }
+    ],
+    "calls": 1,
+    "wall_s": 37.0,
+    "cost_usd": 0.0648,
+    "weekly_miles": [
+     35.0,
+     37.0,
+     40.0,
+     36.0,
+     42.0,
+     45.0,
+     48.0,
+     43.0,
+     50.0,
+     52.0,
+     54.0,
+     48.0,
+     56.0,
+     56.0,
+     53.0,
+     46.0,
+     40.0,
+     10.0
+    ],
+    "assessment": {
+     "method": "riegel_1.06_from_recent_half + 10pct_rule",
+     "goal_min": 190.0,
+     "predicted_min": 187.64,
+     "feasible": true,
+     "recommended_goal_time": "3:10:00",
+     "peak_weekly_miles": 56.0,
+     "taper_weeks": 3,
+     "rationale": "Riegel from a 1:30:00 half predicts 3:07:38; goal 3:10:00 is within that. Peak 56.0 mi/week: 35 grown 10% per build week with every fourth week a step back, capped at 1.6 times the current load and at 70."
+    },
+    "long_runs": [
+     12.0,
+     13.0,
+     14.0,
+     12.0,
+     16.0,
+     18.0,
+     18.0,
+     15.0,
+     18.0,
+     20.0,
+     20.0,
+     18.0,
+     21.0,
+     20.0,
+     20.0,
+     17.0,
+     14.0,
+     0.0
+    ],
+    "log": [
+     "assess (code): target 3:10:00, peak 56.0 mi/week",
+     "draft (model): plan written",
+     "check (code): clean"
+    ],
+    "sample_week": {
+     "week": 10,
+     "phase": "Build",
+     "focus": "Prepare the 30-42 km segment",
+     "sessions": [
+      {
+       "day": "Mon",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Tue",
+       "type": "easy",
+       "miles": 6.0,
+       "note": ""
+      },
+      {
+       "day": "Wed",
+       "type": "tempo",
+       "miles": 8.0,
+       "note": "5 mi tempo"
+      },
+      {
+       "day": "Thu",
+       "type": "marathon_pace",
+       "miles": 8.0,
+       "note": "7 mi at MP"
+      },
+      {
+       "day": "Fri",
+       "type": "easy",
+       "miles": 5.0,
+       "note": ""
+      },
+      {
+       "day": "Sat",
+       "type": "easy",
+       "miles": 5.0,
+       "note": ""
+      },
+      {
+       "day": "Sun",
+       "type": "long",
+       "miles": 20.0,
+       "note": "10 mi MP finish; fuel on race schedule"
+      }
+     ]
+    }
+   },
+   "profile": {
+    "id": "r3",
+    "goal_race": "berlin",
+    "goal_time": "3:10:00",
+    "weeks": 18,
+    "current_mpw": 35,
+    "longest_run_mi": 16,
+    "days_per_week": 6,
+    "race_temp_f": 55,
+    "recent_half": "1:30:00",
+    "note": "November 5 panel: realistic control"
+   }
+  },
+  {
+   "runner": "r4",
+   "race": "chicago",
+   "goal": "4:30:00",
+   "weeks": 16,
+   "llm_targets": [
+    "4:40:00",
+    "4:40:00",
+    "4:45:00"
+   ],
+   "llm_spread_min": 5.0,
+   "code_target": "4:36:00",
+   "before": {
+    "n_weeks": 16,
+    "all_pass": false,
+    "issues": [
+     "week 5 jumps mileage >20% (17→22)",
+     "week 9 jumps mileage >20% (21→28)",
+     "week 13 jumps mileage >20% (30→40)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 132.8,
+    "cost_usd": 0.2512,
+    "weekly_miles": [
+     16,
+     18,
+     20,
+     17,
+     22,
+     24,
+     26,
+     21,
+     28,
+     32,
+     36,
+     30,
+     40,
+     30,
+     22,
+     12
+    ],
+    "assessment": {
+     "feasible": false,
+     "recommended_goal_time": "4:40:00",
+     "peak_weekly_miles": 36,
+     "rationale": "A 2:12 half predicts roughly 4:35 on paper, but 4:30 needs about 10:18/mi for 26.2 miles, only ~13 sec/mi slower than half-marathon pace. That is too aggressive for someone on 15 mi/week with a 6-mile long run, even with 16 weeks and 4 days/week to build to a ~36-mile peak and a 20-mile long run. Target 4:40 and treat 4:30 as a stretch if training goes well."
+    },
+    "long_runs": [
+     5,
+     6,
+     7,
+     6,
+     8,
+     9,
+     10,
+     8,
+     11,
+     13,
+     15,
+     14,
+     17,
+     12,
+     8,
+     4
+    ],
+    "log": [
+     "assess → feasible=False, target 4:40:00, peak 36 mpw",
+     "plan → drafted 16 weeks",
+     "adjust → tailored plan to course & weather",
+     "critique → 15 issue(s): week 5 jumps mileage >20% (16→21)",
+     "revise #1 → addressed 15 issue(s)",
+     "critique → 7 issue(s): longest run 26 mi exceeds ~22 mi cap",
+     "revise #2 → addressed 7 issue(s)",
+     "critique → 7 issue(s): week 5 jumps mileage >20% (17→22)"
+    ]
+   },
+   "after": {
+    "n_weeks": 16,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 1,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.12.sessions.3.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [],
+      "n_weeks": 16
+     }
+    ],
+    "calls": 2,
+    "wall_s": 55.7,
+    "cost_usd": 0.1225,
+    "weekly_miles": [
+     15.0,
+     16.0,
+     17.0,
+     15.0,
+     17.0,
+     19.0,
+     20.0,
+     17.0,
+     20.0,
+     22.0,
+     23.0,
+     21.0,
+     24.0,
+     18.0,
+     14.0,
+     7.0
+    ],
+    "assessment": {
+     "method": "riegel_1.06_from_recent_half + 10pct_rule",
+     "goal_min": 270.0,
+     "predicted_min": 275.21,
+     "feasible": false,
+     "recommended_goal_time": "4:36:00",
+     "peak_weekly_miles": 24.0,
+     "taper_weeks": 3,
+     "rationale": "Riegel from a 2:12:00 half predicts 4:35:13; goal 4:30:00 is faster than that. Peak 24.0 mi/week: 15 grown 10% per build week with every fourth week a step back, capped at 1.6 times the current load and at 70."
+    },
+    "long_runs": [
+     6.0,
+     6.0,
+     7.0,
+     6.0,
+     7.0,
+     8.0,
+     8.0,
+     7.0,
+     9.0,
+     10.0,
+     11.0,
+     10.0,
+     12.0,
+     8.0,
+     6.0,
+     0.0
+    ],
+    "log": [
+     "assess (code): target 4:36:00, peak 24.0 mi/week",
+     "draft (model): plan written",
+     "check (code): 1 problem(s)",
+     "repair (model): asked to fix 1 problem(s)",
+     "check (code): clean"
+    ],
+    "sample_week": {
+     "week": 9,
+     "phase": "Build",
+     "focus": "Stamina for late-race segment",
+     "sessions": [
+      {
+       "day": "Mon",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Tue",
+       "type": "easy",
+       "miles": 3.0,
+       "note": ""
+      },
+      {
+       "day": "Wed",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Thu",
+       "type": "intervals",
+       "miles": 4.0,
+       "note": "4 x 800m at 10K effort, 400m jog; even splits"
+      },
+      {
+       "day": "Fri",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Sat",
+       "type": "easy",
+       "miles": 4.0,
+       "note": ""
+      },
+      {
+       "day": "Sun",
+       "type": "long",
+       "miles": 9.0,
+       "note": "Final 3 mi at marathon pace; steady effort when tired"
+      }
+     ]
+    }
+   },
+   "profile": {
+    "id": "r4",
+    "goal_race": "chicago",
+    "goal_time": "4:30:00",
+    "weeks": 16,
+    "current_mpw": 15,
+    "longest_run_mi": 6,
+    "days_per_week": 4,
+    "race_temp_f": null,
+    "recent_half": "2:12:00",
+    "note": "new: first-timer, low base"
+   }
+  },
+  {
+   "runner": "r5",
+   "race": "london",
+   "goal": "2:55:00",
+   "weeks": 20,
+   "llm_targets": [
+    "2:56:00",
+    "2:56:00",
+    "2:55:00"
+   ],
+   "llm_spread_min": 1.0,
+   "code_target": "2:55:00",
+   "before": {
+    "n_weeks": 20,
+    "all_pass": true,
+    "issues": [],
+    "revisions": 1,
+    "calls": 6,
+    "wall_s": 97.2,
+    "cost_usd": 0.1911,
+    "weekly_miles": [
+     38,
+     41,
+     44,
+     40,
+     46,
+     49,
+     52,
+     44,
+     52,
+     55,
+     58,
+     48,
+     56,
+     60,
+     50,
+     58,
+     54,
+     44,
+     36,
+     30
+    ],
+    "assessment": {
+     "feasible": true,
+     "recommended_goal_time": "2:56:00",
+     "peak_weekly_miles": 60,
+     "rationale": "A 1:23:30 half predicts about 2:54-2:56 for the marathon, so 2:55:00 (6:41/mi) is within reach but leaves no margin. With a 45 mpw base, 20 weeks and 6 days/week, building to about 60 mpw with 20-22 mile long runs and marathon-pace work is realistic. Plan around 2:56 and go for 2:55 only if the final 10 weeks of training and a tune-up half (around 1:22-1:23) go well."
+    },
+    "long_runs": [
+     12,
+     13,
+     14,
+     11,
+     15,
+     16,
+     17,
+     13,
+     17,
+     18,
+     19,
+     15,
+     18,
+     20,
+     15,
+     20,
+     15,
+     12,
+     10,
+     3
+    ],
+    "log": [
+     "assess → feasible=True, target 2:56:00, peak 60 mpw",
+     "plan → drafted 20 weeks",
+     "adjust → tailored plan to course & weather",
+     "critique → 18 issue(s): week 5 jumps mileage >20% (43→52)",
+     "revise #1 → addressed 18 issue(s)",
+     "critique → clean"
+    ]
+   },
+   "after": {
+    "n_weeks": 20,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 0,
+    "first_valid": true,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [],
+      "n_weeks": 20
+     }
+    ],
+    "calls": 1,
+    "wall_s": 44.0,
+    "cost_usd": 0.0781,
+    "weekly_miles": [
+     45.0,
+     48.0,
+     51.0,
+     44.0,
+     52.0,
+     56.0,
+     60.0,
+     51.0,
+     60.0,
+     64.0,
+     67.0,
+     56.0,
+     66.0,
+     70.0,
+     68.0,
+     70.0,
+     62.0,
+     55.0,
+     43.0,
+     10.0
+    ],
+    "assessment": {
+     "method": "riegel_1.06_from_recent_half + 10pct_rule",
+     "goal_min": 175.0,
+     "predicted_min": 174.09,
+     "feasible": true,
+     "recommended_goal_time": "2:55:00",
+     "peak_weekly_miles": 70.0,
+     "taper_weeks": 3,
+     "rationale": "Riegel from a 1:23:30 half predicts 2:54:05; goal 2:55:00 is within that. Peak 70.0 mi/week: 45 grown 10% per build week with every fourth week a step back, capped at 1.6 times the current load and at 70."
+    },
+    "long_runs": [
+     16.0,
+     18.0,
+     19.0,
+     16.0,
+     20.0,
+     21.0,
+     20.0,
+     18.0,
+     21.0,
+     22.0,
+     22.0,
+     18.0,
+     22.0,
+     22.0,
+     22.0,
+     22.0,
+     20.0,
+     18.0,
+     13.0,
+     0.0
+    ],
+    "log": [
+     "assess (code): target 2:55:00, peak 70.0 mi/week",
+     "draft (model): plan written",
+     "check (code): clean"
+    ],
+    "sample_week": {
+     "week": 11,
+     "phase": "Build",
+     "focus": "Marathon-pace endurance",
+     "sessions": [
+      {
+       "day": "Mon",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Tue",
+       "type": "easy",
+       "miles": 10.0,
+       "note": ""
+      },
+      {
+       "day": "Wed",
+       "type": "marathon_pace",
+       "miles": 12.0,
+       "note": "8 mi at marathon pace"
+      },
+      {
+       "day": "Thu",
+       "type": "easy",
+       "miles": 9.0,
+       "note": ""
+      },
+      {
+       "day": "Fri",
+       "type": "easy",
+       "miles": 7.0,
+       "note": ""
+      },
+      {
+       "day": "Sat",
+       "type": "easy",
+       "miles": 7.0,
+       "note": ""
+      },
+      {
+       "day": "Sun",
+       "type": "long",
+       "miles": 22.0,
+       "note": "Steady, fuel on schedule"
+      }
+     ]
+    }
+   },
+   "profile": {
+    "id": "r5",
+    "goal_race": "london",
+    "goal_time": "2:55:00",
+    "weeks": 20,
+    "current_mpw": 45,
+    "longest_run_mi": 16,
+    "days_per_week": 6,
+    "race_temp_f": null,
+    "recent_half": "1:23:30",
+    "note": "new: experienced, long window"
+   }
+  },
+  {
+   "runner": "r6",
+   "race": "tokyo",
+   "goal": "3:45:00",
+   "weeks": 8,
+   "llm_targets": [
+    "3:52:00",
+    "3:55:00",
+    "3:52:00"
+   ],
+   "llm_spread_min": 3.0,
+   "code_target": "3:50:00",
+   "before": {
+    "n_weeks": 15,
+    "all_pass": false,
+    "issues": [
+     "week 9 jumps mileage >20% (27→35)"
+    ],
+    "revisions": 2,
+    "calls": 8,
+    "wall_s": 113.1,
+    "cost_usd": 0.2156,
+    "weekly_miles": [
+     26,
+     28,
+     30,
+     24,
+     28,
+     31,
+     34,
+     27,
+     35,
+     38,
+     42,
+     46,
+     36,
+     28,
+     16
+    ],
+    "assessment": {
+     "feasible": false,
+     "recommended_goal_time": "3:52:00",
+     "peak_weekly_miles": 40,
+     "rationale": "A 1:50 half predicts about 3:49 on ideal training, but 30 mpw and a 14-mile long run leave only 8 weeks to build the endurance for 3:45 (8:35/mi), which is a stretch. Aim for about 3:52, build to about 40 mpw with a peak long run of 20 miles, and go for 3:45 only if the first half feels easy."
+    },
+    "long_runs": [
+     9,
+     10,
+     11,
+     9,
+     12,
+     14,
+     15,
+     11,
+     16,
+     17,
+     19,
+     21,
+     14,
+     10,
+     6
+    ],
+    "log": [
+     "assess → feasible=False, target 3:52:00, peak 40 mpw",
+     "plan → drafted 8 weeks",
+     "adjust → tailored plan to course & weather",
+     "critique → 15 issue(s): week 5 jumps mileage >20% (32→40)",
+     "revise #1 → addressed 15 issue(s)",
+     "critique → 8 issue(s): week 5 jumps mileage >20% (25→33)",
+     "revise #2 → addressed 8 issue(s)",
+     "critique → 9 issue(s): week 9 jumps mileage >20% (27→35)"
+    ]
+   },
+   "after": {
+    "n_weeks": 8,
+    "all_pass": true,
+    "issues": [],
+    "repairs": 1,
+    "first_valid": false,
+    "history": [
+     {
+      "calls": 1,
+      "problems": [
+       "weeks.5.sessions.6.note: String should have at most 120 characters",
+       "weeks.7.sessions.6.note: String should have at most 120 characters"
+      ],
+      "n_weeks": null
+     },
+     {
+      "calls": 2,
+      "problems": [],
+      "n_weeks": 8
+     }
+    ],
+    "calls": 2,
+    "wall_s": 41.7,
+    "cost_usd": 0.0869,
+    "weekly_miles": [
+     30.0,
+     33.0,
+     37.0,
+     35.0,
+     41.0,
+     48.0,
+     34.0,
+     9.0
+    ],
+    "assessment": {
+     "method": "riegel_1.06_from_recent_half + 10pct_rule",
+     "goal_min": 225.0,
+     "predicted_min": 229.34,
+     "feasible": false,
+     "recommended_goal_time": "3:50:00",
+     "peak_weekly_miles": 48.0,
+     "taper_weeks": 2,
+     "rationale": "Riegel from a 1:50:00 half predicts 3:49:20; goal 3:45:00 is faster than that. Peak 48.0 mi/week: 30 grown 10% per build week with every fourth week a step back, capped at 1.6 times the current load and at 70."
+    },
+    "long_runs": [
+     14.0,
+     15.0,
+     16.0,
+     14.0,
+     18.0,
+     20.0,
+     12.0,
+     0.0
+    ],
+    "log": [
+     "assess (code): target 3:50:00, peak 48.0 mi/week",
+     "draft (model): plan written",
+     "check (code): 2 problem(s)",
+     "repair (model): asked to fix 2 problem(s)",
+     "check (code): clean"
+    ],
+    "sample_week": {
+     "week": 5,
+     "phase": "Peak",
+     "focus": "Prepare the 30-42 km segment",
+     "sessions": [
+      {
+       "day": "Mon",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Tue",
+       "type": "easy",
+       "miles": 6.0,
+       "note": ""
+      },
+      {
+       "day": "Wed",
+       "type": "tempo",
+       "miles": 8.0,
+       "note": "2 mi warm-up, 4 mi at ~8:15/mi, cool-down"
+      },
+      {
+       "day": "Thu",
+       "type": "easy",
+       "miles": 5.0,
+       "note": ""
+      },
+      {
+       "day": "Fri",
+       "type": "rest",
+       "miles": 0.0,
+       "note": ""
+      },
+      {
+       "day": "Sat",
+       "type": "easy",
+       "miles": 4.0,
+       "note": "Easy, on tired legs"
+      },
+      {
+       "day": "Sun",
+       "type": "long",
+       "miles": 18.0,
+       "note": "Miles 12-18 at goal pace; stay on fueling schedule to prepare for the wall after 30 km"
+      }
+     ]
+    }
+   },
+   "profile": {
+    "id": "r6",
+    "goal_race": "tokyo",
+    "goal_time": "3:45:00",
+    "weeks": 8,
+    "current_mpw": 30,
+    "longest_run_mi": 14,
+    "days_per_week": 5,
+    "race_temp_f": 50,
+    "recent_half": "1:50:00",
+    "note": "new: eight weeks only"
+   }
+  }
+ ]
+}
