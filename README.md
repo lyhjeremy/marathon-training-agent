@@ -1,13 +1,53 @@
 # Marathon training agent
 
-A LangGraph agent that writes a personalized marathon training plan, then critiques it with deterministic safety checks plus an LLM review and revises it until it passes.
+[![tests](https://github.com/lyhjeremy/marathon-training-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/lyhjeremy/marathon-training-agent/actions/workflows/tests.yml)
+
+![Stepping through six runners on the write-up: the original loop's weekly-mileage bars run past the race-day line for three of them, while the structured plans stop at race day and pass every check](assets/demo.gif)
+
+A LangGraph agent that writes a personalized marathon training plan, then critiques it with deterministic safety checks and revises it until it passes.
+In November 2026 the plan moved into a JSON schema validated in code: on six frozen runners, 6 of 6 structured plans passed every check and none came back the wrong length, against 1 of 6 and 3 length drifts for the original loop on the same model, at a median $0.10 and 47 s a plan against $0.22 and 114 s.
 On its own three-runner safety panel (five plans, 2026-11-05) the loop moved plans passing all four checks from 1 in 5 to 2 in 5, and one of the two came back 18 weeks long for a 10-week runner; each plan cost $1.19 API-equivalent and took 172 s median.
 
 [Live site](https://lyhjeremy.github.io/marathon-training-agent/) · [Write-up](https://lyhjeremy.github.io/marathon-training-agent/overview/) · [Long-form notes](writeup.md) · [Recorded run](examples/sample_run.md)
 
 Design and copy follow [these standards](https://github.com/lyhjeremy/lyhjeremy/blob/main/DESIGN_STANDARDS.md).
 
-## Results
+## Structured outputs (November 2026)
+
+`src/schema.py` defines the plan as pydantic models (seven sessions a week, each a day, a type from a fixed list and a distance) and a validator for what the schema cannot say: the week count equals the runner's input, weeks run 1 to N, each day once, running days within the runner's limit, phases in order, the race in the last week. `assess_runner` replaces the LLM's feasibility call with Riegel's formula from a recent half marathon and a 10%-rule peak mileage. `src/structured.py` is the new LangGraph loop: assess in code, one draft, validate in code, up to two repairs that quote the errors back.
+
+`eval/structured_eval.py` ran both agents on six runners frozen at `d397cd5` (`eval/structured/runners.json`): the three November 5 profiles with a recent half added, and three new ones. Same model (claude-sonnet-5-5), same isolated CLI flags, one plan at a time on an Apple M4, 2026-11-13. Cost is the API-equivalent `total_cost_usd` the Claude CLI reports.
+
+| | Original loop | Structured |
+|---|---|---|
+| Plans passing all checks (of 6) | 1 | 6 |
+| Plans with the wrong number of weeks | 3 (17 for 12, 18 for 10, 15 for 8) | 0 |
+| Safety issues left in final plans | 8 | 0 |
+| Model calls per plan | 7.7 | 1.8 |
+| Cost per plan, median | $0.22 | $0.10 |
+| Latency per plan, median / p95 | 114 s / 129 s | 47 s / 66 s |
+| Target time across three runs | varied 0 to 5 min (LLM) | identical (code) |
+
+Every length drift came from a revision; the drafts all had the right length. On runner r2 the LLM reviewer called a 10-week build "too short", and the revisions lengthened it to 18 weeks. The structured agent's own failure: 4 of 6 first drafts broke the schema's 120-character limit on a session note, and one repair introduced a ramp jump that the next repair removed. Six runners and one run each is a small sample, and dropping the LLM reviewer means nothing now checks things like long-run share. Results: `eval/structured/results.json`; every plan and call: `runs_before.jsonl`, `runs_after.jsonl`, `runs_assess.jsonl`. 69 model calls in all.
+
+The November 5 figures below ($1.19 and 172 s a plan) were on claude-opus-5-5 with the CLI's default system prompt; the wrapper now runs isolated on sonnet, which is most of the cost difference.
+
+### MCP server
+
+`src/mcp_server.py` serves `assess_runner`, `plan_schema`, `validate_plan` and `safety_checks` over stdio (official `mcp` SDK). No tool calls a model. `tests/test_mcp.py` starts it and validates a plan through it.
+
+```bash
+claude mcp add plan-checks -- ~/venvs/marathon-training-agent/bin/python /path/to/marathon-training-agent/src/mcp_server.py
+```
+
+```bash
+P=~/venvs/marathon-training-agent/bin/python
+$P -m eval.structured_eval --system before; $P -m eval.structured_eval --system after
+$P -m eval.structured_eval --system assess; $P -m eval.structured_eval --summarize
+$P -m eval.export_web; $P -m pytest -q tests
+```
+
+## Results (November 5, 2026)
 
 One recorded run, from [`examples/sample_run.md`](examples/sample_run.md): Boston, goal 3:05, 16 weeks, 22 miles a week, longest recent run 9 miles, 74°F forecast.
 

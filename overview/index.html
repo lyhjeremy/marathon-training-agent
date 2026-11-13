@@ -289,6 +289,17 @@
   .verdict.fail b { color: var(--accent); }
   .verdict ul { margin: 0; padding-left: 1.2em; color: var(--ink); }
   .verdict p { margin: 0; color: var(--ink2); }
+  #sx .readout, #structured .readout { font: 400 14px/1.5 var(--mono); color: var(--ink); min-height: 3em; border-top: 1px solid var(--rule); padding-top: 10px; margin: 10px 0 0; }
+  #sx svg { display: block; width: 100%; height: auto; }
+  #sx g.row:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #structured .sk { height: 15px; margin: 12px 0; background: var(--rule); }
+  @media (prefers-reduced-motion: no-preference) { #structured .sk { animation: skp 1.2s ease-in-out infinite alternate; } }
+  @keyframes skp { from { opacity: .45; } to { opacity: 1; } }
+  #structured .misses li { margin: 0 0 14px; color: var(--ink2); }
+  #structured .misses b { color: var(--ink); }
+  #structured q { font-style: italic; color: var(--ink); }
+  #structured p code, #structured li code { overflow-wrap: anywhere; }
+  #structured .log td { font-size: 14.5px; }
   @media (max-width: 520px) { .viz { padding: 14px 12px 12px; } }
   /* At a glance (same card as Race Day Copilot) */
   .glance { margin-top: 30px; border: 1px solid var(--edge); background: var(--card); padding: 16px 18px 6px; font-family: var(--sans); }
@@ -317,11 +328,17 @@
   </header>
 
   <section class="hero">
-    <p class="kicker">An agent loop with a code-based critic</p>
+    <p class="kicker">An agent loop with a code-based critic, rebuilt on structured outputs in November 2026</p>
     <h1>A training-plan agent that checks its own plan before you see it</h1>
 
+    <p class="hero-sub" style="color:var(--ink);font-size:clamp(19px,2vw,22px)">
+      November 2026: with the plan written into a JSON schema and checked in code, <b>6 of 6 plans passed every safety
+      check and none came back the wrong length</b>. The original loop, on the same model and six frozen runners, passed
+      1 of 6 and returned 3 plans longer than the runner had weeks. The structured version costs a median $0.10 and
+      47 seconds a plan against $0.22 and 114 seconds.
+    </p>
     <p class="hero-sub">
-      Run on its own three-runner safety panel (five plans), the critique and revise loop moved
+      Before that, run on its own three-runner safety panel (five plans), the critique and revise loop moved
       the share of plans passing all four safety checks from 1 in 5 to 2 in 5, and one of those two
       came back 18 weeks long for a runner with 10. Each plan cost $1.19 at API prices and took
       172 seconds. In the recorded run below, asked for a 3:05 Boston off 22 miles a week, it
@@ -365,7 +382,10 @@
         <div><dt>Cost per plan</dt><dd><b>$1.19</b> median API-equivalent ($0.98 to $1.38, n = 5), 6 to 8 Claude CLI calls on Opus 5.5</dd></div>
         <div><dt>Latency</dt><dd><b>172 s</b> median, 179 s p95 (n = 5, Apple M4, 2026-11-05)</dd></div>
         <div><dt>Revision loops</dt><dd><b>1.8</b> per plan on average: four plans used both revisions, one used one</dd></div>
-        <div><dt>Main failure</dt><dd>Revisions don't reliably fix what the checks flag: of the 4 plans whose draft failed a check, 3 still failed one at the end. The LLM review raised issues of its own in 11 of 14 rounds</dd></div>
+        <div><dt>Structured, Nov. 13</dt><dd>Six frozen runners, same model (sonnet): <b>6 of 6</b> pass all checks against 1 of 6; length drift 0 against 3; 1.8 calls, $0.10 and 47 s median a plan against 7.7, $0.22 and 114 s (p95 66 s against 129 s)</dd></div>
+        <div><dt>Assessment</dt><dd>Now a calculation (Riegel from a recent half): one target per runner. Three runs of the old LLM node on sonnet varied by 0 to 5 minutes</dd></div>
+        <div><dt>Structured failure</dt><dd>4 of 6 first drafts broke a 120-character note limit in the schema; one repair fixed each, and one repair added a ramp jump the next removed</dd></div>
+        <div><dt>Main failure (Nov. 5)</dt><dd>Revisions don't reliably fix what the checks flag: of the 4 plans whose draft failed a check, 3 still failed one at the end. The LLM review raised issues of its own in 11 of 14 rounds</dd></div>
       </dl>
     </section>
   </section>
@@ -373,6 +393,89 @@
 
 <div class="wrap">
 <div class="route">
+
+  <section class="stop stop--key" id="structured">
+    <p class="eyebrow">November 2026: structured outputs</p>
+    <h2>Six runners, six plans that pass, none the wrong length</h2>
+    <p>
+      <b>With the plan in a schema and validated in code, 6 of 6 plans passed every check and none came back the wrong
+      length. The original loop, on the same model and the same six frozen runners, passed 1 of 6, and 3 of 6 came back
+      longer than the runner had weeks</b>: 17 weeks for a 12-week runner, 18 for 10, 15 for 8. The structured agent
+      made 1.8 model calls a plan against 7.7, cost a median $0.10 against $0.22 (API-equivalent, as the Claude CLI
+      reports it) and took a median 47 s against 114 s, p95 66 s against 129 s. Both ran on claude-sonnet-5-5 with the
+      same isolated CLI flags, one plan at a time on an Apple M4. The six runners, the three from November 5 with a
+      recent half-marathon time added and three new ones, were frozen at commit <code>d397cd5</code> before either
+      system saw them. Six runners is a small set; it shows the failure modes went away on these, not a rate.
+    </p>
+    <p>
+      The fix moves the parts that kept going wrong into code. <code>src/schema.py</code> defines the plan as pydantic
+      models: every week has exactly seven sessions, each with a day, a type from a fixed list (rest, easy, long, tempo,
+      intervals, marathon pace, hills, race) and a distance. A validator then checks what a schema cannot: the plan has
+      exactly as many weeks as the runner has, the weeks run 1 to N, each day appears once, running days do not exceed the
+      runner's days per week, phases go Base, Build, Peak, Taper, and the last week holds the race. The assessment is a
+      calculation: Riegel's formula from the runner's recent half marathon, and a peak mileage from the 10% rule the old
+      plan prompt already stated. <code>src/structured.py</code> is the new LangGraph loop: assess in code, one draft in the
+      schema, validate in code, and up to two repairs that quote every validation error back to the model. The old LLM
+      review is gone; the four safety checks are unchanged and score both versions.
+    </p>
+    <div class="viz" id="sx">
+      <h3>The original loop runs past race day; the structured plans stop there</h3>
+      <p class="sub">Weekly training miles for each frozen runner, original loop against structured output. The dashed line is race day; grey bars fall after it. Outlined bars are more than 20% above the week before. Focus or hover a row for its issues.</p>
+      <div class="ctl" role="group" aria-label="Runner" id="sx-r"></div>
+      <div id="sx-svg"><div class="sk" style="width:80%"></div><div class="sk" style="width:65%"></div></div>
+      <p class="readout" id="sx-out" aria-live="polite"></p>
+      <p class="vsrc">From <code>eval/structured/web.json</code>, written by <code>eval/export_web.py</code> from <code>eval/structured/runs_before.jsonl</code> and <code>runs_after.jsonl</code> (<code>eval/structured_eval.py</code>, 13 November 2026). The race itself is left out of race-week miles in the structured plans.</p>
+    </div>
+    <div class="tablewrap" role="region" aria-label="Before and after on six runners" tabindex="0" style="margin-top:22px">
+      <table class="log" style="min-width:560px">
+        <thead><tr><th>Six frozen runners</th><th>Original loop</th><th>Structured</th></tr></thead>
+        <tbody>
+          <tr><td>r1 Boston 3:00, 12 wk</td><td>17 weeks (asked 12); 3 ramp jumps, wrong length; 8 calls, 92 s, $0.19</td><td>12 weeks; passes; 2 calls, 49 s, $0.11</td></tr>
+          <tr><td>r2 New York 3:30, 10 wk</td><td>18 weeks (asked 10); fails on length; 8 calls, 114 s, $0.23</td><td>10 weeks; passes; 3 calls, 70 s, $0.16</td></tr>
+          <tr><td>r3 Berlin 3:10, 18 wk</td><td>18 weeks; 1 ramp jump; 8 calls, 117 s, $0.25</td><td>18 weeks; passes; 1 call, 37 s, $0.06</td></tr>
+          <tr><td>r4 Chicago 4:30, 16 wk</td><td>16 weeks; 3 ramp jumps; 8 calls, 133 s, $0.25</td><td>16 weeks; passes; 2 calls, 56 s, $0.12</td></tr>
+          <tr><td>r5 London 2:55, 20 wk</td><td>20 weeks; passes; 6 calls, 97 s, $0.19</td><td>20 weeks; passes; 1 call, 44 s, $0.08</td></tr>
+          <tr><td>r6 Tokyo 3:45, 8 wk</td><td>15 weeks (asked 8); 1 ramp jump, wrong length; 8 calls, 113 s, $0.22</td><td>8 weeks; passes; 2 calls, 42 s, $0.09</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="splits-note">One run per runner per system; every number from <code>eval/structured/results.json</code>. A plan passes when it has the
+      runner's number of weeks and the four original safety checks find nothing. The original loop's drafts never drifted in length
+      (0 of 6); every drift came from a revision. The assessment, run three times per runner through the original LLM node, varied by
+      0 to 5 minutes (median 2), which is less than the November 5 opus runs, where one runner got 3:45 and 4:15. The calculation in
+      code gives one answer per runner by construction.</p>
+    <h3 class="sub-h" style="font:600 clamp(22px,2.6vw,28px)/1.06 var(--display);text-transform:uppercase;margin:30px 0 8px">Where each version failed</h3>
+    <ol class="misses" style="margin:14px 0 0;padding-left:1.3em;max-width:68ch">
+      <li><b>The original loop, runner r2 (New York, 10 weeks).</b> The draft had 10 weeks. Critique listed 15 issues, three from the
+        code and twelve from the LLM reviewer, among them <q>Only 10 weeks total ... too short and too compressed a build</q>. Revision 1
+        answered that by lengthening the plan; after revision 2 the plan had 18 weeks, the code checks passed, and the reviewer still
+        listed 6 issues. The reviewer's own opinions pushed the plan away from the runner's input, and no check compared the length.</li>
+      <li><b>The original loop, ramp jumps.</b> r1, r3, r4 and r6 ended with weeks more than 20% above the week before, 1 to 3 per plan,
+        after two revisions each. In its drafts the race week's 26.2 miles also counted as a long run over the 22.5-mile cap, since that
+        schema had no way to mark the race.</li>
+      <li><b>The structured agent, first drafts.</b> Only 2 of 6 first drafts were valid. The other four broke a limit I set in the schema,
+        a 120-character cap on a session note (<code>weeks.11.sessions.6.note: String should have at most 120 characters</code>),
+        and each was fixed by one repair. On r2 the repair then added a ramp jump (27 to 33 miles in week 5), which the second repair
+        removed. So 5 of the 11 structured calls were repairs, four of them caused by a limit that adds nothing to safety.</li>
+    </ol>
+    <h3 class="sub-h" style="font:600 clamp(22px,2.6vw,28px)/1.06 var(--display);text-transform:uppercase;margin:30px 0 8px">The same checks over MCP</h3>
+    <p>
+      <code>src/mcp_server.py</code> serves four tools over stdio with the same SDK as my strategy coach:
+      <code>assess_runner</code>, <code>plan_schema</code>, <code>validate_plan</code> and <code>safety_checks</code>.
+      None calls a model, so a client such as Claude Code can write a plan itself and have it checked by the agent's own
+      code. <code>tests/test_mcp.py</code> starts the server, lists the tools and validates a plan through it on every push.
+    </p>
+<pre class="cfg" style="margin:14px 0 0;font:400 13px/1.5 var(--mono);background:var(--card);border:1px solid var(--rule);padding:12px 14px;overflow-x:auto">claude mcp add plan-checks -- \
+  ~/venvs/marathon-training-agent/bin/python \
+  /path/to/marathon-training-agent/src/mcp_server.py</pre>
+    <h3 class="sub-h" style="font:600 clamp(22px,2.6vw,28px)/1.06 var(--display);text-transform:uppercase;margin:30px 0 8px">What I would do next</h3>
+    <ul class="misses" style="margin:14px 0 0;padding-left:1.3em;max-width:68ch">
+      <li>Raise or drop the note-length cap, which caused four of five repairs, and measure the first-draft valid rate again.</li>
+      <li>Run each runner three times through the structured agent, so the pass rate has a spread and not one run per runner.</li>
+      <li>Check the Riegel targets against real race pairs (a half and a marathon by the same runner); Riegel is known to be optimistic for low-mileage runners, which is most of this panel.</li>
+      <li>Add an 80/20 easy-to-hard check now that sessions have types, which the old weekly-total schema could not express.</li>
+    </ul>
+  </section>
 
   <section class="stop">
     <p class="eyebrow">Why a graph</p>
@@ -554,6 +657,12 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
       <code>adjust</code>, and none of the safety checks reads them.
     </p>
     <p>
+      The November comparison is one run per runner on six synthetic runners I wrote, so 6 of 6 against 1 of 6 shows the
+      failure modes, not a stable rate. It drops the LLM reviewer, so the structured plans are judged only by the four safety
+      checks and the validator; the reviewer's points about long-run share, for example, are no longer checked by anything.
+      The Riegel target and the 10% peak rule are standard rules of thumb, not fitted to these runners.
+    </p>
+    <p>
       2026-10-28: the label was added after the recorded run shown on this page. The values are
       unchanged.
     </p>
@@ -689,6 +798,65 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
   var last = host.clientWidth;
   var f = function () { if (host.clientWidth !== last) { last = host.clientWidth; draw(); } };
   if (window.ResizeObserver) new ResizeObserver(f).observe(host); else window.addEventListener("resize", f);
+})();
+</script>
+<script>
+(function () {
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  var RACE = { boston: "Boston", nyc: "New York", berlin: "Berlin", chicago: "Chicago", london: "London", tokyo: "Tokyo" };
+  function jumps(m) { var o = {}; for (var i = 1; i < m.length; i++) if (m[i - 1] > 0 && (m[i] - m[i - 1]) / m[i - 1] > 0.2) o[i] = true; return o; }
+
+  function draw(D, i) {
+    var R = D.runners[i], p = R.profile, host = document.getElementById("sx-svg"), out = document.getElementById("sx-out");
+    var rows = [["before", "Original loop"], ["after", "Structured"]].filter(function (r) { return R[r[0]]; });
+    var maxW = Math.max.apply(null, rows.map(function (r) { return R[r[0]].weekly_miles.length; }).concat([p.weeks]));
+    var maxM = Math.max.apply(null, rows.map(function (r) { return Math.max.apply(null, R[r[0]].weekly_miles.map(Number).concat([10])); }));
+    var W = Math.max(330, Math.min(760, host.clientWidth || 760)), L = 8, Rr = 8, rh = 118, top = 26, H = top + rows.length * (rh + 34) + 10;
+    var bw = (W - L - Rr) / maxW;
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Weekly miles, original loop against structured output, for ' + esc(RACE[p.goal_race]) + '">';
+    var xr = L + p.weeks * bw;
+    s += '<line x1="' + xr.toFixed(1) + '" x2="' + xr.toFixed(1) + '" y1="14" y2="' + (H - 6) + '" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"/>'
+      + '<text x="' + Math.min(xr - 4, W - 4).toFixed(1) + '" y="12" font-size="12" text-anchor="end" fill="var(--ink)" font-family="var(--mono)">race day, week ' + p.weeks + '</text>';
+    rows.forEach(function (r, j) {
+      var d = R[r[0]], m = d.weekly_miles.map(Number), J = jumps(m), y0 = top + j * (rh + 34);
+      var label = r[1] + ": " + d.n_weeks + " weeks, peak " + Math.max.apply(null, m) + " miles, " + (d.all_pass ? "passes every check" : (d.issues.length ? d.issues.length + " safety issue(s)" : "") + (d.n_weeks !== p.weeks ? (d.issues.length ? " and " : "") + "the wrong length" : ""));
+      s += '<g class="row" tabindex="0" role="img" aria-label="' + esc(label) + '" data-l="' + esc(label) + '">';
+      s += '<text x="' + L + '" y="' + (y0 + 12) + '" font-size="13" font-weight="600" fill="var(--ink)" font-family="var(--sans)">' + esc(r[1]) + (d.all_pass ? "" : " (fails)") + '</text>';
+      m.forEach(function (v, k) {
+        var h = Math.max(1, v / maxM * (rh - 24)), x = L + k * bw + 1, y = y0 + rh - h;
+        var past = k >= p.weeks, fill = past ? "var(--muted)" : (r[0] === "after" ? "var(--accent2)" : "var(--accent)");
+        s += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + Math.max(1, bw - 2).toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + fill + '"' + (past ? ' fill-opacity="0.45"' : '') + (J[k] ? ' stroke="var(--ink)" stroke-width="2"' : '') + '/>';
+      });
+      s += '<line x1="' + L + '" x2="' + (W - Rr) + '" y1="' + (y0 + rh) + '" y2="' + (y0 + rh) + '" stroke="var(--rule)"/>';
+      s += '<text x="' + L + '" y="' + (y0 + rh + 15) + '" font-size="11.5" fill="var(--muted)" font-family="var(--mono)">' + d.n_weeks + ' weeks &middot; peak ' + Math.max.apply(null, m) + ' mi &middot; ' + d.calls + ' calls &middot; ' + Math.round(d.wall_s) + ' s &middot; $' + d.cost_usd.toFixed(2) + '</text>';
+      s += '</g>';
+    });
+    s += '</svg>';
+    host.innerHTML = s;
+    var intro = RACE[p.goal_race] + ", goal " + p.goal_time + ", " + p.weeks + " weeks, " + p.current_mpw + " mi/week now, recent half " + p.recent_half + ". ";
+    var asg = "Targets from three runs of the original LLM assessment: " + R.llm_targets.join(", ") + " (spread " + (R.llm_spread_min == null ? "n/a" : R.llm_spread_min + " min") + "). From the code: " + R.code_target + ", every time.";
+    out.textContent = intro + asg;
+    [].forEach.call(host.querySelectorAll("g.row"), function (g) {
+      var show = function () {
+        var key = g.getAttribute("data-l").indexOf("Original") === 0 ? "before" : "after", d = R[key];
+        out.textContent = g.getAttribute("data-l") + ". " + (d.issues.length ? "Issues: " + d.issues.join("; ") + "." : "") + " " + asg;
+      };
+      g.addEventListener("focus", show); g.addEventListener("mouseenter", show);
+    });
+  }
+
+  fetch("../eval/structured/web.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (D) {
+    var bar = document.getElementById("sx-r"), cur = 0;
+    D.runners.forEach(function (R, i) {
+      var b = document.createElement("button"); b.type = "button";
+      b.textContent = R.runner + " " + RACE[R.profile.goal_race] + " " + R.profile.weeks + " wk";
+      b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+      b.addEventListener("click", function () { cur = i; [].forEach.call(bar.children, function (x, j) { x.setAttribute("aria-pressed", j === i ? "true" : "false"); }); draw(D, i); });
+      bar.appendChild(b);
+    });
+    draw(D, 0);
+    window.addEventListener("resize", function () { draw(D, cur); });
+  }).catch(function () { document.getElementById("sx-svg").innerHTML = '<p class="vsrc">The results file did not load. It is at eval/structured/web.json in the repo.</p>'; });
 })();
 </script>
 </body>
