@@ -547,7 +547,8 @@ stretch that lets you peak around 45 mi/week without high injury risk.</pre></di
       Issues here are the four deterministic checks only. The critique node also merges in the LLM
       review, which raised issues of its own in 11 of 14 rounds; between the two, four of five plans
       ran out of revisions. The assessment is not stable either: the same Boston runner was told 3:45 in one
-      run and 4:15 in the other. Outcomes are hand-coded in <code>eval/error_analysis.json</code>.
+      run and 4:15 in the other. Outcomes were coded in a review session on 2026-11-05 by a
+      model, not a person; they are in <code>eval/error_analysis.json</code>.
     </p>
     <dl class="specs">
       <div class="spec"><dt>Cost per plan</dt><dd>$1.19 median, $0.98 to $1.38, mean $1.18 (n = 5). This is the API-equivalent <code>total_cost_usd</code> that <code>claude -p --output-format json</code> reports, on Opus 5.5, the CLI's default; it runs on a subscription, so nothing was billed</dd></div>

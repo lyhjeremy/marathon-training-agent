@@ -1,5 +1,5 @@
 {
-  "note": "Hand-coded 2026-11-05 from eval/runs.json: what the critique and revise loop did to each plan.",
+  "note": "Coded in a review session on 2026-11-05 by a model (Claude), not a person, from eval/runs.json: what the critique and revise loop did to each plan.",
   "plans": [
     {
       "run": "boston-3:00:00-r1",

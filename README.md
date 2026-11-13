@@ -65,7 +65,7 @@ One recorded run, from [`examples/sample_run.md`](examples/sample_run.md): Bosto
 - Revision loops: 1.8 per plan (four plans used both revisions, one used one). The LLM review raised issues of its own in 11 of 14 critique rounds, which is why most plans ran out of revisions.
 - Cost: $1.19 median API-equivalent per plan ($0.98 to $1.38, n = 5), 6 to 8 calls on Opus 5.5, the CLI's default. This is the `total_cost_usd` that `claude -p --output-format json` reports; the CLI runs on a subscription, so nothing was billed.
 - Latency: 172 s median, 179 s p95 per plan (n = 5). `revise` is the slowest node at 32 s median per call.
-- Failures: one plan passed only because its revision came back 18 weeks long for a 10-week runner (no check compares the length); one revision turned one ramp jump into two; one left both jumps in place; one fixed two and added a new one. The same Boston runner was assessed at 3:45 in one run and 4:15 in the other. Hand-coded in `eval/error_analysis.json`; every draft and final plan is in `eval/runs.json`.
+- Failures: one plan passed only because its revision came back 18 weeks long for a 10-week runner (no check compares the length); one revision turned one ramp jump into two; one left both jumps in place; one fixed two and added a new one. The same Boston runner was assessed at 3:45 in one run and 4:15 in the other. These outcomes were coded in a review session on 2026-11-05 by a model, not a person; they are in `eval/error_analysis.json`; every draft and final plan is in `eval/runs.json`.
 
 The [write-up page](https://lyhjeremy.github.io/marathon-training-agent/overview/) has a JavaScript port of `_safety_checks` that you can run against edited versions of the recorded plan.
 
