@@ -11,17 +11,28 @@ Backend selection (automatic, in priority order):
    without the Claude CLI installed.
 
 Override the choice with ``LLM_BACKEND=cli`` or ``LLM_BACKEND=api``.
+
+Since 2026-11-13 the CLI runs isolated (no built-in tools, no user or project
+settings, the caller's system prompt in place of Claude Code's, no saved session)
+on ``sonnet`` unless ``CLAUDE_MODEL`` says otherwise, and every call records the
+API-equivalent cost, duration and token counts the CLI reports in ``last_meta``
+and in ``LLM.ledger``. Before that it appended to Claude Code's own system prompt
+on the CLI's default model, which is why the November 5 measurement cost $1.19 a
+plan on claude-opus-5-5.
 """
 
 from __future__ import annotations
 
 import os
 import shutil
+import json
 import subprocess
+import tempfile
+import time
 
 
-DEFAULT_CLI_MODEL = os.environ.get("CLAUDE_MODEL", "")          # "" -> CLI default
-DEFAULT_API_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5")
+DEFAULT_CLI_MODEL = os.environ.get("CLAUDE_MODEL", "sonnet")
+DEFAULT_API_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5-5")
 
 
 class LLMError(RuntimeError):
@@ -66,22 +77,34 @@ def _choose_backend() -> str:
 class LLM:
     """Minimal text-completion interface used across the project."""
 
-    def __init__(self, backend: str | None = None, timeout: int = 180):
+    ledger: list = []   # every call made through any LLM instance, for cost accounting
+
+    def __init__(self, backend: str | None = None, timeout: int = 300, model: str | None = None):
         self.backend = backend or _choose_backend()
         self.timeout = timeout
+        self.model = model
+        self.last_meta: dict = {}
+        self.tag = None   # set by callers (eval harness) to label calls
 
     def complete(self, prompt: str, system: str | None = None) -> str:
+        t0 = time.perf_counter()
         if self.backend == "cli":
-            return self._complete_cli(prompt, system)
-        return self._complete_api(prompt, system)
+            text = self._complete_cli(prompt, system)
+        else:
+            text = self._complete_api(prompt, system)
+        self.last_meta["wall_s"] = round(time.perf_counter() - t0, 2)
+        LLM.ledger.append({"tag": self.tag, **self.last_meta})
+        return text
 
     # --- CLI backend (Claude subscription, no API key) -----------------------
     def _complete_cli(self, prompt: str, system: str | None) -> str:
-        cmd = _claude_command() + ["-p"]
-        if system:
-            cmd += ["--append-system-prompt", system]
-        if DEFAULT_CLI_MODEL:
-            cmd += ["--model", DEFAULT_CLI_MODEL]
+        cmd = _claude_command() + [
+            "-p", "--tools", "", "--setting-sources", "", "--no-session-persistence",
+            "--output-format", "json",
+            "--system-prompt", system or "You are a helpful assistant.",
+        ]
+        if self.model or DEFAULT_CLI_MODEL:
+            cmd += ["--model", self.model or DEFAULT_CLI_MODEL]
         try:
             # Prompt is piped via stdin so long RAG contexts never hit argv limits.
             result = subprocess.run(
@@ -94,14 +117,28 @@ class LLM:
                 encoding="utf-8",
                 errors="replace",
                 timeout=self.timeout,
+                cwd=tempfile.gettempdir(),
             )
         except FileNotFoundError as exc:  # claude not on PATH
             raise LLMError("`claude` CLI not found on PATH.") from exc
         except subprocess.TimeoutExpired as exc:
             raise LLMError(f"claude CLI timed out after {self.timeout}s.") from exc
         if result.returncode != 0:
-            raise LLMError(f"claude CLI failed: {result.stderr.strip()}")
-        return result.stdout.strip()
+            raise LLMError(f"claude CLI failed: {result.stderr.strip() or result.stdout[:300]}")
+        try:
+            data = json.loads(result.stdout)
+        except json.JSONDecodeError as exc:
+            raise LLMError(f"claude CLI returned non-JSON output: {result.stdout[:200]}") from exc
+        if data.get("is_error"):
+            raise LLMError(f"claude CLI error: {str(data.get('result', ''))[:300]}")
+        u = data.get("usage") or {}
+        self.last_meta = {
+            "model": ",".join(sorted(data.get("modelUsage") or {})) or (self.model or DEFAULT_CLI_MODEL),
+            "cost_usd": data.get("total_cost_usd"), "duration_ms": data.get("duration_ms"),
+            "input_tokens": u.get("input_tokens"), "output_tokens": u.get("output_tokens"),
+            "cache_read_input_tokens": u.get("cache_read_input_tokens"),
+        }
+        return (data.get("result") or "").strip()
 
     # --- API backend (official SDK) ------------------------------------------
     def _complete_api(self, prompt: str, system: str | None) -> str:
@@ -111,11 +148,13 @@ class LLM:
             raise LLMError("pip install anthropic to use the API backend.") from exc
         client = anthropic.Anthropic()
         msg = client.messages.create(
-            model=DEFAULT_API_MODEL,
-            max_tokens=1500,
+            model=self.model or DEFAULT_API_MODEL,
+            max_tokens=16000,
             system=system or "You are a helpful assistant.",
             messages=[{"role": "user", "content": prompt}],
         )
+        self.last_meta = {"model": msg.model, "output_tokens": msg.usage.output_tokens,
+                          "input_tokens": msg.usage.input_tokens}
         return "".join(block.text for block in msg.content if block.type == "text").strip()
 
 

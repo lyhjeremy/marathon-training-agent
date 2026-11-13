@@ -1,0 +1,76 @@
+{
+ "runners": [
+  {
+   "id": "r1",
+   "goal_race": "boston",
+   "goal_time": "3:00:00",
+   "weeks": 12,
+   "current_mpw": 20,
+   "longest_run_mi": 8,
+   "days_per_week": 4,
+   "race_temp_f": 74,
+   "recent_half": "1:42:00",
+   "note": "November 5 panel: aggressive, low base"
+  },
+  {
+   "id": "r2",
+   "goal_race": "nyc",
+   "goal_time": "3:30:00",
+   "weeks": 10,
+   "current_mpw": 25,
+   "longest_run_mi": 12,
+   "days_per_week": 5,
+   "race_temp_f": null,
+   "recent_half": "1:48:00",
+   "note": "November 5 panel: short window (the 18-week drift case)"
+  },
+  {
+   "id": "r3",
+   "goal_race": "berlin",
+   "goal_time": "3:10:00",
+   "weeks": 18,
+   "current_mpw": 35,
+   "longest_run_mi": 16,
+   "days_per_week": 6,
+   "race_temp_f": 55,
+   "recent_half": "1:30:00",
+   "note": "November 5 panel: realistic control"
+  },
+  {
+   "id": "r4",
+   "goal_race": "chicago",
+   "goal_time": "4:30:00",
+   "weeks": 16,
+   "current_mpw": 15,
+   "longest_run_mi": 6,
+   "days_per_week": 4,
+   "race_temp_f": null,
+   "recent_half": "2:12:00",
+   "note": "new: first-timer, low base"
+  },
+  {
+   "id": "r5",
+   "goal_race": "london",
+   "goal_time": "2:55:00",
+   "weeks": 20,
+   "current_mpw": 45,
+   "longest_run_mi": 16,
+   "days_per_week": 6,
+   "race_temp_f": null,
+   "recent_half": "1:23:30",
+   "note": "new: experienced, long window"
+  },
+  {
+   "id": "r6",
+   "goal_race": "tokyo",
+   "goal_time": "3:45:00",
+   "weeks": 8,
+   "current_mpw": 30,
+   "longest_run_mi": 14,
+   "days_per_week": 5,
+   "race_temp_f": 50,
+   "recent_half": "1:50:00",
+   "note": "new: eight weeks only"
+  }
+ ]
+}

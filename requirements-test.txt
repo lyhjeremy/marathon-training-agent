@@ -1,0 +1,5 @@
+# Only what the offline tests need (python -m pytest -q tests): no model calls.
+pytest>=8.0
+pydantic>=2.6
+langgraph>=1.0
+mcp==2.3.0

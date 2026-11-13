@@ -1,0 +1,7 @@
+{
+ "frozen_at_commit": "(set in the next commit)",
+ "date": "2026-11-13",
+ "sha256": "f26ddc669e90884046195444233e9472c449d8c7f727ebcfb841f04b97474aee",
+ "runners": 6,
+ "note": "Frozen before either system ran on these runners. r1 to r3 are the November 5 profiles with a recent half-marathon time added; r4 to r6 are new. eval/structured_eval.py refuses to run if runners.json changes."
+}

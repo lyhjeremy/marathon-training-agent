@@ -61,7 +61,9 @@ def assess(state: PlanState) -> PlanState:
         f"A runner wants to run {p['goal_race'].title()} in {p['goal_time']}.\n"
         f"Current fitness: {p['current_mpw']} miles/week, longest recent run "
         f"{p['longest_run_mi']} miles, {p['weeks']} weeks until race day, can train "
-        f"{p['days_per_week']} days/week.\n\n"
+        f"{p['days_per_week']} days/week."
+        + (f" Recent half marathon: {p['recent_half']}." if p.get("recent_half") else "")
+        + "\n\n"
         "Judge whether the goal time is realistic. Return JSON: "
         '{"feasible": bool, "recommended_goal_time": "H:MM:SS", '
         '"peak_weekly_miles": number, "rationale": "one or two sentences"}.'
